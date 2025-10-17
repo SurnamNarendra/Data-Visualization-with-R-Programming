@@ -4,133 +4,297 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Data Visualization with R Programming</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
   <style>
     body {
-      font-family: 'Segoe UI', Roboto, sans-serif;
       margin: 0;
-      background: #f5f7fa;
-      color: #222;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #5b9fff, #8864ff);
+      color: #fff;
+      overflow-x: hidden;
     }
+
     header {
-      background: #005f73;
-      color: white;
-      text-align: center;
-      padding: 2rem 1rem;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      padding: 20px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
+
     header h1 {
-      margin: 0;
-      font-size: 2rem;
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: 1px;
     }
-    header p {
-      margin-top: .5rem;
-      font-size: 1rem;
+
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #ffd369;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 100px 20px 80px;
+    }
+
+    .hero h2 {
+      font-size: 2.8rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto;
       opacity: 0.9;
     }
-    main {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+
+    .modules {
+      padding: 60px 20px;
+      background: #fff;
+      color: #333;
+      border-radius: 40px 40px 0 0;
+      margin-top: -40px;
     }
+
     .module {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-      margin-bottom: 1.5rem;
-      padding: 1rem 1.2rem;
-      transition: transform 0.2s ease;
+      background: #f5f7ff;
+      margin: 20px auto;
+      border-radius: 16px;
+      max-width: 900px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: 0.3s;
     }
-    .module:hover { transform: translateY(-3px); }
-    .module h2 {
-      color: #005f73;
-      margin-top: 0;
+
+    .module:hover {
+      transform: translateY(-3px);
     }
-    .lectures {
-      margin-top: .5rem;
-      padding-left: 1.2rem;
-    }
-    .lecture {
-      margin-bottom: .5rem;
-    }
-    details summary {
+
+    .module h3 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       cursor: pointer;
-      list-style: none;
       font-weight: 600;
-      color: #0a9396;
-      font-size: 1.1rem;
+      color: #333;
     }
-    details summary::marker { display: none; }
-    footer {
+
+    .lectures {
+      display: none;
+      margin-top: 15px;
+      padding-left: 20px;
+    }
+
+    .lectures li {
+      padding: 8px 0;
+      border-bottom: 1px solid #ddd;
+      list-style-type: circle;
+    }
+
+    .lectures li:last-child {
+      border-bottom: none;
+    }
+
+    .resources, .contact, .instructor {
       text-align: center;
-      padding: 1.5rem 1rem;
-      color: #555;
-      font-size: 0.9rem;
+      padding: 60px 20px;
     }
-    a {
-      color: #0a9396;
+
+    .resources a {
+      color: #ffd369;
       text-decoration: none;
+      font-weight: 500;
     }
-    a:hover { text-decoration: underline; }
+
+    .instructor img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 3px solid #fff;
+    }
+
+    footer {
+      background: rgba(0,0,0,0.3);
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #ddd;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+      }
+      nav a {
+        margin: 0 8px;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>Data Visualization with R Programming</h1>
-    <p>Course Content — Organized into Four Modules</p>
+
+  <header data-aos="fade-down">
+    <h1>Data Visualization with R</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#modules">Modules</a>
+      <a href="#resources">Resources</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </header>
 
-  <main>
-    <div class="module">
-      <details open>
-        <summary>Module 1 — Introduction & Basics of R Visualization</summary>
-        <div class="lectures">
-          <div class="lecture">Lecture 1: Overview of R and RStudio</div>
-          <div class="lecture">Lecture 2: Importing and Cleaning Data</div>
-          <div class="lecture">Lecture 3: Introduction to ggplot2</div>
-          <div class="lecture">Lecture 4: Grammar of Graphics</div>
-        </div>
-      </details>
+  <section class="hero" id="home" data-aos="zoom-in">
+    <h2>Master Data Visualization with R Programming</h2>
+    <p>Learn how to explore, visualize, and communicate data insights using powerful R tools like ggplot2, plotly, and Shiny. This course is designed to build your analytical and storytelling skills step-by-step.</p>
+  </section>
+
+  <section class="modules" id="modules">
+    <h2 style="text-align:center;" data-aos="fade-up">Course Modules</h2>
+
+    <!-- Module 1 -->
+    <div class="module" data-aos="fade-up">
+      <h3 onclick="toggleModule(this)">Module 1: Introduction to Data Visualization <span>➕</span></h3>
+      <ul class="lectures">
+        <li>Lecture 1: Importance of Data Visualization</li>
+        <li>Lecture 2: R Environment Setup</li>
+        <li>Lecture 3: Basic Visualization Functions</li>
+      </ul>
     </div>
 
-    <div class="module">
-      <details>
-        <summary>Module 2 — Aesthetics and Geometries</summary>
-        <div class="lectures">
-          <div class="lecture">Lecture 1: Understanding Aesthetics Mapping</div>
-          <div class="lecture">Lecture 2: Working with Geoms (point, line, bar)</div>
-          <div class="lecture">Lecture 3: Scale and Axis Customization</div>
-          <div class="lecture">Lecture 4: Color, Shape, and Size in Plots</div>
-        </div>
-      </details>
+    <!-- Module 2 -->
+    <div class="module" data-aos="fade-up">
+      <h3 onclick="toggleModule(this)">Module 2: ggplot2 for Static Visuals <span>➕</span></h3>
+      <ul class="lectures">
+        <li>Lecture 1: Grammar of Graphics</li>
+        <li>Lecture 2: Aesthetic Mappings & Layers</li>
+        <li>Lecture 3: Themes and Customizations</li>
+      </ul>
     </div>
 
-    <div class="module">
-      <details>
-        <summary>Module 3 — Themes, Facets & Statistical Layers</summary>
-        <div class="lectures">
-          <div class="lecture">Lecture 1: Applying Themes and Styles</div>
-          <div class="lecture">Lecture 2: Faceting for Subplots</div>
-          <div class="lecture">Lecture 3: Statistical Summaries and Smooths</div>
-          <div class="lecture">Lecture 4: Customizing Legends and Titles</div>
-        </div>
-      </details>
+    <!-- Module 3 -->
+    <div class="module" data-aos="fade-up">
+      <h3 onclick="toggleModule(this)">Module 3: Interactive Visuals <span>➕</span></h3>
+      <ul class="lectures">
+        <li>Lecture 1: Plotly for Interactivity</li>
+        <li>Lecture 2: Shiny Dashboards</li>
+        <li>Lecture 3: Dynamic Visualization Projects</li>
+      </ul>
     </div>
 
-    <div class="module">
-      <details>
-        <summary>Module 4 — Interactive Visualization & Reporting</summary>
-        <div class="lectures">
-          <div class="lecture">Lecture 1: Interactive Plots with Plotly</div>
-          <div class="lecture">Lecture 2: Dashboards using Shiny</div>
-          <div class="lecture">Lecture 3: R Markdown for Reporting</div>
-          <div class="lecture">Lecture 4: Case Study and Project Presentation</div>
-        </div>
-      </details>
+    <!-- Module 4 -->
+    <div class="module" data-aos="fade-up">
+      <h3 onclick="toggleModule(this)">Module 4: Advanced Visualization & Case Studies <span>➕</span></h3>
+      <ul class="lectures">
+        <li>Lecture 1: Visualization in Research Papers</li>
+        <li>Lecture 2: Data Storytelling Techniques</li>
+        <li>Lecture 3: Capstone Project Presentation</li>
+      </ul>
     </div>
-  </main>
+  </section>
+
+ <section class="resources" id="resources" data-aos="fade-up">
+  <h2>Learning Resources</h2>
+  <p>Explore these curated materials to enhance your understanding of data visualization using R.</p>
+
+  <div class="resource-grid">
+
+    <div class="resource-card" data-aos="zoom-in">
+      <h4>📘 Core Reading</h4>
+      <p><a href="https://r4ds.had.co.nz/" target="_blank">R for Data Science</a> — An essential guide covering data manipulation, visualization, and modeling in R.</p>
+    </div>
+
+    <div class="resource-card" data-aos="zoom-in">
+      <h4>🎨 ggplot2 Documentation</h4>
+      <p><a href="https://ggplot2.tidyverse.org/" target="_blank">ggplot2.tidyverse.org</a> — Official ggplot2 reference for themes, layers, and aesthetics.</p>
+    </div>
+
+    <div class="resource-card" data-aos="zoom-in">
+      <h4>📊 Interactive Tools</h4>
+      <p><a href="https://plotly.com/r/" target="_blank">Plotly for R</a> — Learn to build interactive, web-based visualizations using Plotly.</p>
+    </div>
+
+    <div class="resource-card" data-aos="zoom-in">
+      <h4>🧠 Online Learning</h4>
+      <p><a href="https://r-graph-gallery.com/" target="_blank">R Graph Gallery</a> — A comprehensive collection of R visualization examples with reproducible code.</p>
+      <p><a href="https://www.coursera.org/learn/data-visualization-r" target="_blank">Coursera: Data Visualization in R</a> — A structured online course to master concepts step-by-step.</p>
+    </div>
+
+    <div class="resource-card" data-aos="zoom-in">
+      <h4>🧩 Useful Packages</h4>
+      <p>Explore top visualization packages: <strong>ggplot2</strong>, <strong>plotly</strong>, <strong>shiny</strong>, <strong>lattice</strong>, <strong>cowplot</strong>, and <strong>ggthemes</strong>.</p>
+    </div>
+
+    <div class="resource-card" data-aos="zoom-in">
+      <h4>📚 Research & Blogs</h4>
+      <p><a href="https://towardsdatascience.com/tagged/r" target="_blank">Towards Data Science (R Section)</a><br>
+      <a href="https://medium.com/tag/data-visualization" target="_blank">Medium: Data Visualization Articles</a><br>
+      <a href="https://rstudio-pubs-static.s3.amazonaws.com/" target="_blank">RStudio Pubs</a> — Explore visual analytics shared by R developers.</p>
+    </div>
+
+  </div>
+</section>
+
+
+  <section class="instructor" data-aos="fade-up">
+    <h2>Instructor</h2>
+    <img src="images/Picture1.png" alt="Instructor Photo">
+    <h3>Dr. S. Narendra</h3>
+    <p>Assistant Profess<br>School of Science <br> Woxsen University</p>
+  </section>
+
+  <section class="contact" id="contact" data-aos="fade-up">
+    <h2>Contact</h2>
+      <a href="https://www.linkedin.com/in/narendra-suvarna-71b92815b/" target="_blank">LinkedIn</a>
+        <a href="mailto:surnamnarendra@gmail.com">Email</a>
+         <a href="https://surnamnarendra.github.io/Surnam-Narendra/" target="_blank">
+      My Website
+    </a>
+  </section>
 
   <footer>
-    © 2025 Dr. S. Narendra — School of Science <br>
-    <a href="https://cran.r-project.org" target="_blank">Learn more about R</a>
+    © 2025 Data Visualization with R | Designed by Dr. S. Narendra
   </footer>
+
+  <!-- JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800 });
+
+    function toggleModule(el) {
+      const lectures = el.nextElementSibling;
+      const icon = el.querySelector("span");
+      if (lectures.style.display === "block") {
+        lectures.style.display = "none";
+        icon.textContent = "➕";
+      } else {
+        lectures.style.display = "block";
+        icon.textContent = "➖";
+      }
+    }
+  </script>
 </body>
 </html>
