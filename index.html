@@ -1,328 +1,543 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Data Visualization with R Programming</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Data Visualization with R — Dr. S. Narendra</title>
+  <meta name="description" content="Course: Data Visualization with R — ggplot2, plotly, Shiny, R Markdown. Curriculum, resources, instructor and contact." />
+  <link rel="icon" href="favicon.ico" />
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <!-- AOS Animation Library -->
+  <!-- AOS for subtle entrance animations -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
   <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #5b9fff, #8864ff);
-      color: #fff;
-      overflow-x: hidden;
+    :root{
+      --bg1: #e7f0ff;
+      --grad-a: #56b6ff;
+      --grad-b: #7c6bff;
+      --accent: #ffd369;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --glass: rgba(255,255,255,0.12);
+      --max-width: 1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background: linear-gradient(135deg,var(--grad-a),var(--grad-b));
+      color:#0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
     }
 
-    header {
-      background: rgba(0,0,0,0.3);
-      backdrop-filter: blur(10px);
-      padding: 20px 60px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+    /* top nav */
+    header{
+      position:sticky; top:0; z-index:1200;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .navwrap{max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;gap:24px;padding:14px 20px;}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+      width:48px;height:48px;border-radius:10px;
+      background:linear-gradient(180deg,#fff8e1,#fff2cf);
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:#2b3a67;
+      box-shadow:0 6px 18px rgba(11,22,40,0.15);
+      font-size:18px;
+    }
+    .brand h1{font-size:16px;margin:0;color:white}
+    nav{margin-left:auto;display:flex;gap:18px;align-items:center}
+    nav a{color:rgba(255,255,255,0.95);text-decoration:none;font-weight:600;padding:8px;border-radius:8px;transition:all .18s}
+    nav a:hover, nav a.active{color:var(--grad-b);background:rgba(255,255,255,0.12);}
+
+    /* hero */
+    .hero{max-width:var(--max-width);margin:30px auto 0;padding:44px 20px 24px;color:white;text-align:left}
+    .hero-card{
+      display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center;
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      padding:28px;border-radius:18px;box-shadow:0 12px 30px rgba(11,22,40,0.18);
+      backdrop-filter: blur(8px);
+    }
+    .hero h2{margin:0 0 8px;font-size:28px;color:white;letter-spacing:0.2px}
+    .hero p{margin:0;color:rgba(255,255,255,0.9);max-width:70%}
+    .cta{display:flex;gap:10px;margin-top:16px}
+    .btn{background:var(--accent);color:#222;padding:10px 14px;border-radius:10px;font-weight:700;border:0;cursor:pointer}
+    .btn-ghost{background:transparent;color:white;border:1px solid rgba(255,255,255,0.12);padding:9px 12px;border-radius:10px}
+
+    .hero-meta{font-size:13px;color:rgba(255,255,255,0.85)}
+    .hero-stats{display:flex;gap:12px;margin-top:12px}
+    .stat{background:rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:white;font-weight:600}
+
+    /* content area */
+    main{max-width:var(--max-width);margin:36px auto 80px;padding:0 20px}
+
+    /* modules area */
+    .modules-wrap{background:var(--card);padding:36px;border-radius:20px;box-shadow:0 10px 30px rgba(2,6,23,0.08)}
+    .modules-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+    .modules-head h3{margin:0;font-size:20px;color:#0f172a}
+    .modules-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .module-card{
+      background:linear-gradient(180deg,#ffffff,#fbfdff);
+      border-radius:14px;padding:18px;border:1px solid #eef2f7;box-shadow:0 8px 20px rgba(15,23,42,0.04);
+      transition:transform .22s, box-shadow .22s;
+      overflow:hidden;
+    }
+    .module-card:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(11,22,40,0.08)}
+    .module-header{display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer}
+    .module-title{font-weight:700;color:#0b1220}
+    .module-meta{font-size:13px;color:var(--muted)}
+    .toggle-icon{font-weight:800;color:var(--grad-b);transition:transform .22s}
+    .module-body{max-height:0;overflow:hidden;transition:max-height .35s ease, opacity .25s;opacity:0;padding-top:0;margin-top:0}
+    .module-body.open{opacity:1;padding-top:12px;margin-top:8px}
+    .lecture-list{list-style:none;padding:0;margin:0}
+    .lecture-list li{
+      padding:10px;border-radius:10px;margin-bottom:8px;background:#f8fafc;border:1px solid #eef2f7;display:flex;justify-content:space-between;gap:10px;align-items:center;
+    }
+    .lecture-title{font-weight:600;color:#0f172a}
+    .lecture-meta{font-size:13px;color:var(--muted)}
+
+    /* resources */
+    .resources{margin-top:28px;padding-top:8px}
+    .resources h4{margin:0 0 10px;font-size:18px}
+    .resource-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+    .resource-card{
+      background:linear-gradient(180deg, rgba(11,22,40,0.02), rgba(11,22,40,0.01));
+      border-radius:12px;padding:16px;border:1px solid #eef2f7;min-height:110px;
+      transition:transform .18s, box-shadow .18s;
+    }
+    .resource-card:hover{transform:translateY(-6px);box-shadow:0 16px 36px rgba(11,22,40,0.06)}
+    .resource-card h5{margin:0 0 6px;color:var(--grad-b)}
+    .resource-card p{margin:0;font-size:14px;color:var(--muted)}
+    .resource-links{margin-top:8px;display:flex;gap:10px;flex-wrap:wrap}
+    .chip{border-radius:999px;padding:6px 10px;background:var(--glass);font-weight:600;color:#10203a;font-size:13px}
+
+    /* instructor / contact / footer */
+    .instructor{display:flex;gap:18px;align-items:center;margin-top:28px}
+    .instructor img{width:110px;height:110px;border-radius:12px;object-fit:cover;border:3px solid #fff;box-shadow:0 8px 24px rgba(12,18,40,0.12)}
+    .instructor h4{margin:0}
+    footer{margin-top:40px;padding:22px;text-align:center;color:rgba(2,6,23,0.5);font-size:14px}
+
+    /* responsive */
+    @media (max-width:980px){
+      .hero-card{grid-template-columns:1fr; text-align:center}
+      nav{display:none}
+      .modules-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:600px){
+      .navwrap{padding:10px}
+      .hero h2{font-size:22px}
+      .lecture-list li{padding:8px}
     }
 
-    header h1 {
-      font-size: 1.6rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-
-    nav a {
-      color: #fff;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: 0.3s;
-    }
-
-    nav a:hover {
-      color: #ffd369;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 100px 20px 80px;
-    }
-
-    .hero h2 {
-      font-size: 2.8rem;
-      margin-bottom: 15px;
-      font-weight: 600;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      max-width: 600px;
-      margin: 0 auto;
-      opacity: 0.9;
-    }
-
-    .modules {
-      padding: 60px 20px;
-      background: #fff;
-      color: #333;
-      border-radius: 40px 40px 0 0;
-      margin-top: -40px;
-    }
-
-    .module {
-      background: #f5f7ff;
-      margin: 20px auto;
-      border-radius: 16px;
-      max-width: 900px;
-      padding: 25px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      transition: 0.3s;
-    }
-
-    .module:hover {
-      transform: translateY(-3px);
-    }
-
-    .module h3 {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      font-weight: 600;
-      color: #333;
-    }
-
-    .lectures {
-      display: none;
-      margin-top: 15px;
-      padding-left: 20px;
-    }
-
-    .lectures li {
-      padding: 8px 0;
-      border-bottom: 1px solid #ddd;
-      list-style-type: circle;
-    }
-
-    .lectures li:last-child {
-      border-bottom: none;
-    }
-
-    .resources, .contact, .instructor {
-      text-align: center;
-      padding: 60px 20px;
-    }
-.resource-grid {
+    /* small utility */
+    .muted{color:var(--muted)}
+	.labs {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #e0f7fa, #e1bee7);
+  text-align: center;
+}
+.lab-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
   margin-top: 30px;
 }
-
-.resource-card {
-  background: rgba(255,255,255,0.1);
+.lab-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
   padding: 20px;
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
-  transition: 0.3s;
+  transition: transform 0.3s;
 }
-
-.resource-card:hover {
-  background: rgba(255,255,255,0.2);
-  transform: translateY(-5px);
+.lab-card:hover {
+  transform: scale(1.03);
 }
-
-.resource-card h4 {
-  color: #ffd369;
-  margin-bottom: 10px;
+.lab-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #00796b;
+  text-decoration: none;
+  font-weight: bold;
 }
-
-.resource-card a {
-  color: #fff;
+.lab-link:hover {
   text-decoration: underline;
 }
+.flash-news {
+  background: linear-gradient(135deg, #00bcd4, #8e24aa);
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+  border-radius: 0 0 50px 50px;
+}
+.news-ticker {
+  margin-top: 20px;
+  animation: scrollNews 12s linear infinite;
+}
+@keyframes scrollNews {
+  0% { transform: translateY(0); }
+  33% { transform: translateY(-25%); }
+  66% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
 
-    .resources a {
-      color: #ffd369;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .instructor img {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 15px;
-      border: 3px solid #fff;
-    }
-
-    footer {
-      background: rgba(0,0,0,0.3);
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-      color: #ddd;
-    }
-
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        gap: 10px;
-      }
-      nav a {
-        margin: 0 8px;
-      }
-    }
   </style>
 </head>
-
 <body>
 
-  <header data-aos="fade-down">
-    <h1>Data Visualization with R</h1>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#modules">Modules</a>
-      <a href="#resources">Resources</a>
-      <a href="#contact">Contact</a>
-    </nav>
+  <header>
+    <div class="navwrap">
+      <div class="brand">
+        <div class="logo">R</div>
+        <div>
+          <h1 style="color:white;font-size:15px;margin:0">Data Visualization — R Programming</h1>
+          <div style="font-size:12px;color:rgba(255,255,255,0.9)">Dr. S. Narendra — School of Science</div>
+        </div>
+      </div>
+
+     <nav>
+ 
+    <li><a href="#home">Home</a></li>
+    <li><a href="#modules">Modules</a></li>
+    <li><a href="#labs">Labs</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#flash-news">Flash News</a></li>
+    <li><a href="#contact">Contact</a></li>
+  
+</nav>
+
+
+      <!-- small mobile menu trigger -->
+      <div id="mobileToggle" style="display:none;margin-left:auto">
+        <button class="btn-ghost" onclick="window.scrollTo({top:0,behavior:'smooth'})">Top</button>
+      </div>
+    </div>
   </header>
 
-  <section class="hero" id="home" data-aos="zoom-in">
-    <h2>Master Data Visualization with R Programming</h2>
-    <p>Learn how to explore, visualize, and communicate data insights using powerful R tools like ggplot2, plotly, and Shiny. This course is designed to build your analytical and storytelling skills step-by-step.</p>
+  <!-- HERO -->
+  <section class="hero" id="home" aria-labelledby="hero-title">
+    <div class="hero-card" data-aos="zoom-in">
+      <div>
+        <h2 id="hero-title">Master Data Visualization with R</h2>
+        <p>Learn ggplot2, plotly and Shiny for static & interactive visualizations. Build reproducible reports with R Markdown and present insights with clarity.</p>
+        <div class="cta">
+          <button class="btn" onclick="document.querySelector('#modules').scrollIntoView({behavior:'smooth'})">View Modules</button>
+          <button class="btn-ghost" onclick="document.querySelector('#resources').scrollIntoView({behavior:'smooth'})">Learning Resources</button>
+        </div>
+
+        <div class="hero-stats" style="margin-top:14px">
+          <div class="stat">4 Modules</div>
+          <div class="stat">~12 Lectures</div>
+          <div class="stat">Project-based</div>
+        </div>
+      </div>
+
+    <div style="text-align:center; padding:25px 20px; max-width:400px; margin:20px auto; 
+            background: linear-gradient(135deg, #4facfe, #00f2fe); border-radius:15px; 
+            color:white; box-shadow:0 6px 20px rgba(0,0,0,0.12);">
+  <!-- Compact Hero Quote -->
+  <h3 style="font-size:1.5rem; margin-bottom:12px; font-weight:600;">
+    "Turn data into insight with R."
+  </h3>
+  <p style="font-size:0.95rem; margin-bottom:10px; opacity:0.9;">
+    Explore statistics, visualize patterns, master data storytelling.
+  </p>
+  <div style="margin-top:8px; font-weight:500; opacity:0.85; font-size:0.9rem;">
+    Self-paced • Code Examples • Projects
+  </div>
+</div>
+
+
   </section>
 
-  <section class="modules" id="modules">
-    <h2 style="text-align:center;" data-aos="fade-up">Course Modules</h2>
+  <!-- MAIN CONTENT -->
+  <main>
+    <section class="modules-wrap" id="modules" data-aos="fade-up">
+      <div class="modules-head">
+        <h3>Course Modules</h3>
+        <div class="muted">Click a module to expand lectures — smooth animations included.</div>
+      </div>
 
-    <!-- Module 1 -->
-    <div class="module" data-aos="fade-up">
-      <h3 onclick="toggleModule(this)">Module 1: Introduction to Data Visualization <span>➕</span></h3>
-      <ul class="lectures">
-        <li>Lecture 1: Importance of Data Visualization</li>
-        <li>Lecture 2: R Environment Setup</li>
-        <li>Lecture 3: Basic Visualization Functions</li>
-      </ul>
+      <div class="modules-grid">
+        <!-- Module 1 -->
+        <article class="module-card" data-module="1">
+          <div class="module-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(event,this)">
+            <div>
+              <div class="module-title">Module 1 — Introduction & ggplot2 basics</div>
+              <div class="module-meta">Getting started with R, RStudio, and plotting essentials</div>
+            </div>
+            <div class="toggle-icon">+</div>
+          </div>
+          <div class="module-body" aria-hidden="true">
+            <ul class="lecture-list">
+              <li><div class="lecture-title">Lecture 1 — Course overview & setup</div><div class="lecture-meta">20m</div></li>
+              <li><div class="lecture-title">Lecture 2 — Data import & tidy data</div><div class="lecture-meta">35m</div></li>
+              <li><div class="lecture-title">Lecture 3 — ggplot2 fundamentals</div><div class="lecture-meta">45m</div></li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Module 2 -->
+        <article class="module-card" data-module="2">
+          <div class="module-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(event,this)">
+            <div>
+              <div class="module-title">Module 2 — Aesthetics & Geoms</div>
+              <div class="module-meta">Layered grammar of graphics: aes, geoms, scales</div>
+            </div>
+            <div class="toggle-icon">+</div>
+          </div>
+          <div class="module-body" aria-hidden="true">
+            <ul class="lecture-list">
+              <li><div class="lecture-title">Lecture 1 — Aesthetic mappings</div><div class="lecture-meta">40m</div></li>
+              <li><div class="lecture-title">Lecture 2 — Geoms: point, line, bar</div><div class="lecture-meta">50m</div></li>
+              <li><div class="lecture-title">Lecture 3 — Scales & color</div><div class="lecture-meta">35m</div></li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Module 3 -->
+        <article class="module-card" data-module="3">
+          <div class="module-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(event,this)">
+            <div>
+              <div class="module-title">Module 3 — Themes, Facets & Stats</div>
+              <div class="module-meta">Customize look & add statistical layers</div>
+            </div>
+            <div class="toggle-icon">+</div>
+          </div>
+          <div class="module-body" aria-hidden="true">
+            <ul class="lecture-list">
+              <li><div class="lecture-title">Lecture 1 — Themes & layouts</div><div class="lecture-meta">30m</div></li>
+              <li><div class="lecture-title">Lecture 2 — Faceting and small multiples</div><div class="lecture-meta">40m</div></li>
+              <li><div class="lecture-title">Lecture 3 — Summary statistics & smoothing</div><div class="lecture-meta">45m</div></li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Module 4 -->
+        <article class="module-card" data-module="4">
+          <div class="module-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(event,this)">
+            <div>
+              <div class="module-title">Module 4 — Interactive Viz & Reporting</div>
+              <div class="module-meta">Plotly, Shiny and reproducible reporting with R Markdown</div>
+            </div>
+            <div class="toggle-icon">+</div>
+          </div>
+          <div class="module-body" aria-hidden="true">
+            <ul class="lecture-list">
+              <li><div class="lecture-title">Lecture 1 — Plotly & interactive plots</div><div class="lecture-meta">50m</div></li>
+              <li><div class="lecture-title">Lecture 2 — Shiny app basics</div><div class="lecture-meta">60m</div></li>
+              <li><div class="lecture-title">Lecture 3 — R Markdown reports</div><div class="lecture-meta">45m</div></li>
+            </ul>
+          </div>
+        </article>
+      </div>
+	  <section class="labs" id="labs" data-aos="fade-up">
+  <h2>Lab Sessions</h2>
+  <p>Practice your R programming and visualization skills through guided exercises.</p>
+  
+  <div class="lab-container">
+    <div class="lab-card">
+      <h3>Lab 1: Introduction to R and RStudio</h3>
+      <p>Setup R and RStudio, explore datasets, and perform basic visualizations.</p>
+      <a href="#" class="lab-link">View Lab</a>
     </div>
-
-    <!-- Module 2 -->
-    <div class="module" data-aos="fade-up">
-      <h3 onclick="toggleModule(this)">Module 2: ggplot2 for Static Visuals <span>➕</span></h3>
-      <ul class="lectures">
-        <li>Lecture 1: Grammar of Graphics</li>
-        <li>Lecture 2: Aesthetic Mappings & Layers</li>
-        <li>Lecture 3: Themes and Customizations</li>
-      </ul>
+    <div class="lab-card">
+      <h3>Lab 2: Exploring ggplot2</h3>
+      <p>Learn aesthetic mappings, layers, and themes for building rich visuals.</p>
+      <a href="#" class="lab-link">View Lab</a>
     </div>
-
-    <!-- Module 3 -->
-    <div class="module" data-aos="fade-up">
-      <h3 onclick="toggleModule(this)">Module 3: Interactive Visuals <span>➕</span></h3>
-      <ul class="lectures">
-        <li>Lecture 1: Plotly for Interactivity</li>
-        <li>Lecture 2: Shiny Dashboards</li>
-        <li>Lecture 3: Dynamic Visualization Projects</li>
-      </ul>
+    <div class="lab-card">
+      <h3>Lab 3: Interactive Dashboards with Plotly</h3>
+      <p>Create dynamic and interactive plots to explore datasets effectively.</p>
+      <a href="#" class="lab-link">View Lab</a>
     </div>
-
-    <!-- Module 4 -->
-    <div class="module" data-aos="fade-up">
-      <h3 onclick="toggleModule(this)">Module 4: Advanced Visualization & Case Studies <span>➕</span></h3>
-      <ul class="lectures">
-        <li>Lecture 1: Visualization in Research Papers</li>
-        <li>Lecture 2: Data Storytelling Techniques</li>
-        <li>Lecture 3: Capstone Project Presentation</li>
-      </ul>
-    </div>
-  </section>
-
- <section class="resources" id="resources" data-aos="fade-up">
-  <h2>Learning Resources</h2>
-  <p>Explore these curated materials to enhance your understanding of data visualization using R.</p>
-
-  <div class="resource-grid">
-
-    <div class="resource-card" data-aos="zoom-in">
-      <h4>📘 Core Reading</h4>
-      <p><a href="https://r4ds.had.co.nz/" target="_blank">R for Data Science</a> — An essential guide covering data manipulation, visualization, and modeling in R.</p>
-    </div>
-
-    <div class="resource-card" data-aos="zoom-in">
-      <h4>🎨 ggplot2 Documentation</h4>
-      <p><a href="https://ggplot2.tidyverse.org/" target="_blank">ggplot2.tidyverse.org</a> — Official ggplot2 reference for themes, layers, and aesthetics.</p>
-    </div>
-
-    <div class="resource-card" data-aos="zoom-in">
-      <h4>📊 Interactive Tools</h4>
-      <p><a href="https://plotly.com/r/" target="_blank">Plotly for R</a> — Learn to build interactive, web-based visualizations using Plotly.</p>
-    </div>
-
-    <div class="resource-card" data-aos="zoom-in">
-      <h4>🧠 Online Learning</h4>
-      <p><a href="https://r-graph-gallery.com/" target="_blank">R Graph Gallery</a> — A comprehensive collection of R visualization examples with reproducible code.</p>
-      <p><a href="https://www.coursera.org/learn/data-visualization-r" target="_blank">Coursera: Data Visualization in R</a> — A structured online course to master concepts step-by-step.</p>
-    </div>
-
-    <div class="resource-card" data-aos="zoom-in">
-      <h4>🧩 Useful Packages</h4>
-      <p>Explore top visualization packages: <strong>ggplot2</strong>, <strong>plotly</strong>, <strong>shiny</strong>, <strong>lattice</strong>, <strong>cowplot</strong>, and <strong>ggthemes</strong>.</p>
-    </div>
-
-    <div class="resource-card" data-aos="zoom-in">
-      <h4>📚 Research & Blogs</h4>
-      <p><a href="https://towardsdatascience.com/tagged/r" target="_blank">Towards Data Science (R Section)</a><br>
-      <a href="https://medium.com/tag/data-visualization" target="_blank">Medium: Data Visualization Articles</a><br>
-      <a href="https://rstudio-pubs-static.s3.amazonaws.com/" target="_blank">RStudio Pubs</a> — Explore visual analytics shared by R developers.</p>
-    </div>
-
   </div>
 </section>
 
 
-  <section class="instructor" data-aos="fade-up">
-    <h2>Instructor</h2>
-    <img src="images/Picture1.png" alt="Instructor Photo">
-    <h3>Dr. S. Narendra</h3>
-    <p>Assistant Profess<br>School of Science <br> Woxsen University</p>
-  </section>
+      <!-- resources inside modules section -->
+      <div class="resources" id="resources" data-aos="fade-up">
+        <h4>Learning Resources</h4>
+        <p class="muted">Curated books, official docs, and interactive learning — quick links and notes.</p>
 
-  <section class="contact" id="contact" data-aos="fade-up">
-    <h2>Contact</h2>
-      <a href="https://www.linkedin.com/in/narendra-suvarna-71b92815b/" target="_blank">LinkedIn</a>
+        <div class="resource-grid">
+          <div class="resource-card" data-aos="zoom-in">
+            <h5>R for Data Science</h5>
+            <p class="muted">By Hadley Wickham & Garrett Grolemund — essential reading: tidy data, transformation, and visualization.</p>
+            <div class="resource-links" aria-hidden="true">
+              <a class="chip" href="https://r4ds.had.co.nz/" target="_blank" rel="noopener">Read online</a>
+              <a class="chip" href="https://r4ds.had.co.nz/index.html" target="_blank" rel="noopener">Chapters</a>
+            </div>
+          </div>
+
+          <div class="resource-card" data-aos="zoom-in">
+            <h5>ggplot2 — Official docs</h5>
+            <p class="muted">Reference & examples for geoms, scales, and themes.</p>
+            <div class="resource-links">
+              <a class="chip" href="https://ggplot2.tidyverse.org/" target="_blank" rel="noopener">ggplot2 docs</a>
+              <a class="chip" href="https://exts.ggplot2.tidyverse.org" target="_blank" rel="noopener">Extensions</a>
+            </div>
+          </div>
+
+          <div class="resource-card" data-aos="zoom-in">
+            <h5>Plotly for R</h5>
+            <p class="muted">Interactive, web-ready visualizations (hover, zoom, export).</p>
+            <div class="resource-links">
+              <a class="chip" href="https://plotly.com/r/" target="_blank" rel="noopener">Plotly docs</a>
+            </div>
+          </div>
+
+          <div class="resource-card" data-aos="zoom-in">
+            <h5>R Graph Gallery</h5>
+            <p class="muted">Examples and code snippets for many popular chart types (great for inspiration).</p>
+            <div class="resource-links">
+              <a class="chip" href="https://r-graph-gallery.com/" target="_blank" rel="noopener">R Graph Gallery</a>
+            </div>
+          </div>
+
+          <div class="resource-card" data-aos="zoom-in">
+            <h5>Shiny</h5>
+            <p class="muted">Build dashboards and interactive apps with reactive programming in R.</p>
+            <div class="resource-links">
+              <a class="chip" href="https://shiny.posit.co/" target="_blank" rel="noopener">Shiny by Posit</a>
+            </div>
+          </div>
+
+          <div class="resource-card" data-aos="zoom-in">
+            <h5>Courses & Tutorials</h5>
+            <p class="muted">Structured courses & articles to practice with projects.</p>
+            <div class="resource-links">
+              <a class="chip" href="https://www.coursera.org/learn/data-visualization-r" target="_blank" rel="noopener">Coursera</a>
+              <a class="chip" href="https://www.datacamp.com/courses/data-visualization-with-ggplot2-1" target="_blank" rel="noopener">DataCamp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+<section class="flash-news" id="flash-news" data-aos="fade-up">
+  <h2>Flash News</h2>
+  <div class="news-ticker">
+    <p>📢 Upcoming Deadline: Module 2 Lab submission due Oct 25!</p>
+    <p>🆕 New Tutorial: “Visualizing Time Series Data in ggplot2” added.</p>
+    <p>🎓 Guest Lecture on Data Dashboards this Friday.</p>
+  </div>
+</section>
+
+    <!-- Instructor & contact -->
+    <section class="instructor" data-aos="fade-up" id="contact" style="margin-top:18px">
+    <img src="images/Picture1.png" alt="Instructor Photo">
+      <div>
+        <h4>Dr. S. Narendra</h4>
+        <p class="muted">Assistant Professor, School of Science, Woxsen University</p>
+        <div style="margin-top:10px;display:flex;gap:8px">
+            <a href="https://www.linkedin.com/in/narendra-suvarna-71b92815b/" target="_blank">LinkedIn</a>
         <a href="mailto:surnamnarendra@gmail.com">Email</a>
          <a href="https://surnamnarendra.github.io/Surnam-Narendra/" target="_blank">
       My Website
     </a>
-  </section>
+        </div>
+      </div>
+    </section>
 
-  <footer>
-    © 2025 Data Visualization with R | Designed by Dr. S. Narendra
-  </footer>
+    <footer>
+      © 2025 Dr. S. Narendra — Data Visualization with R.
+    </footer>
+  </main>
 
-  <!-- JS -->
+  <!-- AOS lib -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init({ duration: 800 });
 
-    function toggleModule(el) {
-      const lectures = el.nextElementSibling;
-      const icon = el.querySelector("span");
-      if (lectures.style.display === "block") {
-        lectures.style.display = "none";
-        icon.textContent = "➕";
+  <script>
+    // Initialize AOS
+    AOS.init({ duration: 700, once: true });
+
+    // Module expand/collapse with smooth max-height animation
+    function toggleCard(evt, headerEl){
+      // find module-body and icon
+      const card = headerEl.closest('.module-card');
+      const body = card.querySelector('.module-body');
+      const icon = headerEl.querySelector('.toggle-icon');
+
+      const isOpen = body.classList.contains('open');
+      if(isOpen){
+        // close
+        body.style.maxHeight = body.scrollHeight + 'px'; // set current for transition
+        requestAnimationFrame(() => {
+          body.style.maxHeight = '0px';
+          body.classList.remove('open');
+          headerEl.setAttribute('aria-expanded','false');
+          icon.textContent = '+';
+        });
       } else {
-        lectures.style.display = "block";
-        icon.textContent = "➖";
+        // open
+        body.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        headerEl.setAttribute('aria-expanded','true');
+        icon.textContent = '−';
+        // remove maxHeight after transition to allow auto height on resizes
+        body.addEventListener('transitionend', function te(){
+          if(body.classList.contains('open')){
+            body.style.maxHeight = 'none';
+          }
+          body.removeEventListener('transitionend', te);
+        });
       }
+    }
+
+    // Allow keyboard toggle (Enter/Space)
+    document.querySelectorAll('.module-header').forEach(h=>{
+      h.addEventListener('keydown', e=>{
+        if(e.key==='Enter' || e.key===' '){
+          e.preventDefault(); toggleCard(e,h);
+        }
+      });
+    });
+
+    // Scrollspy: highlight nav based on scroll position
+    const sections = {
+      home: document.querySelector('#home'),
+      modules: document.querySelector('#modules'),
+      resources: document.querySelector('#resources'),
+      contact: document.querySelector('#contact')
+    };
+    const navLinks = document.querySelectorAll('.navlink');
+
+    function onScrollSpy(){
+      const viewportMid = window.scrollY + window.innerHeight/3;
+      let active = 'home';
+      for(const [key, el] of Object.entries(sections)){
+        if(el && (el.offsetTop <= viewportMid)) active = key;
+      }
+      navLinks.forEach(a=>{
+        a.classList.toggle('active', a.getAttribute('href') === '#' + active);
+      });
+    }
+    window.addEventListener('scroll', onScrollSpy, {passive:true});
+    onScrollSpy();
+
+    // Smooth anchor scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const href = a.getAttribute('href');
+        if(href.startsWith('#')){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      });
+    });
+
+    // Accessibility: reduce motion for users who prefer reduced motion
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(prefersReduced){
+      AOS.init({ disable:true });
+      document.querySelectorAll('[data-aos]').forEach(el => el.removeAttribute('data-aos'));
     }
   </script>
 </body>
