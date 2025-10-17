@@ -1,1 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Visualization with R Programming</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      background: #f5f7fa;
+      color: #222;
+    }
+    header {
+      background: #005f73;
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    header p {
+      margin-top: .5rem;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .module {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      margin-bottom: 1.5rem;
+      padding: 1rem 1.2rem;
+      transition: transform 0.2s ease;
+    }
+    .module:hover { transform: translateY(-3px); }
+    .module h2 {
+      color: #005f73;
+      margin-top: 0;
+    }
+    .lectures {
+      margin-top: .5rem;
+      padding-left: 1.2rem;
+    }
+    .lecture {
+      margin-bottom: .5rem;
+    }
+    details summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 600;
+      color: #0a9396;
+      font-size: 1.1rem;
+    }
+    details summary::marker { display: none; }
+    footer {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      color: #555;
+      font-size: 0.9rem;
+    }
+    a {
+      color: #0a9396;
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Data Visualization with R Programming</h1>
+    <p>Course Content — Organized into Four Modules</p>
+  </header>
 
+  <main>
+    <div class="module">
+      <details open>
+        <summary>Module 1 — Introduction & Basics of R Visualization</summary>
+        <div class="lectures">
+          <div class="lecture">Lecture 1: Overview of R and RStudio</div>
+          <div class="lecture">Lecture 2: Importing and Cleaning Data</div>
+          <div class="lecture">Lecture 3: Introduction to ggplot2</div>
+          <div class="lecture">Lecture 4: Grammar of Graphics</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="module">
+      <details>
+        <summary>Module 2 — Aesthetics and Geometries</summary>
+        <div class="lectures">
+          <div class="lecture">Lecture 1: Understanding Aesthetics Mapping</div>
+          <div class="lecture">Lecture 2: Working with Geoms (point, line, bar)</div>
+          <div class="lecture">Lecture 3: Scale and Axis Customization</div>
+          <div class="lecture">Lecture 4: Color, Shape, and Size in Plots</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="module">
+      <details>
+        <summary>Module 3 — Themes, Facets & Statistical Layers</summary>
+        <div class="lectures">
+          <div class="lecture">Lecture 1: Applying Themes and Styles</div>
+          <div class="lecture">Lecture 2: Faceting for Subplots</div>
+          <div class="lecture">Lecture 3: Statistical Summaries and Smooths</div>
+          <div class="lecture">Lecture 4: Customizing Legends and Titles</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="module">
+      <details>
+        <summary>Module 4 — Interactive Visualization & Reporting</summary>
+        <div class="lectures">
+          <div class="lecture">Lecture 1: Interactive Plots with Plotly</div>
+          <div class="lecture">Lecture 2: Dashboards using Shiny</div>
+          <div class="lecture">Lecture 3: R Markdown for Reporting</div>
+          <div class="lecture">Lecture 4: Case Study and Project Presentation</div>
+        </div>
+      </details>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Dr. S. Narendra — School of Science <br>
+    <a href="https://cran.r-project.org" target="_blank">Learn more about R</a>
+  </footer>
+</body>
+</html>
