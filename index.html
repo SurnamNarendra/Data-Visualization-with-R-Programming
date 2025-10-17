@@ -119,6 +119,35 @@
       text-align: center;
       padding: 60px 20px;
     }
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.resource-card {
+  background: rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.resource-card:hover {
+  background: rgba(255,255,255,0.2);
+  transform: translateY(-5px);
+}
+
+.resource-card h4 {
+  color: #ffd369;
+  margin-bottom: 10px;
+}
+
+.resource-card a {
+  color: #fff;
+  text-decoration: underline;
+}
 
     .resources a {
       color: #ffd369;
