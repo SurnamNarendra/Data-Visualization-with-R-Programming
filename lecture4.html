@@ -3,18 +3,136 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecture 4 — Introduction to R and RStudio Environment</title>
+  <title>Lecture 4 — Sampling and the Central Limit Theorem</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; color: #333; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.7;
+    }
     h1 { color: #007acc; }
-    p { line-height: 1.6; }
-    a.button { display: inline-block; margin-top: 20px; padding: 10px 16px; background-color: #007acc; color: white; border-radius: 6px; text-decoration: none; }
+    h2 { color: #005b99; margin-top: 30px; }
+    p { margin: 10px 0; }
+    ul, ol { margin-left: 30px; }
+    .formula {
+      background-color: #eef7ff;
+      padding: 8px;
+      border-radius: 5px;
+      font-family: "Courier New", monospace;
+      display: inline-block;
+      margin: 5px 0;
+    }
+    .example {
+      background-color: #eef6fb;
+      border-left: 4px solid #007acc;
+      padding: 10px 15px;
+      margin: 10px 0;
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 16px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+    }
     a.button:hover { background-color: #005b99; }
   </style>
 </head>
 <body>
-  <h1>Lecture 4 — Introduction to R and RStudio Environment</h1>
-  <p>Guides through installation, R interface, workspace, console usage, and loading libraries.</p>
+
+  <h1>Lecture 4 — Sampling and the Central Limit Theorem</h1>
+
+  <p>This lecture introduces the concepts of sampling, different sampling methods, the idea of sampling distributions, and the Central Limit Theorem (CLT), which is fundamental in inferential statistics.</p>
+
+  <h2>1. Population and Sample</h2>
+  <p>
+    A <strong>population</strong> is the complete set of individuals or observations of interest. 
+    A <strong>sample</strong> is a subset selected from the population for analysis. Sampling allows us to make inferences about the population when studying the entire population is impractical.
+  </p>
+
+  <div class="example">
+    <strong>Examples:</strong>
+    <ul>
+      <li>Population: All patients with diabetes in a city; Sample: 200 patients selected randomly from hospitals.</li>
+      <li>Population: All blood donors; Sample: 500 donors analyzed for hemoglobin levels.</li>
+      <li>Population: All leaves of a plant species; Sample: 50 leaves chosen for chlorophyll content measurement.</li>
+    </ul>
+  </div>
+
+  <h2>2. Types of Sampling Methods</h2>
+  <p>There are several techniques to select representative samples from a population:</p>
+
+  <ul>
+    <li><strong>Simple Random Sampling:</strong> Every individual has an equal chance of selection.  
+      <em>Example:</em> Randomly selecting 100 patients from a hospital database.</li>
+    <li><strong>Systematic Sampling:</strong> Selecting every k-th individual from a list.  
+      <em>Example:</em> Choosing every 5th patient visiting a clinic for blood sugar measurement.</li>
+    <li><strong>Stratified Sampling:</strong> Population divided into strata, then samples drawn proportionally.  
+      <em>Example:</em> Sampling equal numbers of males and females to study cholesterol levels.</li>
+    <li><strong>Cluster Sampling:</strong> Population divided into clusters, some clusters are randomly selected.  
+      <em>Example:</em> Selecting certain hospitals in a city and including all patients from those hospitals.</li>
+  </ul>
+
+  <h2>3. Sampling Distribution</h2>
+  <p>
+    A <strong>sampling distribution</strong> is the probability distribution of a statistic (like mean or proportion) obtained from multiple random samples of the same size from a population.
+  </p>
+
+  <p class="formula">
+    Standard Error of the Mean (SEM): <br>
+    <strong>SEM = σ / √n</strong>
+  </p>
+  <p>where σ = population standard deviation, n = sample size.</p>
+
+  <div class="example">
+    <strong>Examples:</strong>
+    <ul>
+      <li>Distribution of mean fasting glucose from 100 random samples of 30 patients each.</li>
+      <li>Distribution of average white blood cell counts from repeated random samples of 20 blood samples.</li>
+    </ul>
+  </div>
+
+  <h2>4. Central Limit Theorem (CLT)</h2>
+  <p>
+    The CLT states that the sampling distribution of the sample mean will be approximately normal, regardless of the population distribution, if the sample size is sufficiently large (n ≥ 30). This is crucial for applying inferential statistics.
+  </p>
+
+  <p class="formula">
+    If X̄ = sample mean, μ = population mean, σ = population standard deviation, n = sample size:<br>
+    X̄ ~ N(μ, σ²/n)
+  </p>
+
+  <div class="example">
+    <strong>Examples:</strong>
+    <ul>
+      <li>Average blood pressure of 50 randomly selected patients follows an approximately normal distribution, even if individual blood pressures are skewed.</li>
+      <li>Mean enzyme activity from repeated samples of cell cultures approximates a normal distribution.</li>
+      <li>Sampling mean heights of plants from multiple plots follows normal distribution regardless of plant height distribution in each plot.</li>
+    </ul>
+  </div>
+
+  <h2>5. Importance of Sampling and CLT</h2>
+  <ul>
+    <li>Enables reliable inference about populations using sample statistics.</li>
+    <li>CLT allows the use of normal distribution for confidence intervals and hypothesis testing, even with non-normal populations.</li>
+    <li>Reduces cost and effort in data collection while maintaining accuracy.</li>
+    <li>Essential for designing experiments, clinical trials, and surveys.</li>
+  </ul>
+
+  <h2>6. Summary</h2>
+  <ul>
+    <li>Sampling allows analysis of a subset to make conclusions about the population.</li>
+    <li>Different sampling methods ensure representativeness and reduce bias.</li>
+    <li>Sampling distributions describe the variation of sample statistics.</li>
+    <li>The Central Limit Theorem ensures approximate normality of sample means, enabling inferential procedures.</li>
+    <li>Biological and medical examples illustrate the applicability of these concepts in research.</li>
+  </ul>
+
   <a class="button" href="../module1.html">← Back to Module 1</a>
+
 </body>
 </html>
