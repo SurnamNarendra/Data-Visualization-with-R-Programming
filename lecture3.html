@@ -3,18 +3,129 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecture 3 — Descriptive Statistics: Central Tendency & Dispersion</title>
+  <title>Lecture 3 — Probability and Probability Distributions</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; color: #333; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.7;
+    }
     h1 { color: #007acc; }
-    p { line-height: 1.6; }
-    a.button { display: inline-block; margin-top: 20px; padding: 10px 16px; background-color: #007acc; color: white; border-radius: 6px; text-decoration: none; }
+    h2 { color: #005b99; margin-top: 30px; }
+    p { margin: 10px 0; }
+    ul, ol { margin-left: 30px; }
+    .formula {
+      background-color: #eef7ff;
+      padding: 8px;
+      border-radius: 5px;
+      font-family: "Courier New", monospace;
+      display: inline-block;
+      margin: 5px 0;
+    }
+    .example {
+      background-color: #eef6fb;
+      border-left: 4px solid #007acc;
+      padding: 10px 15px;
+      margin: 10px 0;
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 16px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+    }
     a.button:hover { background-color: #005b99; }
   </style>
 </head>
 <body>
-  <h1>Lecture 3 — Descriptive Statistics: Central Tendency & Dispersion</h1>
-  <p>Introduces mean, median, mode, variance, and standard deviation with examples in R.</p>
+
+  <h1>Lecture 3 — Probability and Probability Distributions</h1>
+
+  <p>This lecture introduces probability as the foundation of statistical inference, followed by probability distributions, the normal distribution, and standard scores (Z-scores) used for comparing and interpreting data.</p>
+
+  <h2>1. Probability: Concept and Definition</h2>
+  <p>Probability measures the likelihood of an event occurring. It ranges from 0 (impossible) to 1 (certain).</p>
+
+  <p class="formula">P(Event) = Number of favorable outcomes / Total number of outcomes</p>
+
+  <div class="example">
+    <strong>Examples:</strong>
+    <ul>
+      <li>Probability of randomly selecting a male participant from a group of 60 males and 40 females: P(Male) = 60 / 100 = 0.6</li>
+      <li>Probability of drawing a red blood cell from a blood sample where 70% are red: P(RBC) = 0.7</li>
+      <li>Probability of a patient developing a certain enzyme deficiency based on historical data: P(Deficiency) = Number affected / Total patients</li>
+    </ul>
+  </div>
+
+  <h2>2. Types of Probability</h2>
+  <ul>
+    <li><strong>Theoretical Probability:</strong> Based on reasoning or known possible outcomes.</li>
+    <li><strong>Experimental Probability:</strong> Based on observed data or experiments.</li>
+    <li><strong>Conditional Probability:</strong> Probability of an event given another event has occurred.  
+      <p class="formula">P(A|B) = P(A ∩ B) / P(B)</p>
+    </li>
+  </ul>
+
+  <h2>3. Probability Distributions</h2>
+  <p>A probability distribution describes how probabilities are distributed over possible outcomes of a random variable.</p>
+
+  <ul>
+    <li><strong>Discrete Probability Distribution:</strong> Random variable takes specific, countable values.  
+      <em>Example:</em> Number of patients with high blood pressure in a sample of 50.</li>
+    <li><strong>Continuous Probability Distribution:</strong> Random variable can take any value in a range.  
+      <em>Example:</em> Blood glucose level of patients measured in mg/dL.</li>
+  </ul>
+
+  <h2>4. Normal Distribution</h2>
+  <p>The normal distribution is a symmetric, bell-shaped distribution defined by its mean (μ) and standard deviation (σ).</p>
+
+  <p class="formula">f(x) = (1 / (σ√2π)) × e^(-(x-μ)² / 2σ²)</p>
+
+  <p>Characteristics of normal distribution:</p>
+  <ul>
+    <li>Mean = Median = Mode</li>
+    <li>68% of values lie within ±1σ, 95% within ±2σ, 99.7% within ±3σ</li>
+    <li>Symmetrical around the mean</li>
+  </ul>
+
+  <div class="example">
+    <strong>Examples:</strong>
+    <ul>
+      <li>Distribution of body temperature in healthy adults.</li>
+      <li>Serum cholesterol levels across a large patient population.</li>
+      <li>Height of plants in a controlled experiment.</li>
+    </ul>
+  </div>
+
+  <h2>5. Z-Scores (Standard Scores)</h2>
+  <p>Z-scores indicate how many standard deviations a value is from the mean, allowing comparison across different scales.</p>
+
+  <p class="formula">Z = (X - μ) / σ</p>
+
+  <div class="example">
+    <strong>Examples:</strong>
+    <ul>
+      <li>A patient’s blood glucose of 150 mg/dL when the mean is 120 mg/dL and SD = 15 mg/dL: Z = (150-120)/15 = 2 → 2 SD above mean.</li>
+      <li>Comparing enzyme activity between two experiments with different units using Z-scores.</li>
+      <li>Standardizing patient body weights to detect outliers.</li>
+    </ul>
+  </div>
+
+  <h2>6. Summary</h2>
+  <ul>
+    <li>Probability measures the likelihood of events and forms the basis for inferential statistics.</li>
+    <li>Probability distributions describe how probabilities are spread across outcomes.</li>
+    <li>The normal distribution is key due to its symmetry and natural occurrence in many datasets.</li>
+    <li>Z-scores allow standardization and comparison across datasets with different means and SDs.</li>
+    <li>Biological examples such as blood pressure, glucose levels, and enzyme activity help illustrate these concepts.</li>
+  </ul>
+
   <a class="button" href="../module1.html">← Back to Module 1</a>
+
 </body>
 </html>
