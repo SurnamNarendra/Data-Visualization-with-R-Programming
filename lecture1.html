@@ -5,16 +5,171 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lecture 1 — Introduction to Data and Statistical Thinking</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; color: #333; }
-    h1 { color: #007acc; }
-    p { line-height: 1.6; }
-    a.button { display: inline-block; margin-top: 20px; padding: 10px 16px; background-color: #007acc; color: white; border-radius: 6px; text-decoration: none; }
-    a.button:hover { background-color: #005b99; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 40px;
+      background-color: #f9fafc;
+      color: #333;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #007acc;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+    h2 {
+      color: #005b99;
+      border-bottom: 2px solid #007acc;
+      padding-bottom: 5px;
+    }
+    p {
+      margin: 10px 0;
+    }
+    ul, ol {
+      margin-left: 30px;
+    }
+    section {
+      background-color: #ffffff;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 18px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    a.button:hover {
+      background-color: #005b99;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #666;
+    }
+    .example {
+      background-color: #eef6fb;
+      border-left: 4px solid #007acc;
+      padding: 10px 15px;
+      margin: 10px 0;
+    }
   </style>
 </head>
 <body>
-  <h1>Lecture 1 — Introduction to Data and Statistical Thinking</h1>
-  <p>Covers types of data, variables, population vs. sample, and the role of statistics in data-driven research.</p>
+
+  <header>
+    <h1>Lecture 1 — Introduction to Data and Statistical Thinking</h1>
+    <p><em>Understanding the foundation of data and its role in decision-making</em></p>
+  </header>
+
+  <section>
+    <h2>1. What is Data?</h2>
+    <p>Data are facts, observations, or measurements collected for analysis and decision-making. In statistics, data form the basis of all inference and interpretation. Data can come from surveys, experiments, observations, or sensors in digital systems.</p>
+    
+    <div class="example">
+      <strong>Example:</strong> A researcher collects information about the daily glucose levels of 100 patients — this collection of measurements is data.
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Types of Data</h2>
+    <p>Data can be broadly categorized into two types:</p>
+    <ul>
+      <li><strong>Quantitative Data:</strong> Numerical values that represent measurable quantities.</li>
+      <ul>
+        <li><em>Continuous data</em> — e.g., height, weight, glucose level.</li>
+        <li><em>Discrete data</em> — e.g., number of hospital visits, number of students.</li>
+      </ul>
+      <li><strong>Qualitative (Categorical) Data:</strong> Non-numeric information describing categories or qualities.</li>
+      <ul>
+        <li><em>Nominal data</em> — e.g., gender, blood group, marital status.</li>
+        <li><em>Ordinal data</em> — e.g., pain level (low, medium, high), satisfaction (poor, good, excellent).</li>
+      </ul>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. Variables and Their Roles</h2>
+    <p>A <strong>variable</strong> is a characteristic that can take different values among individuals in a dataset.</p>
+    <ul>
+      <li><strong>Independent variable:</strong> The variable manipulated or categorized to observe its effect on another variable (e.g., exercise level).</li>
+      <li><strong>Dependent variable:</strong> The outcome variable that responds to the independent variable (e.g., glucose level).</li>
+    </ul>
+
+    <div class="example">
+      <strong>Example:</strong> In a study exploring the effect of diet on blood sugar, “diet type” is the independent variable and “blood sugar level” is the dependent variable.
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Population and Sample</h2>
+    <p>The distinction between population and sample is fundamental in statistical reasoning.</p>
+    <ul>
+      <li><strong>Population:</strong> The entire set of individuals or observations of interest (e.g., all diabetic patients in a country).</li>
+      <li><strong>Sample:</strong> A subset of the population used for analysis (e.g., 200 diabetic patients selected randomly).</li>
+    </ul>
+
+    <div class="example">
+      <strong>Example:</strong> If we wish to estimate the average blood pressure of all adults, we cannot measure everyone — instead, we take a representative sample and use statistical methods to infer the population mean.
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Role of Statistics in Data-Driven Research</h2>
+    <p>Statistics helps in collecting, organizing, analyzing, and interpreting data to make informed decisions. It transforms raw data into meaningful insights.</p>
+    <ol>
+      <li><strong>Descriptive statistics:</strong> Summarizes and describes data (mean, median, mode, standard deviation).</li>
+      <li><strong>Inferential statistics:</strong> Uses sample data to make conclusions about the population (confidence intervals, hypothesis testing).</li>
+      <li><strong>Predictive analytics:</strong> Uses statistical models and machine learning to forecast future outcomes.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>6. The Process of Statistical Thinking</h2>
+    <p>Statistical thinking involves reasoning about data systematically. It includes:</p>
+    <ul>
+      <li>Understanding the problem and defining variables.</li>
+      <li>Designing methods for data collection (experiments, surveys, observational studies).</li>
+      <li>Analyzing data with appropriate statistical tools.</li>
+      <li>Drawing conclusions and communicating findings clearly.</li>
+    </ul>
+
+    <div class="example">
+      <strong>Example:</strong> A public health analyst uses statistical thinking to determine whether a new exercise program reduces obesity rates by analyzing before-and-after BMI data.
+    </div>
+  </section>
+
+  <section>
+    <h2>7. Summary</h2>
+    <p>This lecture introduced the foundation of data and the importance of statistical thinking. You learned:</p>
+    <ul>
+      <li>The meaning and types of data.</li>
+      <li>Different types of variables and their roles.</li>
+      <li>The difference between a population and a sample.</li>
+      <li>How statistics enables data-driven insights.</li>
+    </ul>
+    <p>Understanding these basics sets the stage for deeper exploration into data collection, visualization, and inferential statistics in upcoming lectures.</p>
+  </section>
+
   <a class="button" href="../module1.html">← Back to Module 1</a>
+
+  <footer>
+    <p>© 2025 Data Science Course | Lecture 1 — Introduction to Data and Statistical Thinking</p>
+  </footer>
+
 </body>
 </html>
