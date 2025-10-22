@@ -10,7 +10,7 @@
       margin: 40px;
       background-color: #f9fafc;
       color: #333;
-      line-height: 1.6;
+      line-height: 1.7;
     }
     header {
       background-color: #007acc;
@@ -73,96 +73,183 @@
 
   <header>
     <h1>Lecture 1 — Introduction to Data and Statistical Thinking</h1>
-    <p><em>Understanding the foundation of data and its role in decision-making</em></p>
+    <p><em>Understanding the foundation of data, variables, and reasoning through statistical methods.</em></p>
   </header>
 
   <section>
     <h2>1. What is Data?</h2>
-    <p>Data are facts, observations, or measurements collected for analysis and decision-making. In statistics, data form the basis of all inference and interpretation. Data can come from surveys, experiments, observations, or sensors in digital systems.</p>
-    
+    <p>
+      Data are facts, observations, or measurements collected for analysis and decision-making. 
+      They can represent characteristics of individuals, groups, or phenomena. 
+      Data may come from experiments, surveys, observations, or automated systems.
+    </p>
+
     <div class="example">
-      <strong>Example:</strong> A researcher collects information about the daily glucose levels of 100 patients — this collection of measurements is data.
+      <strong>Examples:</strong>
+      <ul>
+        <li>Daily temperature readings recorded in different cities.</li>
+        <li>Enzyme activity levels measured under varying pH conditions.</li>
+        <li>Heart rate and oxygen saturation of patients monitored over time.</li>
+        <li>Cell count data from microscopic imaging of blood samples.</li>
+        <li>Measurements of growth rate of plants exposed to different fertilizers.</li>
+      </ul>
     </div>
   </section>
 
   <section>
     <h2>2. Types of Data</h2>
-    <p>Data can be broadly categorized into two types:</p>
+    <p>
+      Data are broadly classified into <strong>quantitative</strong> and <strong>qualitative</strong> types. 
+      Understanding their nature helps in selecting appropriate statistical tools and visualizations.
+    </p>
+
     <ul>
-      <li><strong>Quantitative Data:</strong> Numerical values that represent measurable quantities.</li>
+      <li><strong>Quantitative Data:</strong> Represent numerical quantities that can be measured or counted.</li>
       <ul>
-        <li><em>Continuous data</em> — e.g., height, weight, glucose level.</li>
-        <li><em>Discrete data</em> — e.g., number of hospital visits, number of students.</li>
+        <li><em>Continuous data</em> — values can take any number within a range (e.g., height, temperature).</li>
+        <li><em>Discrete data</em> — take only specific countable values (e.g., number of cells or colonies).</li>
       </ul>
-      <li><strong>Qualitative (Categorical) Data:</strong> Non-numeric information describing categories or qualities.</li>
+
+      <li><strong>Qualitative (Categorical) Data:</strong> Represent characteristics or categories without numerical meaning.</li>
       <ul>
-        <li><em>Nominal data</em> — e.g., gender, blood group, marital status.</li>
-        <li><em>Ordinal data</em> — e.g., pain level (low, medium, high), satisfaction (poor, good, excellent).</li>
+        <li><em>Nominal data</em> — categories without order (e.g., blood type, gender, species name).</li>
+        <li><em>Ordinal data</em> — categories with a defined order (e.g., pain level: mild, moderate, severe).</li>
       </ul>
     </ul>
+
+    <div class="example">
+      <strong>Examples:</strong>
+      <ul>
+        <li>Quantitative: Blood pressure, enzyme concentration, cholesterol level, cell diameter.</li>
+        <li>Qualitative: Type of bacteria (Gram-positive/Gram-negative), tumor stage (I–IV), blood group.</li>
+        <li>Discrete: Number of red blood cells in a sample.</li>
+        <li>Continuous: Body temperature or hormone concentration in plasma.</li>
+      </ul>
+    </div>
   </section>
 
   <section>
     <h2>3. Variables and Their Roles</h2>
-    <p>A <strong>variable</strong> is a characteristic that can take different values among individuals in a dataset.</p>
+    <p>
+      A <strong>variable</strong> is any characteristic that can take different values among subjects or units of observation. 
+      Variables can be measured, manipulated, or controlled depending on the purpose of the study.
+    </p>
+
     <ul>
-      <li><strong>Independent variable:</strong> The variable manipulated or categorized to observe its effect on another variable (e.g., exercise level).</li>
-      <li><strong>Dependent variable:</strong> The outcome variable that responds to the independent variable (e.g., glucose level).</li>
+      <li><strong>Independent Variable:</strong> The variable that is manipulated or categorized to observe its effect.</li>
+      <li><strong>Dependent Variable:</strong> The variable that represents the outcome or response being measured.</li>
+      <li><strong>Controlled Variable:</strong> Factors kept constant to prevent unwanted variation in results.</li>
     </ul>
 
     <div class="example">
-      <strong>Example:</strong> In a study exploring the effect of diet on blood sugar, “diet type” is the independent variable and “blood sugar level” is the dependent variable.
+      <strong>Examples:</strong>
+      <ul>
+        <li>Independent: Type of diet given to subjects.</li>
+        <li>Dependent: Change in body weight after 4 weeks.</li>
+        <li>Controlled: Room temperature and feeding schedule.</li>
+        <li>Independent: Amount of sunlight exposure to plants.</li>
+        <li>Dependent: Photosynthetic rate measured in leaves.</li>
+        <li>Controlled: Type of soil and watering frequency.</li>
+      </ul>
     </div>
   </section>
 
   <section>
     <h2>4. Population and Sample</h2>
-    <p>The distinction between population and sample is fundamental in statistical reasoning.</p>
+    <p>
+      The <strong>population</strong> is the complete set of all possible observations of interest, 
+      while a <strong>sample</strong> is a smaller subset selected from that population for study. 
+      Since studying an entire population is often impractical, samples are used to make inferences about the whole.
+    </p>
+
     <ul>
-      <li><strong>Population:</strong> The entire set of individuals or observations of interest (e.g., all diabetic patients in a country).</li>
-      <li><strong>Sample:</strong> A subset of the population used for analysis (e.g., 200 diabetic patients selected randomly).</li>
+      <li><strong>Population:</strong> The entire group of interest for a study.</li>
+      <li><strong>Sample:</strong> A representative subset of the population used for analysis.</li>
     </ul>
 
     <div class="example">
-      <strong>Example:</strong> If we wish to estimate the average blood pressure of all adults, we cannot measure everyone — instead, we take a representative sample and use statistical methods to infer the population mean.
+      <strong>Examples:</strong>
+      <ul>
+        <li>Population: All adults in a country; Sample: 1000 randomly selected adults surveyed for dietary habits.</li>
+        <li>Population: All patients with hypertension; Sample: 200 patients selected from a hospital.</li>
+        <li>Population: All plants of a species in a region; Sample: 50 plants chosen from different locations.</li>
+        <li>Population: All blood donors; Sample: 500 individuals analyzed for hemoglobin concentration.</li>
+      </ul>
     </div>
   </section>
 
   <section>
     <h2>5. Role of Statistics in Data-Driven Research</h2>
-    <p>Statistics helps in collecting, organizing, analyzing, and interpreting data to make informed decisions. It transforms raw data into meaningful insights.</p>
+    <p>
+      Statistics provides methods to collect, summarize, analyze, and interpret data. 
+      It helps identify patterns, test hypotheses, and support decision-making. 
+      Through statistical reasoning, one can differentiate between random variation and meaningful results.
+    </p>
+
     <ol>
-      <li><strong>Descriptive statistics:</strong> Summarizes and describes data (mean, median, mode, standard deviation).</li>
-      <li><strong>Inferential statistics:</strong> Uses sample data to make conclusions about the population (confidence intervals, hypothesis testing).</li>
-      <li><strong>Predictive analytics:</strong> Uses statistical models and machine learning to forecast future outcomes.</li>
+      <li><strong>Descriptive Statistics:</strong> Summarize and describe data using numbers, tables, or graphs.</li>
+      <li><strong>Inferential Statistics:</strong> Use sample data to draw conclusions or make predictions about the population.</li>
+      <li><strong>Predictive Analysis:</strong> Employ models to forecast outcomes or behaviors based on observed data.</li>
     </ol>
+
+    <div class="example">
+      <strong>Examples:</strong>
+      <ul>
+        <li>Descriptive: Calculating the mean cholesterol level among a group of patients.</li>
+        <li>Inferential: Testing whether a new drug lowers blood sugar more effectively than an existing one.</li>
+        <li>Predictive: Building a model to estimate survival rate based on age and heart rate.</li>
+        <li>Descriptive: Summarizing rainfall and crop yield data across different seasons.</li>
+        <li>Inferential: Checking if two groups of plants show significant growth differences under different fertilizers.</li>
+      </ul>
+    </div>
   </section>
 
   <section>
     <h2>6. The Process of Statistical Thinking</h2>
-    <p>Statistical thinking involves reasoning about data systematically. It includes:</p>
+    <p>
+      Statistical thinking involves reasoning systematically with data to make objective conclusions. 
+      It emphasizes understanding variability, recognizing uncertainty, and applying logical frameworks to interpret results.
+    </p>
+
     <ul>
-      <li>Understanding the problem and defining variables.</li>
-      <li>Designing methods for data collection (experiments, surveys, observational studies).</li>
-      <li>Analyzing data with appropriate statistical tools.</li>
-      <li>Drawing conclusions and communicating findings clearly.</li>
+      <li>Define the question or problem clearly.</li>
+      <li>Design a suitable method for data collection.</li>
+      <li>Organize and visualize data using tables or plots.</li>
+      <li>Apply appropriate statistical models or tests.</li>
+      <li>Interpret the results and relate them to the research question.</li>
     </ul>
 
     <div class="example">
-      <strong>Example:</strong> A public health analyst uses statistical thinking to determine whether a new exercise program reduces obesity rates by analyzing before-and-after BMI data.
+      <strong>Examples:</strong>
+      <ul>
+        <li>Analyzing whether exposure to a new chemical affects the growth rate of yeast cultures.</li>
+        <li>Comparing average blood pressure before and after a treatment program.</li>
+        <li>Evaluating whether genetic expression differs between treated and control samples.</li>
+        <li>Assessing trends in air quality data and their correlation with hospital admission rates.</li>
+        <li>Testing whether a particular nutrient increases seed germination rates.</li>
+      </ul>
     </div>
   </section>
 
   <section>
     <h2>7. Summary</h2>
-    <p>This lecture introduced the foundation of data and the importance of statistical thinking. You learned:</p>
+    <p>
+      This lecture introduced the essential ideas of data and statistical reasoning. 
+      Understanding how data are classified, measured, and analyzed forms the foundation of statistical practice. 
+      The key points include:
+    </p>
+
     <ul>
-      <li>The meaning and types of data.</li>
-      <li>Different types of variables and their roles.</li>
-      <li>The difference between a population and a sample.</li>
-      <li>How statistics enables data-driven insights.</li>
+      <li>Data are factual observations used for analysis.</li>
+      <li>Data types determine suitable analytical methods.</li>
+      <li>Variables can be independent, dependent, or controlled.</li>
+      <li>Samples represent populations and enable valid inferences.</li>
+      <li>Statistics guides decisions and uncovers meaningful patterns in data.</li>
     </ul>
-    <p>Understanding these basics sets the stage for deeper exploration into data collection, visualization, and inferential statistics in upcoming lectures.</p>
+
+    <p>
+      The next lecture will discuss methods of data collection, sampling strategies, and measurement scales for effective statistical analysis.
+    </p>
   </section>
 
   <a class="button" href="../module1.html">← Back to Module 1</a>
