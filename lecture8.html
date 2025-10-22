@@ -3,18 +3,136 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecture 8 — Integrating Concepts: Statistical Analysis Project in R</title>
+  <title>Lecture 8 — Data Visualization and Interpretation</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; color: #333; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.7;
+    }
     h1 { color: #007acc; }
-    p { line-height: 1.6; }
-    a.button { display: inline-block; margin-top: 20px; padding: 10px 16px; background-color: #007acc; color: white; border-radius: 6px; text-decoration: none; }
+    h2 { color: #005b99; margin-top: 30px; }
+    p { margin: 10px 0; }
+    ul, ol { margin-left: 30px; }
+    .code {
+      background-color: #eef7ff;
+      padding: 8px;
+      border-radius: 5px;
+      font-family: "Courier New", monospace;
+      display: block;
+      margin: 10px 0;
+    }
+    .example {
+      background-color: #eef6fb;
+      border-left: 4px solid #007acc;
+      padding: 10px 15px;
+      margin: 10px 0;
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 16px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+    }
     a.button:hover { background-color: #005b99; }
   </style>
 </head>
 <body>
-  <h1>Lecture 8 — Integrating Concepts: Statistical Analysis Project in R</h1>
-  <p>Demonstrates a mini-project combining descriptive and inferential analysis using RMarkdown.</p>
+
+  <h1>Lecture 8 — Data Visualization and Interpretation</h1>
+
+  <p>Data visualization is an essential step in data analysis. It helps summarize data, identify patterns, detect outliers, and communicate results effectively.</p>
+
+  <h2>1. Importance of Data Visualization</h2>
+  <ul>
+    <li>Exploratory Data Analysis (EDA) to understand trends and distribution.</li>
+    <li>Detect anomalies or missing data.</li>
+    <li>Compare groups or variables easily.</li>
+    <li>Communicate findings in research papers or presentations.</li>
+  </ul>
+
+  <div class="example">
+    <strong>Example:</strong> Plotting blood glucose levels across a patient group can highlight abnormal values and variability.
+  </div>
+
+  <h2>2. Types of Graphs and Plots</h2>
+
+  <h3>a) Bar Plot</h3>
+  <p>Used for categorical data to compare counts or percentages.</p>
+  <div class="code">
+    barplot(table(df$BloodType), col="lightgreen", main="Blood Type Distribution")
+  </div>
+  <div class="example">
+    Count of blood types (A, B, AB, O) in a sample of 200 patients.
+  </div>
+
+  <h3>b) Histogram</h3>
+  <p>Shows frequency distribution of continuous variables.</p>
+  <div class="code">
+    hist(df$Glucose, breaks=10, col="lightblue", main="Histogram of Glucose Levels", xlab="Glucose (mg/dL)")
+  </div>
+  <div class="example">
+    Visualize distribution of fasting glucose levels in diabetic patients.
+  </div>
+
+  <h3>c) Box Plot</h3>
+  <p>Displays median, quartiles, and outliers.</p>
+  <div class="code">
+    boxplot(df$Cholesterol ~ df$Gender, col=c("pink","lightblue"), main="Cholesterol by Gender")
+  </div>
+  <div class="example">
+    Compare cholesterol levels between males and females, identify outliers.
+  </div>
+
+  <h3>d) Scatter Plot</h3>
+  <p>Used to observe relationship between two continuous variables.</p>
+  <div class="code">
+    plot(df$Weight, df$Glucose, xlab="Weight (kg)", ylab="Glucose (mg/dL)", main="Glucose vs Weight")
+  </div>
+  <div class="example">
+    Detect trends or correlations between patient weight and blood glucose levels.
+  </div>
+
+  <h3>e) Line Plot</h3>
+  <p>Useful for time-series data.</p>
+  <div class="code">
+    plot(df$Time, df$Glucose, type="l", col="red", main="Glucose over Time", xlab="Time (hours)", ylab="Glucose")
+  </div>
+  <div class="example">
+    Track glucose levels of a patient over 24 hours to monitor fluctuations.
+  </div>
+
+  <h3>f) Pie Chart</h3>
+  <p>Shows proportion of categories as slices of a circle.</p>
+  <div class="code">
+    pie(table(df$Medication), col=rainbow(length(unique(df$Medication))), main="Medication Usage")
+  </div>
+  <div class="example">
+    Percentage of patients taking different types of medications.
+  </div>
+
+  <h2>3. Interpretation of Plots</h2>
+  <ul>
+    <li>Look at central tendency and spread (mean, median, variance) from histograms and box plots.</li>
+    <li>Identify relationships or correlations in scatter plots.</li>
+    <li>Detect outliers, missing values, or unusual patterns.</li>
+    <li>Use color, labels, and legends for clarity.</li>
+  </ul>
+
+  <h2>4. Summary</h2>
+  <ul>
+    <li>Data visualization is essential for understanding, summarizing, and communicating data.</li>
+    <li>Different types of plots are suitable for different types of data (categorical vs continuous, time-series vs grouped data).</li>
+    <li>Proper interpretation allows identification of trends, anomalies, and relationships.</li>
+    <li>Visualization is a critical skill in biological, clinical, and research-based datasets.</li>
+  </ul>
+
   <a class="button" href="../module1.html">← Back to Module 1</a>
+
 </body>
 </html>
