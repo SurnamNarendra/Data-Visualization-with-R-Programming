@@ -3,18 +3,139 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecture 5 — Working with Data in R (types & transformations)</title>
+  <title>Lecture 5 — Hypothesis Testing</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; color: #333; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.7;
+    }
     h1 { color: #007acc; }
-    p { line-height: 1.6; }
-    a.button { display: inline-block; margin-top: 20px; padding: 10px 16px; background-color: #007acc; color: white; border-radius: 6px; text-decoration: none; }
+    h2 { color: #005b99; margin-top: 30px; }
+    p { margin: 10px 0; }
+    ul, ol { margin-left: 30px; }
+    .formula {
+      background-color: #eef7ff;
+      padding: 8px;
+      border-radius: 5px;
+      font-family: "Courier New", monospace;
+      display: inline-block;
+      margin: 5px 0;
+    }
+    .example {
+      background-color: #eef6fb;
+      border-left: 4px solid #007acc;
+      padding: 10px 15px;
+      margin: 10px 0;
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 16px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+    }
     a.button:hover { background-color: #005b99; }
   </style>
 </head>
 <body>
-  <h1>Lecture 5 — Working with Data in R (types & transformations)</h1>
-  <p>Discusses data structures such as vectors, data frames, and using dplyr for data cleaning.</p>
+
+  <h1>Lecture 5 — Hypothesis Testing</h1>
+
+  <p>Hypothesis testing is a statistical procedure used to make decisions or inferences about population parameters based on sample data. It allows researchers to evaluate claims, compare groups, and determine the likelihood of observed effects being due to chance.</p>
+
+  <h2>1. Null and Alternative Hypotheses</h2>
+  <p>In hypothesis testing, we formulate:</p>
+  <ul>
+    <li><strong>Null Hypothesis (H₀):</strong> A statement that there is no effect or difference. It represents the status quo.</li>
+    <li><strong>Alternative Hypothesis (H₁ or Ha):</strong> A statement that there is an effect or difference.</li>
+  </ul>
+
+  <div class="example">
+    <strong>Examples:</strong>
+    <ul>
+      <li>H₀: Mean fasting glucose level in diabetic patients = 120 mg/dL; H₁: Mean fasting glucose ≠ 120 mg/dL.</li>
+      <li>H₀: A new drug has no effect on enzyme activity; H₁: The drug alters enzyme activity.</li>
+      <li>H₀: Mean blood pressure is the same in males and females; H₁: Mean blood pressure differs between sexes.</li>
+    </ul>
+  </div>
+
+  <h2>2. Types of Errors</h2>
+  <ul>
+    <li><strong>Type I Error (α):</strong> Rejecting H₀ when it is true.  
+      <em>Example:</em> Concluding a drug affects cholesterol when it actually does not.</li>
+    <li><strong>Type II Error (β):</strong> Failing to reject H₀ when it is false.  
+      <em>Example:</em> Concluding a drug has no effect on enzyme activity when it actually does.</li>
+  </ul>
+
+  <h2>3. Significance Level and P-value</h2>
+  <ul>
+    <li><strong>Significance Level (α):</strong> Predefined probability threshold for rejecting H₀ (commonly 0.05 or 0.01).</li>
+    <li><strong>P-value:</strong> Probability of obtaining results as extreme as the observed data if H₀ is true.  
+      - If P ≤ α → Reject H₀  
+      - If P > α → Fail to reject H₀
+    </li>
+  </ul>
+
+  <div class="example">
+    <strong>Examples:</strong>
+    <ul>
+      <li>P = 0.03 for a test comparing mean glucose levels → Reject H₀ at α = 0.05.</li>
+      <li>P = 0.12 for difference in hemoglobin levels → Fail to reject H₀ at α = 0.05.</li>
+    </ul>
+  </div>
+
+  <h2>4. Test Statistics</h2>
+  <p>Test statistics quantify how far the sample statistic is from the population parameter under H₀.</p>
+
+  <ul>
+    <li><strong>Z-test (for large samples, known σ):</strong>  
+      <p class="formula">Z = (X̄ - μ₀) / (σ / √n)</p>
+    </li>
+    <li><strong>t-test (for small samples, unknown σ):</strong>  
+      <p class="formula">t = (X̄ - μ₀) / (s / √n)</p>
+    </li>
+    <li><strong>Chi-square test (for categorical data):</strong>  
+      <p class="formula">χ² = Σ (O - E)² / E</p>  
+      O = observed frequency, E = expected frequency</li>
+    <li><strong>ANOVA (Analysis of Variance):</strong> Compares means across multiple groups using F-statistic.</li>
+  </ul>
+
+  <div class="example">
+    <strong>Examples:</strong>
+    <ul>
+      <li>One-sample t-test: Test if mean blood glucose differs from 120 mg/dL in a sample of 25 patients.</li>
+      <li>Two-sample t-test: Compare mean cholesterol levels between males and females.</li>
+      <li>Chi-square test: Compare observed vs expected blood type frequencies in a population.</li>
+      <li>ANOVA: Compare mean enzyme activity across three different treatment groups.</li>
+    </ul>
+  </div>
+
+  <h2>5. Steps in Hypothesis Testing</h2>
+  <ol>
+    <li>Formulate H₀ and H₁.</li>
+    <li>Choose significance level α.</li>
+    <li>Select the appropriate test and compute the test statistic.</li>
+    <li>Calculate P-value or compare test statistic with critical value.</li>
+    <li>Make a decision: Reject or fail to reject H₀.</li>
+    <li>Interpret results in context.</li>
+  </ol>
+
+  <h2>6. Summary</h2>
+  <ul>
+    <li>Hypothesis testing evaluates claims about population parameters using sample data.</li>
+    <li>Null and alternative hypotheses provide the framework for testing.</li>
+    <li>Type I and Type II errors indicate the risks of incorrect decisions.</li>
+    <li>Significance level and P-values guide decision-making.</li>
+    <li>Test statistics depend on data type, sample size, and variance information.</li>
+    <li>Applications in biological and medical research include comparing treatments, evaluating drug effects, and analyzing physiological data.</li>
+  </ul>
+
   <a class="button" href="../module1.html">← Back to Module 1</a>
+
 </body>
 </html>
