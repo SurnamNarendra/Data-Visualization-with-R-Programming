@@ -3,18 +3,132 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecture 6 — Data Visualization in R using ggplot2</title>
+  <title>Lecture 6 — Correlation and Regression Analysis</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; color: #333; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.7;
+    }
     h1 { color: #007acc; }
-    p { line-height: 1.6; }
-    a.button { display: inline-block; margin-top: 20px; padding: 10px 16px; background-color: #007acc; color: white; border-radius: 6px; text-decoration: none; }
+    h2 { color: #005b99; margin-top: 30px; }
+    p { margin: 10px 0; }
+    ul, ol { margin-left: 30px; }
+    .formula {
+      background-color: #eef7ff;
+      padding: 8px;
+      border-radius: 5px;
+      font-family: "Courier New", monospace;
+      display: inline-block;
+      margin: 5px 0;
+    }
+    .example {
+      background-color: #eef6fb;
+      border-left: 4px solid #007acc;
+      padding: 10px 15px;
+      margin: 10px 0;
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 16px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+    }
     a.button:hover { background-color: #005b99; }
   </style>
 </head>
 <body>
-  <h1>Lecture 6 — Data Visualization in R using ggplot2</h1>
-  <p>Covers the grammar of graphics and how to create visualizations like histograms and scatterplots.</p>
+
+  <h1>Lecture 6 — Correlation and Regression Analysis</h1>
+
+  <p>This lecture introduces correlation and regression, which are statistical methods used to examine the relationships between variables, quantify strength and direction, and make predictions.</p>
+
+  <h2>1. Correlation</h2>
+  <p>Correlation measures the strength and direction of a linear relationship between two variables. The correlation coefficient (r) ranges from -1 to +1:</p>
+
+  <ul>
+    <li>r = +1 → Perfect positive correlation</li>
+    <li>r = -1 → Perfect negative correlation</li>
+    <li>r = 0 → No linear correlation</li>
+  </ul>
+
+  <p class="formula">
+    Pearson correlation coefficient:<br>
+    <strong>r = Σ((X - X̄)(Y - Ȳ)) / √(Σ(X - X̄)² Σ(Y - Ȳ)²)</strong>
+  </p>
+
+  <div class="example">
+    <strong>Examples:</strong>
+    <ul>
+      <li>Correlation between fasting glucose and HbA1c levels in diabetic patients.</li>
+      <li>Correlation between body weight and blood pressure in a population study.</li>
+      <li>Correlation between enzyme concentration and reaction rate in lab experiments.</li>
+    </ul>
+  </div>
+
+  <h2>2. Regression Analysis</h2>
+  <p>Regression analysis is used to predict the value of a dependent variable (Y) based on one or more independent variables (X).</p>
+
+  <ul>
+    <li><strong>Simple Linear Regression:</strong> One independent variable.  
+      <p class="formula">Y = β₀ + β₁X + ε</p>
+      β₀ = intercept, β₁ = slope, ε = error term
+    </li>
+    <li><strong>Multiple Linear Regression:</strong> More than one independent variable.  
+      <p class="formula">Y = β₀ + β₁X₁ + β₂X₂ + ... + βnXn + ε</p>
+    </li>
+  </ul>
+
+  <div class="example">
+    <strong>Examples:</strong>
+    <ul>
+      <li>Predicting fasting glucose level (Y) from BMI (X) using simple linear regression.</li>
+      <li>Predicting cholesterol level (Y) based on age, BMI, and exercise frequency (X₁, X₂, X₃) using multiple regression.</li>
+      <li>Predicting enzyme activity (Y) from substrate concentration (X).</li>
+    </ul>
+  </div>
+
+  <h2>3. Assumptions of Regression</h2>
+  <ul>
+    <li>Linearity: Relationship between X and Y is linear.</li>
+    <li>Independence: Observations are independent.</li>
+    <li>Homoscedasticity: Constant variance of errors.</li>
+    <li>Normality: Errors are normally distributed.</li>
+  </ul>
+
+  <h2>4. Interpreting Results</h2>
+  <ul>
+    <li><strong>Correlation:</strong> Direction (+/-) and strength (closer to 1 or -1) indicate relationship between variables.</li>
+    <li><strong>Regression coefficients:</strong> β₁ represents change in Y for a unit change in X.</li>
+    <li><strong>R² (Coefficient of Determination):</strong> Proportion of variance in Y explained by X.  
+      <p class="formula">R² = 1 - (SS_res / SS_tot)</p>
+    </li>
+  </ul>
+
+  <div class="example">
+    <strong>Examples:</strong>
+    <ul>
+      <li>A strong positive correlation (r = 0.85) between fasting glucose and HbA1c.</li>
+      <li>Regression equation: Glucose = 80 + 1.5 × BMI predicts average glucose based on BMI.</li>
+      <li>R² = 0.72 indicates 72% of variation in blood pressure explained by BMI and age.</li>
+    </ul>
+  </div>
+
+  <h2>5. Summary</h2>
+  <ul>
+    <li>Correlation quantifies the strength and direction of linear relationships between variables.</li>
+    <li>Regression allows prediction of a dependent variable based on independent variable(s).</li>
+    <li>Assumptions of regression must be checked for valid inference.</li>
+    <li>R² measures how well independent variable(s) explain the variation in the dependent variable.</li>
+    <li>Biological and medical examples demonstrate real-world applications in research and clinical studies.</li>
+  </ul>
+
   <a class="button" href="../module1.html">← Back to Module 1</a>
+
 </body>
 </html>
