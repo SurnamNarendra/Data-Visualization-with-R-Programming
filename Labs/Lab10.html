@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANOVA (Analysis of Variance)</title>
+<style>
+body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 40px; }
+.container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+h1 { color: #2c3e50; }
+pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>ANOVA (Analysis of Variance)</h1>
+  <h2>Aim</h2>
+  <p>To conduct one-way ANOVA and interpret group mean differences.</p>
+  <h2>Algorithm / Procedure</h2>
+  <ul><li>Use aov() and summary() functions.</li><li>Plot results with boxplots.</li></ul>
+  <h2>Input / Output</h2>
+  <pre>Input:
+> aov_result <- aov(Weight ~ Diet, data=data)
+> summary(aov_result)</pre>
+  <h2>Result</h2>
+  <p>Tested significance of group mean differences using ANOVA.</p>
+</div>
+</body>
+</html>

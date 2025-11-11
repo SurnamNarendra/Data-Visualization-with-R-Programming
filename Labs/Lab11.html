@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi-square Test</title>
+<style>
+body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 40px; }
+.container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+h1 { color: #2c3e50; }
+pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Chi-square Test</h1>
+  <h2>Aim</h2>
+  <p>To perform Chi-square test for independence using categorical data.</p>
+  <h2>Algorithm / Procedure</h2>
+  <ul><li>Create contingency tables using table().</li><li>Use chisq.test() for analysis.</li></ul>
+  <h2>Input / Output</h2>
+  <pre>Input:
+> chisq.test(table(Gender, Preference))
+Output:
+p-value = 0.032</pre>
+  <h2>Result</h2>
+  <p>Checked variable independence using Chi-square test.</p>
+</div>
+</body>
+</html>
