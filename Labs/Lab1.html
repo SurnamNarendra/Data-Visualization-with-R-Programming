@@ -1,30 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Introduction to R and RStudio</title>
-<style>
-body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 40px; }
-.container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-h1 { color: #2c3e50; }
-pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab 1: Introduction to R Environment and Basic Operations</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background-color: #f9fafb;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
+
+  <script>
+    // Disable right-click
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    // Disable copy, cut, paste
+    ['copy', 'cut', 'paste'].forEach(evt =>
+      document.addEventListener(evt, e => e.preventDefault())
+    );
+
+    // Block PrintScreen key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === "PrintScreen") {
+        alert("Screenshots are disabled on this page.");
+        e.preventDefault();
+      }
+    });
+
+    // Visual blur effect if someone presses PrintScreen
+    window.addEventListener('keyup', function(e) {
+      if (e.key === "PrintScreen") {
+        document.body.style.filter = "blur(6px)";
+        setTimeout(() => { document.body.style.filter = "none"; }, 2500);
+      }
+    });
+  </script>
 </head>
-<body>
-<div class="container">
-  <h1>Introduction to R and RStudio</h1>
-  <h2>Aim</h2>
-  <p>To introduce the R environment, RStudio interface, and basic R commands.</p>
-  <h2>Algorithm / Procedure</h2>
-  <ul><li>Open RStudio and set the working directory.</li><li>Use R console for arithmetic operations.</li><li>Create basic objects and print values.</li></ul>
-  <h2>Input / Output</h2>
-  <pre>Input:
-> x <- 5; y <- 3; x + y
-Output:
-[1] 8</pre>
-  <h2>Result</h2>
-  <p>Successfully explored R interface and executed basic commands.</p>
-</div>
+
+<body class="text-gray-800 leading-relaxed">
+
+  <!-- HEADER -->
+  <header class="bg-blue-700 text-white py-6 text-center shadow-md">
+    <h1 class="text-3xl font-bold">Lab 1: Introduction to R Environment and Basic Operations</h1>
+    <p class="text-lg mt-2">Practice using RStudio, define variables, loops, and user-defined functions for simple data operations.</p>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-8 mt-8 mb-10">
+
+    <!-- AIM -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-blue-700 mb-3">Aim</h2>
+      <p>
+        To get familiar with the R environment and perform basic operations such as defining variables, 
+        using loops, and creating user-defined functions in RStudio.
+      </p>
+    </section>
+
+    <!-- ALGORITHM -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-blue-700 mb-3">Algorithm</h2>
+      <ol class="list-decimal list-inside space-y-1">
+        <li>Open RStudio and set the working directory.</li>
+        <li>Define variables and perform basic arithmetic operations.</li>
+        <li>Use control structures such as <code>for</code> and <code>while</code> loops.</li>
+        <li>Create a user-defined function to perform a specific task.</li>
+        <li>Run the script and verify the outputs in the R console.</li>
+      </ol>
+    </section>
+
+    <!-- SOURCE CODE -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-blue-700 mb-3">Source Code</h2>
+      <pre class="bg-gray-900 text-green-200 p-4 rounded-lg overflow-x-auto text-sm"><code># Lab 1: Introduction to R Environment and Basic Operations
+
+# 1. Define variables
+a <- 10
+b <- 5
+
+# 2. Perform arithmetic operations
+sum_result <- a + b
+diff_result <- a - b
+prod_result <- a * b
+div_result <- a / b
+
+cat("Sum:", sum_result, "\n")
+cat("Difference:", diff_result, "\n")
+cat("Product:", prod_result, "\n")
+cat("Division:", div_result, "\n\n")
+
+# 3. Using loops
+cat("For Loop Example:\n")
+for (i in 1:5) {
+  cat("Iteration:", i, "\n")
+}
+
+cat("\nWhile Loop Example:\n")
+x <- 1
+while (x <= 5) {
+  cat("x =", x, "\n")
+  x <- x + 1
+}
+
+# 4. User-defined function
+add_numbers <- function(x, y) {
+  result <- x + y
+  return(result)
+}
+
+cat("\nFunction Output:\n")
+cat("add_numbers(12, 8) =", add_numbers(12, 8), "\n")</code></pre>
+    </section>
+
+    <!-- EXPECTED OUTPUT -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-blue-700 mb-3">Expected Output</h2>
+      <pre class="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm"><code>Sum: 15
+Difference: 5
+Product: 50
+Division: 2
+
+For Loop Example:
+Iteration: 1
+Iteration: 2
+Iteration: 3
+Iteration: 4
+Iteration: 5
+
+While Loop Example:
+x = 1
+x = 2
+x = 3
+x = 4
+x = 5
+
+Function Output:
+add_numbers(12, 8) = 20</code></pre>
+    </section>
+
+    <!-- ONLINE COMPILER BUTTON -->
+    <section class="text-center mt-8">
+      <h2 class="text-2xl font-semibold text-blue-700 mb-4">Try It Online</h2>
+      <a href="https://onecompiler.com/r" 
+         target="_blank" 
+         class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+         🔹 Open Online R Compiler
+      </a>
+      <p class="text-sm text-gray-500 mt-2">
+        Opens in new tab — powered by <a href="https://onecompiler.com/r" class="text-blue-600 hover:underline" target="_blank">OneCompiler</a>.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="text-center text-gray-600 py-6 border-t mt-10">
+    <p> Surnam Narendra © 2025 Data Visualization With R </p>
+  </footer>
+
 </body>
 </html>
