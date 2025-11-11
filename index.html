@@ -256,132 +256,107 @@
 
   <!-- MAIN CONTENT -->
   <main>
-    <section class="modules-wrap" id="modules" data-aos="fade-up">
-      <div class="modules-head">
-        <h3>Course Modules</h3>
-        <div class="muted">Click a module to expand lectures — smooth animations included.</div>
+   <section class="modules-wrap" id="modules" data-aos="fade-up">
+  <div class="modules-head">
+    <h3>Course Modules</h3>
+    <div class="muted">Click a module to expand lectures — smooth animations included.</div>
+  </div>
+
+  <div class="modules-grid">
+
+    <!-- Module 1 -->
+    <article class="module-card" data-module="1">
+      <div class="module-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(event,this)">
+        <div>
+          <div class="module-title">Module 1 — Fundamentals of Statistics & R Basics</div>
+          <div class="module-meta">Data types, Descriptive Statistics, Probability Distributions, R Basics</div>
+        </div>
+        <div class="toggle-icon">+</div>
       </div>
-
-      <div class="modules-grid">
-        <!-- Module 1 -->
-        <article class="module-card" data-module="1">
-          <div class="module-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(event,this)">
-            <div>
-              <div class="module-title">Module 1 — Introduction to Basic Statistics & R Programming</div>
-              <div class="module-meta">Data, Descriptive Statistics, Inferential Statistics, Getting started with R, RStudio</div>
-            </div>
-            <div class="toggle-icon">+</div>
-          </div>
-          <div class="module-body" aria-hidden="true">
-            <ul class="lecture-list">
-				
- <li>
-        <div class="lecture-title">
-          <a href="lecture1.html" target="_blank">Lecture 1 — Introduction to Data and Statistical Thinking</a>
-        </div>
-        <div class="lecture-meta">30m</div>
-      </li>
-      <li>
-        <div class="lecture-title">
-          <a href="lecture2.html" target="_blank">Lecture 2 — Descriptive Statistics: Central Tendency & Dispersion</a>
-        </div>
-        <div class="lecture-meta">35m</div>
-      </li>
-      <li>
-        <div class="lecture-title">
-          <a href="lecture3.html" target="_blank">Lecture 3 — Probability Distribution </a>
-        </div>
-        <div class="lecture-meta">40m</div>
-      </li>
-      <li>
-        <div class="lecture-title">
-          <a href="lecture4.html" target="_blank">Lecture 4 — Sampling</a>
-        </div>
-        <div class="lecture-meta">30m</div>
-      </li>
-      <li>
-        <div class="lecture-title">
-          <a href="lecture5.html" target="_blank">Lecture 5 — Hypothesis Testing</a>
-        </div>
-        <div class="lecture-meta">40m</div>
-      </li>
-      <li>
-        <div class="lecture-title">
-          <a href="lecture6.html" target="_blank">Lecture 6 — Correlation and Regression</a>
-        </div>
-        <div class="lecture-meta">45m</div>
-      </li>
-      <li>
-        <div class="lecture-title">
-          <a href="lecture7.html" target="_blank">Lecture 7 —  Introduction to R </a>
-        </div>
-        <div class="lecture-meta">45m</div>
-      </li>
-      <li>
-        <div class="lecture-title">
-          <a href="lecture8.html" target="_blank">Lecture 8 — Data Visualization </a>
-        </div>
-        <div class="lecture-meta">50m</div>
-      </li>
-				
-            </ul>
-          </div>
-        </article>
-
-        <!-- Module 2 -->
-        <article class="module-card" data-module="2">
-          <div class="module-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(event,this)">
-            <div>
-              <div class="module-title">Module 2 — Aesthetics & Geoms</div>
-              <div class="module-meta">Layered grammar of graphics: aes, geoms, scales</div>
-            </div>
-            <div class="toggle-icon">+</div>
-          </div>
-          <div class="module-body" aria-hidden="true">
-            <ul class="lecture-list">
-              <li><div class="lecture-title">Lecture 1 — Aesthetic mappings</div><div class="lecture-meta">40m</div></li>
-              <li><div class="lecture-title">Lecture 2 — Geoms: point, line, bar</div><div class="lecture-meta">50m</div></li>
-              <li><div class="lecture-title">Lecture 3 — Scales & color</div><div class="lecture-meta">35m</div></li>
-            </ul>
-          </div>
-        </article>
-
-        <!-- Module 3 -->
-        <article class="module-card" data-module="3">
-          <div class="module-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(event,this)">
-            <div>
-              <div class="module-title">Module 3 — Themes, Facets & Stats</div>
-              <div class="module-meta">Customize look & add statistical layers</div>
-            </div>
-            <div class="toggle-icon">+</div>
-          </div>
-          <div class="module-body" aria-hidden="true">
-            <ul class="lecture-list">
-              <li><div class="lecture-title">Lecture 1 — Themes & layouts</div><div class="lecture-meta">30m</div></li>
-              <li><div class="lecture-title">Lecture 2 — Faceting and small multiples</div><div class="lecture-meta">40m</div></li>
-              <li><div class="lecture-title">Lecture 3 — Summary statistics & smoothing</div><div class="lecture-meta">45m</div></li>
-            </ul>
-          </div>
-        </article>
-
-        <!-- Module 4 -->
-        <article class="module-card" data-module="4">
-          <div class="module-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(event,this)">
-            <div>
-              <div class="module-title">Module 4 — Interactive Viz & Reporting</div>
-              <div class="module-meta">Plotly, Shiny and reproducible reporting with R Markdown</div>
-            </div>
-            <div class="toggle-icon">+</div>
-          </div>
-          <div class="module-body" aria-hidden="true">
-            <ul class="lecture-list">
-              <li><div class="lecture-title">Lecture 1 — Plotly & interactive plots</div><div class="lecture-meta">50m</div></li>
-              <li><div class="lecture-title">Lecture 2 — Shiny app basics</div><div class="lecture-meta">60m</div></li>
-              <li><div class="lecture-title">Lecture 3 — R Markdown reports</div><div class="lecture-meta">45m</div></li>
-            </ul>
-          </div>
-        </article>
+      <div class="module-body" aria-hidden="true">
+        <ul class="lecture-list">
+          <li><a href="lecture1.html" target="_blank">Lecture 1 — Introduction to Biostatistics and Data Types</a><div class="lecture-meta">30m</div></li>
+          <li><a href="lecture2.html" target="_blank">Lecture 2 — Measurement Scales: Nominal, Ordinal, Interval, Ratio</a><div class="lecture-meta">35m</div></li>
+          <li><a href="lecture3.html" target="_blank">Lecture 3 — Frequency Tables and Data Summarization</a><div class="lecture-meta">30m</div></li>
+          <li><a href="lecture4.html" target="_blank">Lecture 4 — Measures of Central Tendency: Mean, Median, Mode</a><div class="lecture-meta">40m</div></li>
+          <li><a href="lecture5.html" target="_blank">Lecture 5 — Measures of Dispersion: Variance, SD, Range</a><div class="lecture-meta">35m</div></li>
+          <li><a href="lecture6.html" target="_blank">Lecture 6 — Probability Distributions: Normal, Binomial, Poisson</a><div class="lecture-meta">45m</div></li>
+          <li><a href="lecture7.html" target="_blank">Lecture 7 — Introduction to R and RStudio Environment</a><div class="lecture-meta">50m</div></li>
+        </ul>
       </div>
+    </article>
+
+    <!-- Module 2 -->
+    <article class="module-card" data-module="2">
+      <div class="module-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(event,this)">
+        <div>
+          <div class="module-title">Module 2 — Correlation, Regression & Data Handling in R</div>
+          <div class="module-meta">Correlation, Regression, Data Cleaning, dplyr, ggplot2</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </div>
+      <div class="module-body" aria-hidden="true">
+        <ul class="lecture-list">
+          <li><a href="lecture8.html" target="_blank">Lecture 8 — Concept of Correlation and Covariance</a><div class="lecture-meta">40m</div></li>
+          <li><a href="lecture9.html" target="_blank">Lecture 9 — Simple Linear Regression and Model Fitting</a><div class="lecture-meta">45m</div></li>
+          <li><a href="lecture10.html" target="_blank">Lecture 10 — Regression Diagnostics and Interpretation</a><div class="lecture-meta">40m</div></li>
+          <li><a href="lecture11.html" target="_blank">Lecture 11 — Importing Biological Data (CSV/Excel) in R</a><div class="lecture-meta">30m</div></li>
+          <li><a href="lecture12.html" target="_blank">Lecture 12 — Data Cleaning and Handling Missing Values</a><div class="lecture-meta">35m</div></li>
+          <li><a href="lecture13.html" target="_blank">Lecture 13 — Outlier Detection and Data Transformation</a><div class="lecture-meta">35m</div></li>
+          <li><a href="lecture14.html" target="_blank">Lecture 14 — Data Wrangling using dplyr: select, filter, mutate</a><div class="lecture-meta">45m</div></li>
+          <li><a href="lecture15.html" target="_blank">Lecture 15 — Scatterplots and Correlation Visualization using ggplot2</a><div class="lecture-meta">50m</div></li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- Module 3 -->
+    <article class="module-card" data-module="3">
+      <div class="module-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(event,this)">
+        <div>
+          <div class="module-title">Module 3 — Data Science & Visualization Fundamentals</div>
+          <div class="module-meta">Data Science Lifecycle, ggplot2, EDA, Visualization Principles</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </div>
+      <div class="module-body" aria-hidden="true">
+        <ul class="lecture-list">
+          <li><a href="lecture16.html" target="_blank">Lecture 16 — Introduction to Data Science and Applications</a><div class="lecture-meta">40m</div></li>
+          <li><a href="lecture17.html" target="_blank">Lecture 17 — Data Science Workflow and Lifecycle</a><div class="lecture-meta">35m</div></li>
+          <li><a href="lecture18.html" target="_blank">Lecture 18 — Principles of Effective Data Visualization</a><div class="lecture-meta">30m</div></li>
+          <li><a href="lecture19.html" target="_blank">Lecture 19 — Types of Visualizations: Bar, Histogram, Pie</a><div class="lecture-meta">40m</div></li>
+          <li><a href="lecture20.html" target="_blank">Lecture 20 — ggplot2 Grammar: Aesthetics, Geoms, Layers</a><div class="lecture-meta">50m</div></li>
+          <li><a href="lecture21.html" target="_blank">Lecture 21 — Customizing ggplot2: Themes, Labels, Legends</a><div class="lecture-meta">45m</div></li>
+          <li><a href="lecture22.html" target="_blank">Lecture 22 — Exploratory Data Analysis: Univariate and Bivariate</a><div class="lecture-meta">50m</div></li>
+          <li><a href="lecture23.html" target="_blank">Lecture 23 — Multivariate EDA and Advanced Visualization</a><div class="lecture-meta">50m</div></li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- Module 4 -->
+    <article class="module-card" data-module="4">
+      <div class="module-header" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(event,this)">
+        <div>
+          <div class="module-title">Module 4 — Hypothesis Testing & Statistical Inference in R</div>
+          <div class="module-meta">t-test, ANOVA, Chi-square, p-value, Confidence Intervals</div>
+        </div>
+        <div class="toggle-icon">+</div>
+      </div>
+      <div class="module-body" aria-hidden="true">
+        <ul class="lecture-list">
+          <li><a href="lecture24.html" target="_blank">Lecture 24 — Concept of Hypothesis Testing</a><div class="lecture-meta">40m</div></li>
+          <li><a href="lecture25.html" target="_blank">Lecture 25 — Understanding p-values and Confidence Intervals</a><div class="lecture-meta">35m</div></li>
+          <li><a href="lecture26.html" target="_blank">Lecture 26 — One-sample, Two-sample, and Paired t-tests</a><div class="lecture-meta">45m</div></li>
+          <li><a href="lecture27.html" target="_blank">Lecture 27 — One-way ANOVA and Post-hoc Tests</a><div class="lecture-meta">50m</div></li>
+          <li><a href="lecture28.html" target="_blank">Lecture 28 — Chi-square Test for Categorical Data</a><div class="lecture-meta">45m</div></li>
+          <li><a href="lecture29.html" target="_blank">Lecture 29 — Visualizing Statistical Test Results in R</a><div class="lecture-meta">40m</div></li>
+          <li><a href="lecture30.html" target="_blank">Lecture 30 — Reporting Hypothesis Testing Results using ggplot2</a><div class="lecture-meta">45m</div></li>
+        </ul>
+      </div>
+    </article>
+
+  </div>
+</section>
+
 	  
 	  
 	  <section class="labs" id="labs" data-aos="fade-up">
