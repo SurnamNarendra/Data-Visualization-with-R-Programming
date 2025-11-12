@@ -70,6 +70,21 @@
   </style>
 </head>
 <body>
+<div id="navbar-placeholder"></div>
+
+<!-- your page content here -->
+
+<div id="footer-placeholder"></div>
+
+<script>
+  async function includeHTML(id, file) {
+    const el = document.getElementById(id);
+    const resp = await fetch(file);
+    if (resp.ok) el.innerHTML = await resp.text();
+  }
+  includeHTML("navbar-placeholder", "navbar.html");
+  includeHTML("footer-placeholder", "footer.html");
+</script>
 
   <header>
     <h1>Lecture 1 — Introduction to Data and Statistical Thinking</h1>
