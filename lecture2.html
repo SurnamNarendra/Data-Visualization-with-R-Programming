@@ -3,129 +3,269 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecture 2 — Descriptive Statistics: Central Tendency, Dispersion, Skewness, and Kurtosis</title>
+  <title>Lecture 1 — Introduction to Data and Statistical Thinking</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 40px;
-      background-color: #f9f9f9;
+      background-color: #f9fafc;
       color: #333;
       line-height: 1.7;
     }
-    h1 { color: #007acc; }
-    h2 { color: #005b99; margin-top: 30px; }
-    p { margin: 10px 0; }
-    ul, ol { margin-left: 30px; }
-    .formula { background-color: #eef7ff; padding: 8px; border-radius: 5px; font-family: "Courier New", monospace; display: inline-block; margin: 5px 0; }
-    .example { background-color: #eef6fb; border-left: 4px solid #007acc; padding: 10px 15px; margin: 10px 0; }
-    a.button { display: inline-block; margin-top: 20px; padding: 10px 16px; background-color: #007acc; color: white; border-radius: 6px; text-decoration: none; }
-    a.button:hover { background-color: #005b99; }
+    header {
+      background-color: #007acc;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+    h2 {
+      color: #005b99;
+      border-bottom: 2px solid #007acc;
+      padding-bottom: 5px;
+    }
+    p {
+      margin: 10px 0;
+    }
+    ul, ol {
+      margin-left: 30px;
+    }
+    section {
+      background-color: #ffffff;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 18px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    a.button:hover {
+      background-color: #005b99;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #666;
+    }
+    .example {
+      background-color: #eef6fb;
+      border-left: 4px solid #007acc;
+      padding: 10px 15px;
+      margin: 10px 0;
+    }
   </style>
 </head>
 <body>
-  <h1>Lecture 2 — Descriptive Statistics: Central Tendency, Dispersion, Skewness, and Kurtosis</h1>
+<body>
+ 
+  <header>
+    <h1>Lecture 2 — Measurement Scales</h1>
+    <p><em>Nominal, Ordinal, Interval,.</em></p>
+  </header>
 
-  <p>Descriptive statistics summarize and describe the main features of a dataset. They help understand data distribution, identify patterns, and provide a basis for further statistical analysis.</p>
 
-  <h2>1. Measures of Central Tendency</h2>
-  <p>Central tendency represents the typical or central value of a dataset. Common measures include:</p>
+    <p>
+      In biostatistics, understanding measurement scales is fundamental before performing any data analysis.  
+      Each variable type determines which statistical techniques and visualizations are appropriate in R.
+    </p>
 
-  <ul>
-    <li><strong>Mean (Arithmetic Mean):</strong> The sum of all values divided by the total number of values.  
-      <p class="formula">Mean (μ) = Σx / n</p>
-    </li>
-    <li><strong>Median:</strong> The middle value when data are arranged in ascending or descending order.</li>
-    <li><strong>Mode:</strong> The value that occurs most frequently in the dataset.</li>
-  </ul>
+    <!-- NOMINAL SCALE -->
+    <section>
+      <h3>Nominal Scale</h3>
+      <p>Nominal data classify observations into categories without any natural order. Each category is distinct and mutually exclusive.</p>
+      
+      <div class="example-box">
+        <strong>Examples in Biostatistics:</strong>
+        <ul>
+          <li>1️⃣ Blood group — A, B, AB, O</li>
+          <li>2️⃣ Gender — Male, Female, Other</li>
+          <li>3️⃣ Blood type — Positive / Negative (Rh factor)</li>
+          <li>4️⃣ Type of microorganism — Bacteria, Virus, Fungi, Parasite</li>
+          <li>5️⃣ Marital status — Single, Married, Divorced, Widowed</li>
+          <li>6️⃣ Religion or ethnicity in demographic data</li>
+          <li>7️⃣ Smoking status — Smoker, Non-smoker</li>
+          <li>8️⃣ Type of diet — Vegetarian, Non-vegetarian, Vegan</li>
+          <li>9️⃣ Type of hospital — Government, Private, Teaching</li>
+          <li>🔟 Diagnostic test result — Positive, Negative</li>
+        </ul>
 
-  <div class="example">
-    <strong>Examples:</strong>
-    <ul>
-      <li>Average heart rate of patients during a clinical trial (Mean).</li>
-      <li>Median fasting glucose level in a study of 50 participants.</li>
-      <li>The most common blood type among a population sample (Mode).</li>
-      <li>Average enzyme activity measured across multiple test samples (Mean).</li>
-    </ul>
-  </div>
+        <p><strong>Why analyze nominal data?</strong><br>
+        To study frequency distributions, proportions, and associations between categorical variables (e.g., using Chi-square tests).</p>
 
-  <h2>2. Measures of Dispersion</h2>
-  <p>Dispersion indicates the spread or variability of data. Higher dispersion means greater variability, and lower dispersion means data points are closer to the central value.</p>
+        <p><strong>In R:</strong></p>
+        <code>
+          blood <- factor(c("A","B","O","A","AB","O"))<br>
+          table(blood)<br>
+          prop.table(table(blood))<br>
+          barplot(table(blood), col="skyblue", main="Blood Group Distribution")
+        </code>
+      </div>
+    </section>
 
-  <ul>
-    <li><strong>Range:</strong> Difference between maximum and minimum values.  
-      <p class="formula">Range = Maximum - Minimum</p>
-    </li>
-    <li><strong>Variance (σ²):</strong> The average squared deviation from the mean.  
-      <p class="formula">σ² = Σ(x - μ)² / n</p>
-    </li>
-    <li><strong>Standard Deviation (σ):</strong> The square root of variance; shows spread in the same units as the data.  
-      <p class="formula">σ = √(Σ(x - μ)² / n)</p>
-    </li>
-    <li><strong>Coefficient of Variation (CV):</strong> Standard deviation expressed as a percentage of the mean.  
-      <p class="formula">CV (%) = (σ / μ) × 100</p>
-    </li>
-  </ul>
+    <!-- ORDINAL SCALE -->
+    <section>
+      <h3>Ordinal Scale</h3>
+      <p>Ordinal data have categories with a logical order or ranking, but the differences between ranks are not uniform.</p>
 
-  <div class="example">
-    <strong>Examples:</strong>
-    <ul>
-      <li>Range of blood pressure readings in a patient group.</li>
-      <li>Variance and standard deviation of cholesterol levels across 30 participants.</li>
-      <li>Coefficient of variation of hemoglobin concentration among samples to compare variability relative to mean.</li>
-      <li>Standard deviation of cell count measurements in multiple culture dishes.</li>
-    </ul>
-  </div>
+      <div class="example-box">
+        <strong>Examples in Biostatistics:</strong>
+        <ul>
+          <li>1️⃣ Pain intensity — Mild, Moderate, Severe</li>
+          <li>2️⃣ Disease stage — Stage I, II, III, IV</li>
+          <li>3️⃣ Likert scale — Strongly Disagree to Strongly Agree</li>
+          <li>4️⃣ Socioeconomic class — Low, Middle, High</li>
+          <li>5️⃣ BMI category — Underweight, Normal, Overweight, Obese</li>
+          <li>6️⃣ Risk level — Low, Medium, High</li>
+          <li>7️⃣ Tumor grade — G1, G2, G3</li>
+          <li>8️⃣ Satisfaction level of patients — Poor, Fair, Good, Excellent</li>
+          <li>9️⃣ Education level — Primary, Secondary, Graduate, Postgraduate</li>
+          <li>🔟 Burn severity — First, Second, Third degree</li>
+        </ul>
 
-  <h2>3. Skewness</h2>
-  <p>Skewness measures the asymmetry of the data distribution around the mean:</p>
+        <p><strong>Why analyze ordinal data?</strong><br>
+        To compare ordered responses (e.g., median, percentiles, nonparametric tests like Mann–Whitney U or Kruskal–Wallis).  
+        Visualized using bar plots or stacked charts.</p>
 
-  <ul>
-    <li><strong>Positive skew:</strong> Tail extends to the right (mean > median).</li>
-    <li><strong>Negative skew:</strong> Tail extends to the left (mean < median).</li>
-    <li><strong>Zero skew:</strong> Symmetric distribution (mean ≈ median ≈ mode).</li>
-  </ul>
+        <p><strong>In R:</strong></p>
+        <code>
+          pain <- factor(c("Mild","Moderate","Severe","Mild"), ordered=TRUE)<br>
+          summary(pain)<br>
+          barplot(table(pain), col="lightgreen", main="Pain Intensity Levels")
+        </code>
+      </div>
+    </section>
 
-  <p class="formula">Skewness = (Σ(x - μ)³ / n) / σ³</p>
+    <!-- INTERVAL SCALE -->
+    <section>
+      <h3>Interval Scale</h3>
+      <p>Interval data are numerical with equal intervals between values but no true zero point. Differences are meaningful; ratios are not.</p>
 
-  <div class="example">
-    <strong>Examples:</strong>
-    <ul>
-      <li>Positive skew: Most patients have low white blood cell counts, few have extremely high counts.</li>
-      <li>Negative skew: Most participants have high enzyme levels, few have extremely low levels.</li>
-      <li>Zero skew: Daily body temperature readings of a healthy population forming a symmetric distribution.</li>
-    </ul>
-  </div>
+      <div class="example-box">
+        <strong>Examples in Biostatistics:</strong>
+        <ul>
+          <li>1️⃣ Body temperature in °C or °F</li>
+          <li>2️⃣ IQ score</li>
+          <li>3️⃣ Psychological scale scores (e.g., depression score)</li>
+          <li>4️⃣ pH values of biological samples</li>
+          <li>5️⃣ Heart rate variability index (when rescaled)</li>
+          <li>6️⃣ Enzyme activity measured on arbitrary scale</li>
+          <li>7️⃣ Scale-based pain ratings converted numerically</li>
+          <li>8️⃣ Blood oxygen saturation deviation from baseline</li>
+          <li>9️⃣ ECG signal differences (after normalization)</li>
+          <li>🔟 Gene expression Z-scores</li>
+        </ul>
 
-  <h2>4. Kurtosis</h2>
-  <p>Kurtosis measures the “peakedness” or flatness of a distribution:</p>
+        <p><strong>Why analyze interval data?</strong><br>
+        You can calculate means, standard deviations, and use correlation or regression (as long as variables have consistent intervals).  
+        However, ratio comparisons (like “twice as much”) are not meaningful because there’s no absolute zero.</p>
 
-  <ul>
-    <li><strong>Leptokurtic:</strong> High peak, heavy tails (kurtosis > 3).</li>
-    <li><strong>Platykurtic:</strong> Flat peak, light tails (kurtosis < 3).</li>
-    <li><strong>Mesokurtic:</strong> Moderate peak, similar to normal distribution (kurtosis ≈ 3).</li>
-  </ul>
+        <p><strong>In R:</strong></p>
+        <code>
+          temp <- c(36.5, 37.0, 38.2, 36.8, 37.4)<br>
+          mean(temp); sd(temp)<br>
+          hist(temp, col="lightpink", main="Body Temperature (°C)")
+        </code>
+      </div>
+    </section>
 
-  <p class="formula">Kurtosis = (Σ(x - μ)⁴ / n) / σ⁴</p>
+    <!-- RATIO SCALE -->
+    <section>
+      <h3>Ratio Scale</h3>
+      <p>Ratio data have all the properties of interval data and also a meaningful zero — allowing computation of ratios.</p>
 
-  <div class="example">
-    <strong>Examples:</strong>
-    <ul>
-      <li>Leptokurtic: Blood glucose levels in diabetic patients where most values cluster near the mean but extremes exist.</li>
-      <li>Platykurtic: Height of seedlings in an experimental plot showing wide variation with no sharp peak.</li>
-      <li>Mesokurtic: Normally distributed body temperature measurements in a healthy population.</li>
-    </ul>
-  </div>
+      <div class="example-box">
+        <strong>Examples in Biostatistics:</strong>
+        <ul>
+          <li>1️⃣ Height (cm)</li>
+          <li>2️⃣ Weight (kg)</li>
+          <li>3️⃣ Blood pressure (mmHg)</li>
+          <li>4️⃣ Heart rate (beats per minute)</li>
+          <li>5️⃣ Serum cholesterol (mg/dL)</li>
+          <li>6️⃣ Glucose concentration (mg/dL)</li>
+          <li>7️⃣ White blood cell count (cells/µL)</li>
+          <li>8️⃣ Duration of hospital stay (days)</li>
+          <li>9️⃣ Age (years)</li>
+          <li>🔟 Reaction time (seconds)</li>
+        </ul>
 
-  <h2>5. Summary</h2>
-  <ul>
-    <li>Central tendency (mean, median, mode) identifies typical values in a dataset.</li>
-    <li>Dispersion (range, variance, standard deviation, CV) describes variability.</li>
-    <li>Skewness quantifies asymmetry; kurtosis measures peakedness of the distribution.</li>
-    <li>Descriptive statistics are essential to understand data patterns before applying inferential methods.</li>
-    <li>Practical examples in biology help relate abstract measures to real-world data variability.</li>
-  </ul>
+        <p><strong>Why analyze ratio data?</strong><br>
+        These are true quantitative variables. You can compute all descriptive statistics (mean, variance, coefficient of variation)  
+        and perform correlation, regression, and ANOVA in R. Visualization can include histograms, scatter plots, boxplots, etc.</p>
 
-  <a class="button" href="../module1.html">← Back to Module 1</a>
+        <p><strong>In R:</strong></p>
+        <code>
+          weight <- c(55,60,72,48,67,80)<br>
+          height <- c(1.65,1.68,1.75,1.60,1.70,1.82)<br>
+          bmi <- weight / (height^2)<br>
+          summary(bmi)<br>
+          plot(height, weight, col="purple", pch=19, main="Height vs Weight")
+        </code>
+      </div>
+    </section>
 
+    <!-- SUMMARY TABLE -->
+    <section>
+      <h3>Summary Table</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Scale</th><th>Data Type</th><th>Ordered?</th><th>Equal Intervals?</th><th>True Zero?</th><th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Nominal</td><td>Qualitative</td><td>No</td><td>No</td><td>No</td><td>Blood Group, Gender</td></tr>
+          <tr><td>Ordinal</td><td>Qualitative</td><td>Yes</td><td>No</td><td>No</td><td>Pain Score, Stage</td></tr>
+          <tr><td>Interval</td><td>Quantitative</td><td>Yes</td><td>Yes</td><td>No</td><td>Temperature, IQ</td></tr>
+          <tr><td>Ratio</td><td>Quantitative</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Weight, BP, Age</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="highlight-box">
+      <p><strong>Takeaway:</strong>  
+      Correctly identifying measurement scales ensures accurate statistical tests, proper visualizations, and valid interpretation of biomedical data in R.</p>
+    </div>
+
+    <div class="lecture-footer">
+      <p>End of Lecture 2 — Measurement Scales</p>
+    </div>
+  </main>
+
+  <!-- Footer include -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Back to top button -->
+  <button id="backToTop">↑</button>
+
+  <script>
+    async function includeHTML(id, file) {
+      const el = document.getElementById(id);
+      const resp = await fetch(file);
+      if (resp.ok) el.innerHTML = await resp.text();
+    }
+    includeHTML("navbar-placeholder", "navbar.html");
+    includeHTML("footer-placeholder", "footer.html");
+
+    const btn = document.getElementById("backToTop");
+    window.onscroll = () => btn.style.display = document.documentElement.scrollTop > 200 ? "block" : "none";
+    btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  </script>
+            <footer class="site-footer">
+  <p>© 2025 <strong>Dr. S. Narendra</strong> — Data Visualization with R Programming</p>
+</footer>
 </body>
 </html>
