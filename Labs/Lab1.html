@@ -6,27 +6,84 @@
   <title>Lab 1: Introduction to R Environment and Basic Operations</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   
-<style>
-  body {
-    background-color: #f9fafb;
-    user-select: none;
-    -webkit-touch-callout: none;
-  }
-
-  pre {
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 40px;
+      background-color: #f9fafc;
+      color: #333;
+      line-height: 1.7;
+    }
+    header {
+      background-color: #007acc;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+    h2 {
+      color: #005b99;
+      border-bottom: 2px solid #007acc;
+      padding-bottom: 5px;
+    }
+    p {
+      margin: 10px 0;
+    }
+    ul, ol {
+      margin-left: 30px;
+    }
+    section {
+      background-color: #ffffff;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 18px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    a.button:hover {
+      background-color: #005b99;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #666;
+    }
+    .example {
+      background-color: #eef6fb;
+      border-left: 4px solid #007acc;
+      padding: 10px 15px;
+      margin: 10px 0;
+    }
+    .top-right-logo {
+  position: fixed;      /* or absolute */
+  top: 10px;            /* distance from top */
+  right: 10px;          /* distance from right */
+  width: 100px;         /* adjust as needed */
+  height: auto;         /* preserve aspect ratio */
+  z-index: 1000;        /* ensure it stays on top */
+}
+     pre {
     white-space: pre-wrap;
     word-wrap: break-word;
   }
 
-  .top-right-logo {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 100px;
-    height: auto;
-    z-index: 1000;
-  }
-</style>
+  </style>
+ 
 
 
   <script>
