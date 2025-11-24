@@ -19,6 +19,15 @@
       white-space: pre-wrap;
       word-wrap: break-word;
     }
+    .top-right-logo {
+  position: fixed;      /* or absolute */
+  top: 10px;            /* distance from top */
+  right: 10px;          /* distance from right */
+  width: 100px;         /* adjust as needed */
+  height: auto;         /* preserve aspect ratio */
+  z-index: 1000;        /* ensure it stays on top */
+}
+
   </style>
 
   <script>
@@ -58,6 +67,7 @@
 
   <!-- MAIN CONTENT -->
   <main class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-8 mt-8 mb-10">
+<img src="images/wos ppt.png" alt="University Logo" class="top-right-logo">
 
     <!-- AIM -->
     <section class="mb-8">
