@@ -20,26 +20,21 @@
       word-wrap: break-word;
     }
     .top-right-logo {
-  position: fixed;      /* or absolute */
-  top: 10px;            /* distance from top */
-  right: 10px;          /* distance from right */
-  width: 100px;         /* adjust as needed */
-  height: auto;         /* preserve aspect ratio */
-  z-index: 1000;        /* ensure it stays on top */
-}
-
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 100px;
+      height: auto;
+      z-index: 1000;
+    }
   </style>
 
   <script>
-    // Disable right-click
     document.addEventListener('contextmenu', event => event.preventDefault());
-
-    // Disable copy, cut, paste
     ['copy', 'cut', 'paste'].forEach(evt =>
       document.addEventListener(evt, e => e.preventDefault())
     );
 
-    // Block PrintScreen key
     document.addEventListener('keydown', function(e) {
       if (e.key === "PrintScreen") {
         alert("Screenshots are disabled on this page.");
@@ -47,7 +42,6 @@
       }
     });
 
-    // Visual blur effect if someone presses PrintScreen
     window.addEventListener('keyup', function(e) {
       if (e.key === "PrintScreen") {
         document.body.style.filter = "blur(6px)";
@@ -58,48 +52,53 @@
 </head>
 
 <body class="text-gray-800 leading-relaxed">
+
 <img src="images/wos ppt.png" alt="University Logo" class="top-right-logo">
 
-  <!-- HEADER -->
-  <header class="bg-blue-700 text-white py-6 text-center shadow-md">
-    <h1 class="text-3xl font-bold">Lab 1: Introduction to R Environment and Basic Operations</h1>
-    <p class="text-lg mt-2">Practice using RStudio, define variables, loops, and user-defined functions for simple data operations.</p>
-  </header>
+<!-- HEADER -->
+<header class="bg-blue-700 text-white py-6 text-center shadow-md">
+  <h1 class="text-3xl font-bold">Lab 1: Introduction to R Environment and Basic Operations</h1>
+  <p class="text-lg mt-2">Learn variables, loops, functions, vectors, sequences, conditions, and simple data handling in R.</p>
+</header>
 
-  <!-- MAIN CONTENT -->
-  <main class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-8 mt-8 mb-10">
+<!-- MAIN CONTENT -->
+<main class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-8 mt-8 mb-10">
 
-    <!-- AIM -->
-    <section class="mb-8">
-      <h2 class="text-2xl font-semibold text-blue-700 mb-3">Aim</h2>
-      <p>
-        To get familiar with the R environment and perform basic operations such as defining variables, 
-        using loops, and creating user-defined functions in RStudio.
-      </p>
-    </section>
+  <!-- AIM -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Aim</h2>
+    <p>
+      To understand the R working environment, perform basic operations, explore vectors, use loops, implement conditions, 
+      create user-defined functions, and work with basic data structures in RStudio.
+    </p>
+  </section>
 
-    <!-- ALGORITHM -->
-    <section class="mb-8">
-      <h2 class="text-2xl font-semibold text-blue-700 mb-3">Algorithm</h2>
-      <ol class="list-decimal list-inside space-y-1">
-        <li>Open RStudio and set the working directory.</li>
-        <li>Define variables and perform basic arithmetic operations.</li>
-        <li>Use control structures such as <code>for</code> and <code>while</code> loops.</li>
-        <li>Create a user-defined function to perform a specific task.</li>
-        <li>Run the script and verify the outputs in the R console.</li>
-      </ol>
-    </section>
+  <!-- ALGORITHM -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Algorithm</h2>
+    <ol class="list-decimal list-inside space-y-1">
+      <li>Open RStudio and set the working directory.</li>
+      <li>Define numeric variables and perform arithmetic operations.</li>
+      <li>Create vectors and sequences using R functions.</li>
+      <li>Use conditional statements such as <code>if</code> and <code>if-else</code>.</li>
+      <li>Use <code>for</code> and <code>while</code> loops for iteration.</li>
+      <li>Create a user-defined function and call it with arguments.</li>
+      <li>Create a simple data frame and access its elements.</li>
+      <li>Execute the script and observe outputs in the console.</li>
+    </ol>
+  </section>
 
-    <!-- SOURCE CODE -->
-    <section class="mb-8">
-      <h2 class="text-2xl font-semibold text-blue-700 mb-3">Source Code</h2>
-      <pre class="bg-gray-900 text-green-200 p-4 rounded-lg overflow-x-auto text-sm"><code># Lab 1: Introduction to R Environment and Basic Operations
+  <!-- SOURCE CODE -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Source Code</h2>
 
-# 1. Define variables
+<pre class="bg-gray-900 text-green-200 p-4 rounded-lg overflow-x-auto text-sm"><code># Lab 1: Introduction to R Environment and Basic Operations
+
+# 1. Define Variables
 a <- 10
 b <- 5
 
-# 2. Perform arithmetic operations
+# Arithmetic operations
 sum_result <- a + b
 diff_result <- a - b
 prod_result <- a * b
@@ -110,45 +109,88 @@ cat("Difference:", diff_result, "\n")
 cat("Product:", prod_result, "\n")
 cat("Division:", div_result, "\n\n")
 
-# 3. Using loops
-cat("For Loop Example:\n")
+# 2. Working with Vectors
+vec <- c(10, 20, 30, 40, 50)
+cat("Vector Elements:", vec, "\n")
+cat("Vector Mean:", mean(vec), "\n")
+cat("Vector Length:", length(vec), "\n\n")
+
+# 3. Sequences in R
+seq1 <- seq(1, 10, by = 2)
+cat("Sequence (1 to 10, step 2):", seq1, "\n\n")
+
+# 4. Conditional Statements
+num <- 12
+if (num %% 2 == 0) {
+  cat(num, "is Even\n\n")
+} else {
+  cat(num, "is Odd\n\n")
+}
+
+# 5. For Loop
+cat("For Loop Result:\n")
 for (i in 1:5) {
   cat("Iteration:", i, "\n")
 }
 
-cat("\nWhile Loop Example:\n")
+cat("\n")
+
+# 6. While Loop
+cat("While Loop Result:\n")
 x <- 1
 while (x <= 5) {
   cat("x =", x, "\n")
   x <- x + 1
 }
 
-# 4. User-defined function
+cat("\n")
+
+# 7. User-Defined Function
 add_numbers <- function(x, y) {
   result <- x + y
   return(result)
 }
 
-cat("\nFunction Output:\n")
-cat("add_numbers(12, 8) =", add_numbers(12, 8), "\n")</code></pre>
-    </section>
+cat("Function Output: add_numbers(12, 8) =", add_numbers(12, 8), "\n\n")
 
-    <!-- EXPECTED OUTPUT -->
-    <section class="mb-8">
-      <h2 class="text-2xl font-semibold text-blue-700 mb-3">Expected Output</h2>
-      <pre class="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm"><code>Sum: 15
+# 8. Simple Data Frame
+students <- data.frame(
+  Name = c("Ravi", "Teja", "Asha"),
+  Marks = c(85, 92, 78)
+)
+
+cat("Student Data Frame:\n")
+print(students)
+
+cat("\nMarks of Teja =", students$Marks[2], "\n")
+</code></pre>
+  </section>
+
+  <!-- EXPECTED OUTPUT -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Expected Output</h2>
+
+<pre class="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm"><code>Sum: 15
 Difference: 5
 Product: 50
 Division: 2
 
-For Loop Example:
+Vector Elements: 10 20 30 40 50
+Vector Mean: 30
+Vector Length: 5
+
+Sequence (1 to 10, step 2): 1 3 5 7 9
+
+12 is Even
+
+For Loop Result:
 Iteration: 1
 Iteration: 2
 Iteration: 3
 Iteration: 4
 Iteration: 5
 
-While Loop Example:
+While Loop Result:
 x = 1
 x = 2
 x = 3
@@ -156,28 +198,37 @@ x = 4
 x = 5
 
 Function Output:
-add_numbers(12, 8) = 20</code></pre>
-    </section>
+add_numbers(12, 8) = 20
 
-    <!-- ONLINE COMPILER BUTTON -->
-    <section class="text-center mt-8">
-      <h2 class="text-2xl font-semibold text-blue-700 mb-4">Try It Online</h2>
-      <a href="https://onecompiler.com/r" 
-         target="_blank" 
-         class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
-         🔹 Open Online R Compiler
-      </a>
-      <p class="text-sm text-gray-500 mt-2">
-        Opens in new tab — powered by <a href="https://onecompiler.com/r" class="text-blue-600 hover:underline" target="_blank">OneCompiler</a>.
-      </p>
-    </section>
+Student Data Frame:
+  Name Marks
+1 Ravi    85
+2 Teja    92
+3 Asha    78
 
-  </main>
+Marks of Teja = 92
+</code></pre>
+  </section>
 
-  <!-- FOOTER -->
-  <footer class="text-center text-gray-600 py-6 border-t mt-10">
-    <p> Surnam Narendra © 2025 Data Visualization With R </p>
-  </footer>
+  <!-- ONLINE COMPILER BUTTON -->
+  <section class="text-center mt-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-4">Try It Online</h2>
+    <a href="https://onecompiler.com/r" 
+       target="_blank" 
+       class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+       🔹 Open Online R Compiler
+    </a>
+    <p class="text-sm text-gray-500 mt-2">
+      Opens in new tab — powered by OneCompiler.
+    </p>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="text-center text-gray-600 py-6 border-t mt-10">
+  <p> Surnam Narendra © 2025 Data Visualization With R </p>
+</footer>
 
 </body>
 </html>
