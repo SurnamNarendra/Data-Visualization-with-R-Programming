@@ -186,10 +186,19 @@
   66% { transform: translateY(-50%); }
   100% { transform: translateY(0); }
 }
+	   .top-right-logo {
+  position: fixed;      /* or absolute */
+  top: 10px;            /* distance from top */
+  right: 10px;          /* distance from right */
+  width: 100px;         /* adjust as needed */
+  height: auto;         /* preserve aspect ratio */
+  z-index: 1000;        /* ensure it stays on top */
+}
 
   </style>
 </head>
 <body>
+ <img src="images/wos ppt.png" alt="University Logo" class="top-right-logo">
 
   <header>
     <div class="navwrap">
