@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecture 1 — Introduction to Data and Statistical Thinking</title>
+  <title>Lecture 2 — Measurements Scale</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -67,14 +67,23 @@
       padding: 10px 15px;
       margin: 10px 0;
     }
+     .top-right-logo {
+  position: fixed;      /* or absolute */
+  top: 10px;            /* distance from top */
+  right: 10px;          /* distance from right */
+  width: 100px;         /* adjust as needed */
+  height: auto;         /* preserve aspect ratio */
+  z-index: 1000;        /* ensure it stays on top */
+}
   </style>
 </head>
 <body>
 <body>
- 
+ <img src="images/wos ppt.png" alt="University Logo" class="top-right-logo">
+
   <header>
     <h1>Lecture 2 — Measurement Scales</h1>
-    <p><em>Nominal, Ordinal, Interval,.</em></p>
+    <p><em>Nominal, Ordinal, Interval,Ratio.</em></p>
   </header>
 
 
@@ -264,8 +273,6 @@
     window.onscroll = () => btn.style.display = document.documentElement.scrollTop > 200 ? "block" : "none";
     btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
   </script>
-            <footer class="site-footer">
-  <p>© 2025 <strong>Dr. S. Narendra</strong> — Data Visualization with R Programming</p>
-</footer>
+            
 </body>
 </html>
