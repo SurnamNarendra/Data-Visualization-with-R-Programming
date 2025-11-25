@@ -1,28 +1,66 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecture 4 — Sampling and the Central Limit Theorem</title>
+  <title>Lecture 4 — Measures of Dispersion</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 40px;
-      background-color: #f9f9f9;
+      background-color: #f9fafc;
       color: #333;
       line-height: 1.7;
     }
-    h1 { color: #007acc; }
-    h2 { color: #005b99; margin-top: 30px; }
-    p { margin: 10px 0; }
-    ul, ol { margin-left: 30px; }
-    .formula {
-      background-color: #eef7ff;
-      padding: 8px;
-      border-radius: 5px;
-      font-family: "Courier New", monospace;
+    header {
+      background-color: #007acc;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+    h2 {
+      color: #005b99;
+      border-bottom: 2px solid #007acc;
+      padding-bottom: 5px;
+    }
+    p {
+      margin: 10px 0;
+    }
+    ul, ol {
+      margin-left: 30px;
+    }
+    section {
+      background-color: #ffffff;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    a.button {
       display: inline-block;
-      margin: 5px 0;
+      margin-top: 30px;
+      padding: 12px 18px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    a.button:hover {
+      background-color: #005b99;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #666;
     }
     .example {
       background-color: #eef6fb;
@@ -30,110 +68,262 @@
       padding: 10px 15px;
       margin: 10px 0;
     }
-    a.button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 16px;
-      background-color: #007acc;
-      color: white;
-      border-radius: 6px;
-      text-decoration: none;
-    }
-    a.button:hover { background-color: #005b99; }
+     .top-right-logo {
+  position: fixed;      /* or absolute */
+  top: 10px;            /* distance from top */
+  right: 10px;          /* distance from right */
+  width: 100px;         /* adjust as needed */
+  height: auto;         /* preserve aspect ratio */
+  z-index: 1000;        /* ensure it stays on top */
+}
   </style>
 </head>
 <body>
+<body>
+ <img src="images/wos ppt.png" alt="University Logo" class="top-right-logo">
 
-  <h1>Lecture 4 — Sampling and the Central Limit Theorem</h1>
+  <header>
+    <h1>Lecture 4 — Measures of Dispersion</h1>
+  </header>
 
-  <p>This lecture introduces the concepts of sampling, different sampling methods, the idea of sampling distributions, and the Central Limit Theorem (CLT), which is fundamental in inferential statistics.</p>
+<h1>Measures of Dispersion</h1>
 
-  <h2>1. Population and Sample</h2>
-  <p>
-    A <strong>population</strong> is the complete set of individuals or observations of interest. 
-    A <strong>sample</strong> is a subset selected from the population for analysis. Sampling allows us to make inferences about the population when studying the entire population is impractical.
-  </p>
+<div class="section">
+<h2>1. Definition</h2>
+<p>
+Measures of Dispersion describe how spread out or scattered the data values are around the central value.
+They help understand the variability, consistency, and reliability of a dataset.
+</p>
+</div>
 
-  <div class="example">
-    <strong>Examples:</strong>
-    
-    <ul>
-      <li>Population: All patients with diabetes in a city; Sample: 200 patients selected randomly from hospitals.</li>
-      <li>Population: All blood donors; Sample: 500 donors analyzed for hemoglobin levels.</li>
-      <li>Population: All leaves of a plant species; Sample: 50 leaves chosen for chlorophyll content measurement.</li>
-    </ul>
-  </div>
+<div class="section">
+<h2>2. Uses</h2>
 
-  <h2>2. Types of Sampling Methods</h2>
-  <p>There are several techniques to select representative samples from a population:</p>
+<h3>General Real-Life Uses</h3>
+<ul>
+<li>Understanding variation in students' marks</li>
+<li>Variability in monthly expenses</li>
+<li>Differences in salaries among employees</li>
+<li>Consistency of product quality in manufacturing</li>
+</ul>
 
-  <ul>
-    <li><strong>Simple Random Sampling:</strong> Every individual has an equal chance of selection.  
-      <em>Example:</em> Randomly selecting 100 patients from a hospital database.</li>
-    <li><strong>Systematic Sampling:</strong> Selecting every k-th individual from a list.  
-      <em>Example:</em> Choosing every 5th patient visiting a clinic for blood sugar measurement.</li>
-    <li><strong>Stratified Sampling:</strong> Population divided into strata, then samples drawn proportionally.  
-      <em>Example:</em> Sampling equal numbers of males and females to study cholesterol levels.</li>
-    <li><strong>Cluster Sampling:</strong> Population divided into clusters, some clusters are randomly selected.  
-      <em>Example:</em> Selecting certain hospitals in a city and including all patients from those hospitals.</li>
-  </ul>
+<h3>Uses in Biology</h3>
+<ul>
+<li>Variation in blood pressure across patients</li>
+<li>Spread of bacterial colony sizes in culture plates</li>
+<li>Variability in plant height in experimental plots</li>
+<li>Differences in enzyme activity across replicates</li>
+<li>Studying spread of glucose levels in diabetic subjects</li>
+</ul>
+</div>
 
-  <h2>3. Sampling Distribution</h2>
-  <p>
-    A <strong>sampling distribution</strong> is the probability distribution of a statistic (like mean or proportion) obtained from multiple random samples of the same size from a population.
-  </p>
+<hr>
 
-  <p class="formula">
-    Standard Error of the Mean (SEM): <br>
-    <strong>SEM = σ / √n</strong>
-  </p>
-  <p>where σ = population standard deviation, n = sample size.</p>
+<h1>3. Types of Measures of Dispersion</h1>
 
-  <div class="example">
-    <strong>Examples:</strong>
-    <ul>
-      <li>Distribution of mean fasting glucose from 100 random samples of 30 patients each.</li>
-      <li>Distribution of average white blood cell counts from repeated random samples of 20 blood samples.</li>
-    </ul>
-  </div>
+<!-- ========================= RANGE ============================= -->
+<div class="section">
+<h2>A. Range</h2>
 
-  <h2>4. Central Limit Theorem (CLT)</h2>
-  <p>
-    The CLT states that the sampling distribution of the sample mean will be approximately normal, regardless of the population distribution, if the sample size is sufficiently large (n ≥ 30). This is crucial for applying inferential statistics.
-  </p>
+<h3>Definition</h3>
+<p>
+Range is the difference between the maximum and minimum values in a dataset.
+</p>
 
-  <p class="formula">
-    If X̄ = sample mean, μ = population mean, σ = population standard deviation, n = sample size:<br>
-    X̄ ~ N(μ, σ²/n)
-  </p>
+<h3>Real-Life Examples</h3>
+<ul>
+<li>Difference between highest and lowest temperature in a day</li>
+<li>Range of salaries in a company</li>
+<li>Minimum and maximum marks in a class</li>
+</ul>
 
-  <div class="example">
-    <strong>Examples:</strong>
-    <ul>
-      <li>Average blood pressure of 50 randomly selected patients follows an approximately normal distribution, even if individual blood pressures are skewed.</li>
-      <li>Mean enzyme activity from repeated samples of cell cultures approximates a normal distribution.</li>
-      <li>Sampling mean heights of plants from multiple plots follows normal distribution regardless of plant height distribution in each plot.</li>
-    </ul>
-  </div>
+<h3>Biology Examples</h3>
+<ul>
+<li>Range of plant heights in a greenhouse experiment</li>
+<li>Difference between highest and lowest blood glucose levels in patients</li>
+<li>Maximum and minimum bacterial colony diameters</li>
+</ul>
 
-  <h2>5. Importance of Sampling and CLT</h2>
-  <ul>
-    <li>Enables reliable inference about populations using sample statistics.</li>
-    <li>CLT allows the use of normal distribution for confidence intervals and hypothesis testing, even with non-normal populations.</li>
-    <li>Reduces cost and effort in data collection while maintaining accuracy.</li>
-    <li>Essential for designing experiments, clinical trials, and surveys.</li>
-  </ul>
+<h3>R Code</h3>
+<code>
+values <- c(10, 15, 20, 30, 40)<br>
+range(values)<br>
+max(values) - min(values)
+</code>
+</div>
 
-  <h2>6. Summary</h2>
-  <ul>
-    <li>Sampling allows analysis of a subset to make conclusions about the population.</li>
-    <li>Different sampling methods ensure representativeness and reduce bias.</li>
-    <li>Sampling distributions describe the variation of sample statistics.</li>
-    <li>The Central Limit Theorem ensures approximate normality of sample means, enabling inferential procedures.</li>
-    <li>Biological and medical examples illustrate the applicability of these concepts in research.</li>
-  </ul>
+<!-- ========================= VARIANCE ============================= -->
+<div class="section">
+<h2>B. Variance</h2>
 
-  <a class="button" href="../module1.html">← Back to Module 1</a>
+<h3>Definition</h3>
+<p>
+Variance measures the average squared deviation of each value from the mean.
+Higher variance means higher spread.
+</p>
 
+<h3>Real-Life Examples</h3>
+<ul>
+<li>Variation in petrol prices across cities</li>
+<li>Fluctuation in daily stock market prices</li>
+<li>Consistency of students' test scores</li>
+</ul>
+
+<h3>Biology Examples</h3>
+<ul>
+<li>Variation in enzyme activity across replicates</li>
+<li>Spread of blood pressure readings</li>
+<li>Variance in cell sizes in microscopy images</li>
+</ul>
+
+<h3>R Code</h3>
+<code>
+values <- c(12, 15, 18, 22, 30)<br>
+var(values)
+</code>
+</div>
+
+<!-- ========================= STANDARD DEVIATION ============================= -->
+<div class="section">
+<h2>C. Standard Deviation (SD)</h2>
+
+<h3>Definition</h3>
+<p>
+Standard Deviation is the square root of variance and indicates how far data typically deviates from the mean.
+</p>
+
+<h3>Real-Life Examples</h3>
+<ul>
+<li>Consistency of monthly bills</li>
+<li>Variation in travel time due to traffic</li>
+<li>Spread of prices for the same product in different shops</li>
+</ul>
+
+<h3>Biology Examples</h3>
+<ul>
+<li>Standard deviation of fasting glucose levels</li>
+<li>Variation in heart rate measured by sensors</li>
+<li>SD of plant growth over multiple treatment conditions</li>
+</ul>
+
+<h3>R Code</h3>
+<code>
+values <- c(10, 12, 15, 18, 25)<br>
+sd(values)
+</code>
+</div>
+
+<!-- ========================= COEFFICIENT OF VARIATION ============================= -->
+<div class="section">
+<h2>D. Coefficient of Variation (CV)</h2>
+
+<h3>Definition</h3>
+<p>
+CV = (Standard Deviation / Mean) × 100. <br>
+Used to compare variability between datasets with different units or scales.
+</p>
+
+<h3>Real-Life Examples</h3>
+<ul>
+<li>Comparing variation in petrol price vs. milk price</li>
+<li>Comparing consistency of two machines' outputs</li>
+</ul>
+
+<h3>Biology Examples</h3>
+<ul>
+<li>Comparing glucose variability between patients</li>
+<li>Assessing experimental reproducibility in enzyme assays</li>
+<li>Comparing plant growth variation across treatments</li>
+</ul>
+
+<h3>R Code</h3>
+<code>
+values <- c(20, 22, 25, 30, 35)<br>
+cv <- (sd(values) / mean(values)) * 100<br>
+cv
+</code>
+</div>
+
+<!-- ========================= IQR ============================= -->
+<div class="section">
+<h2>E. Interquartile Range (IQR)</h2>
+
+<h3>Definition</h3>
+<p>
+IQR is the difference between the 75th percentile (Q3) and the 25th percentile (Q1).  
+It measures the spread of the middle 50% of data.
+</p>
+
+<h3>Real-Life Examples</h3>
+<ul>
+<li>IQR of house prices in a city</li>
+<li>Spread of students’ marks in an exam</li>
+</ul>
+
+<h3>Biology Examples</h3>
+<ul>
+<li>IQR of gene expression values</li>
+<li>IQR of heart rate variability data</li>
+<li>Spread of plant height after removing extreme values</li>
+</ul>
+
+<h3>R Code</h3>
+<code>
+values <- c(5, 7, 9, 15, 30, 32, 35)<br>
+IQR(values)
+</code>
+</div>
+
+<!-- ========================= MEAN ABSOLUTE DEVIATION ============================= -->
+<div class="section">
+<h2>F. Mean Absolute Deviation (MAD)</h2>
+
+<h3>Definition</h3>
+<p>
+MAD is the average of absolute deviations from the mean.  
+It is a robust measure of variability.
+</p>
+
+<h3>Real-Life Examples</h3>
+<ul>
+<li>Average deviation of students' marks from class mean</li>
+<li>Deviation in daily expenses from monthly mean</li>
+</ul>
+
+<h3>Biology Examples</h3>
+<ul>
+<li>MAD of plant growth measurements</li>
+<li>Deviation in blood pressure readings from average</li>
+<li>MAD of bacterial colony diameters</li>
+</ul>
+
+<h3>R Code</h3>
+<code>
+values <- c(10, 12, 15, 18, 25)<br>
+mad(values)
+</code>
+</div>
+  
+
+  <!-- Footer include -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Back to top button -->
+  <button id="backToTop">↑</button>
+
+  <script>
+    async function includeHTML(id, file) {
+      const el = document.getElementById(id);
+      const resp = await fetch(file);
+      if (resp.ok) el.innerHTML = await resp.text();
+    }
+    includeHTML("navbar-placeholder", "navbar.html");
+    includeHTML("footer-placeholder", "footer.html");
+
+    const btn = document.getElementById("backToTop");
+    window.onscroll = () => btn.style.display = document.documentElement.scrollTop > 200 ? "block" : "none";
+    btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  </script>
+            
 </body>
 </html>
