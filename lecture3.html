@@ -1,28 +1,66 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecture 3 — Probability and Probability Distributions</title>
+  <title>Lecture 3 — Measures of Central Tendency</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 40px;
-      background-color: #f9f9f9;
+      background-color: #f9fafc;
       color: #333;
       line-height: 1.7;
     }
-    h1 { color: #007acc; }
-    h2 { color: #005b99; margin-top: 30px; }
-    p { margin: 10px 0; }
-    ul, ol { margin-left: 30px; }
-    .formula {
-      background-color: #eef7ff;
-      padding: 8px;
-      border-radius: 5px;
-      font-family: "Courier New", monospace;
+    header {
+      background-color: #007acc;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+    h2 {
+      color: #005b99;
+      border-bottom: 2px solid #007acc;
+      padding-bottom: 5px;
+    }
+    p {
+      margin: 10px 0;
+    }
+    ul, ol {
+      margin-left: 30px;
+    }
+    section {
+      background-color: #ffffff;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    a.button {
       display: inline-block;
-      margin: 5px 0;
+      margin-top: 30px;
+      padding: 12px 18px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    a.button:hover {
+      background-color: #005b99;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #666;
     }
     .example {
       background-color: #eef6fb;
@@ -30,102 +68,264 @@
       padding: 10px 15px;
       margin: 10px 0;
     }
-    a.button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 16px;
-      background-color: #007acc;
-      color: white;
-      border-radius: 6px;
-      text-decoration: none;
-    }
-    a.button:hover { background-color: #005b99; }
+     .top-right-logo {
+  position: fixed;      /* or absolute */
+  top: 10px;            /* distance from top */
+  right: 10px;          /* distance from right */
+  width: 100px;         /* adjust as needed */
+  height: auto;         /* preserve aspect ratio */
+  z-index: 1000;        /* ensure it stays on top */
+}
   </style>
 </head>
 <body>
+<body>
+ <img src="images/wos ppt.png" alt="University Logo" class="top-right-logo">
 
-  <h1>Lecture 3 — Probability and Probability Distributions</h1>
+  <header>
+    <h1>Lecture 3 — Measures of Central Tendency</h1>
+  </header>
 
-  <p>This lecture introduces probability as the foundation of statistical inference, followed by probability distributions, the normal distribution, and standard scores (Z-scores) used for comparing and interpreting data.</p>
+<h1>Measures of Central Tendency</h1>
 
-  <h2>1. Probability: Concept and Definition</h2>
-  <p>Probability measures the likelihood of an event occurring. It ranges from 0 (impossible) to 1 (certain).</p>
+<div class="section">
+<h2>1. Definition</h2>
+<p>
+Measures of Central Tendency are statistical methods used to identify the center or typical value of a dataset.
+They summarize large datasets using a single representative value.
+</p>
+</div>
 
-  <p class="formula">P(Event) = Number of favorable outcomes / Total number of outcomes</p>
+<div class="section">
+<h2>2. Uses</h2>
 
-  <div class="example"> 
-    <strong>Examples:</strong>
-    <ul>
-      <li>Probability of randomly selecting a male participant from a group of 60 males and 40 females: P(Male) = 60 / 100 = 0.6</li>
-      <li>Probability of drawing a red blood cell from a blood sample where 70% are red: P(RBC) = 0.7</li>
-      <li>Probability of a patient developing a certain enzyme deficiency based on historical data: P(Deficiency) = Number affected / Total patients</li>
-    </ul>
-  </div>
+<h3>General Real-Life Uses</h3>
+<ul>
+<li>Summarizing student marks</li>
+<li>Finding average salary of employees</li>
+<li>Customer behavior analysis</li>
+<li>Understanding product pricing</li>
+</ul>
 
-  <h2>2. Types of Probability</h2>
-  <ul>
-    <li><strong>Theoretical Probability:</strong> Based on reasoning or known possible outcomes.</li>
-    <li><strong>Experimental Probability:</strong> Based on observed data or experiments.</li>
-    <li><strong>Conditional Probability:</strong> Probability of an event given another event has occurred.  
-      <p class="formula">P(A|B) = P(A ∩ B) / P(B)</p>
-    </li>
-  </ul>
+<h3>Uses in Biology</h3>
+<ul>
+<li>Average glucose level in diabetic patients</li>
+<li>Mean bacterial growth rate</li>
+<li>Average plant height in experiments</li>
+<li>Common blood group distribution in a population</li>
+</ul>
+</div>
 
-  <h2>3. Probability Distributions</h2>
-  <p>A probability distribution describes how probabilities are distributed over possible outcomes of a random variable.</p>
+<hr>
 
-  <ul>
-    <li><strong>Discrete Probability Distribution:</strong> Random variable takes specific, countable values.  
-      <em>Example:</em> Number of patients with high blood pressure in a sample of 50.</li>
-    <li><strong>Continuous Probability Distribution:</strong> Random variable can take any value in a range.  
-      <em>Example:</em> Blood glucose level of patients measured in mg/dL.</li>
-  </ul>
+<h1>3. Types of Central Tendency</h1>
 
-  <h2>4. Normal Distribution</h2>
-  <p>The normal distribution is a symmetric, bell-shaped distribution defined by its mean (μ) and standard deviation (σ).</p>
+<!-- ========================= MEAN ============================= -->
+<div class="section">
+<h2>A. Mean (Average)</h2>
 
-  <p class="formula">f(x) = (1 / (σ√2π)) × e^(-(x-μ)² / 2σ²)</p>
+<h3>Definition</h3>
+<p>
+Mean is the sum of all observations divided by the total number of observations.
+</p>
 
-  <p>Characteristics of normal distribution:</p>
-  <ul>
-    <li>Mean = Median = Mode</li>
-    <li>68% of values lie within ±1σ, 95% within ±2σ, 99.7% within ±3σ</li>
-    <li>Symmetrical around the mean</li>
-  </ul>
+<h3>Real-Life Examples</h3>
+<ul>
+<li>Average electricity bill</li>
+<li>Average marks obtained by students</li>
+<li>Mean fuel consumption of vehicles</li>
+</ul>
 
-  <div class="example">
-    <strong>Examples:</strong>
-    <ul>
-      <li>Distribution of body temperature in healthy adults.</li>
-      <li>Serum cholesterol levels across a large patient population.</li>
-      <li>Height of plants in a controlled experiment.</li>
-    </ul>
-  </div>
+<h3>Biology Examples</h3>
+<ul>
+<li>Average enzyme activity</li>
+<li>Mean glucose level over 10 days</li>
+<li>Average weight of lab animals</li>
+</ul>
 
-  <h2>5. Z-Scores (Standard Scores)</h2>
-  <p>Z-scores indicate how many standard deviations a value is from the mean, allowing comparison across different scales.</p>
+<h3>R Code</h3>
+<code>
+values <- c(120, 130, 140, 110, 150)<br>
+mean(values)
+</code>
+</div>
 
-  <p class="formula">Z = (X - μ) / σ</p>
+<!-- ========================= MEDIAN ============================= -->
+<div class="section">
+<h2>B. Median</h2>
 
-  <div class="example">
-    <strong>Examples:</strong>
-    <ul>
-      <li>A patient’s blood glucose of 150 mg/dL when the mean is 120 mg/dL and SD = 15 mg/dL: Z = (150-120)/15 = 2 → 2 SD above mean.</li>
-      <li>Comparing enzyme activity between two experiments with different units using Z-scores.</li>
-      <li>Standardizing patient body weights to detect outliers.</li>
-    </ul>
-  </div>
+<h3>Definition</h3>
+<p>
+Median is the middle value of an ordered dataset. It is especially useful in skewed data.
+</p>
 
-  <h2>6. Summary</h2>
-  <ul>
-    <li>Probability measures the likelihood of events and forms the basis for inferential statistics.</li>
-    <li>Probability distributions describe how probabilities are spread across outcomes.</li>
-    <li>The normal distribution is key due to its symmetry and natural occurrence in many datasets.</li>
-    <li>Z-scores allow standardization and comparison across datasets with different means and SDs.</li>
-    <li>Biological examples such as blood pressure, glucose levels, and enzyme activity help illustrate these concepts.</li>
-  </ul>
+<h3>Real-Life Examples</h3>
+<ul>
+<li>Median household income</li>
+<li>Median house price</li>
+<li>Median age of employees</li>
+</ul>
 
-  <a class="button" href="../module1.html">← Back to Module 1</a>
+<h3>Biology Examples</h3>
+<ul>
+<li>Median survival time of cancer patients</li>
+<li>Median growth rate of plants with outliers</li>
+<li>Median viral load where a few values are extremely high</li>
+</ul>
 
+<h3>R Code</h3>
+<code>
+values <- c(2, 4, 10, 50, 100)<br>
+median(values)
+</code>
+</div>
+
+<!-- ========================= MODE ============================= -->
+<div class="section">
+<h2>C. Mode</h2>
+
+<h3>Definition</h3>
+<p>
+Mode is the value that occurs most frequently in a dataset.
+</p>
+
+<h3>Real-Life Examples</h3>
+<ul>
+<li>Most common shoe size</li>
+<li>Most used mobile brand</li>
+<li>Most common problem in customer complaints</li>
+</ul>
+
+<h3>Biology Examples</h3>
+<ul>
+<li>Most common blood group</li>
+<li>Most frequent bacteria species in a sample</li>
+<li>Most common flower color in a population</li>
+</ul>
+
+<h3>R Code</h3>
+<code>
+get_mode <- function(x) {<br>
+&nbsp;&nbsp;uniq <- unique(x)<br>
+&nbsp;&nbsp;uniq[which.max(tabulate(match(x, uniq)))]<br>
+}<br><br>
+
+values <- c(2, 2, 3, 4, 4, 4, 5)<br>
+get_mode(values)
+</code>
+</div>
+
+<!-- ========================= GEOMETRIC MEAN ============================= -->
+<div class="section">
+<h2>D. Geometric Mean</h2>
+
+<h3>Definition</h3>
+<p>
+Geometric mean is used for multiplicative data such as growth rates, ratios, and fold changes.
+</p>
+
+<h3>Real-Life Examples</h3>
+<ul>
+<li>Average rate of return in investments</li>
+<li>Population growth rate over years</li>
+<li>Average price index movement</li>
+</ul>
+
+<h3>Biology Examples</h3>
+<ul>
+<li>Fold change in gene expression</li>
+<li>Bacterial growth factor</li>
+<li>Geometric mean of viral load reduction</li>
+</ul>
+
+<h3>R Code</h3>
+<code>
+library(psych)<br>
+values <- c(1.2, 1.5, 1.8)<br>
+geometric.mean(values)
+</code>
+</div>
+
+<!-- ========================= HARMONIC MEAN ============================= -->
+<div class="section">
+<h2>E. Harmonic Mean</h2>
+
+<h3>Definition</h3>
+<p>
+The harmonic mean is used for data in rate form, such as speed, concentration, or reaction rates.
+</p>
+
+<h3>Real-Life Examples</h3>
+<ul>
+<li>Average speed over different distances</li>
+<li>Average price per unit at varying quantities</li>
+</ul>
+
+<h3>Biology Examples</h3>
+<ul>
+<li>Mean clearance rate of toxins</li>
+<li>Average PCR sequencing rate</li>
+<li>Average enzyme reaction rates (reciprocal values)</li>
+</ul>
+
+<h3>R Code</h3>
+<code>
+library(psych)<br>
+values <- c(2, 4, 6)<br>
+harmonic.mean(values)
+</code>
+</div>
+
+<!-- ========================= TRIMMED MEAN ============================= -->
+<div class="section">
+<h2>F. Trimmed Mean</h2>
+
+<h3>Definition</h3>
+<p>
+Trimmed mean removes a certain percentage of the lowest and highest values before calculating the mean. 
+Useful when dataset contains outliers.
+</p>
+
+<h3>Real-Life Examples</h3>
+<ul>
+<li>Sports scoring after removing extreme judge scores</li>
+<li>Average income calculation removing very high outliers</li>
+</ul>
+
+<h3>Biology Examples</h3>
+<ul>
+<li>Removing abnormal sensor readings in heart rate data</li>
+<li>Eliminating failed assays in enzyme studies</li>
+<li>Averaging plant height after excluding mutant values</li>
+</ul>
+
+<h3>R Code</h3>
+<code>
+values <- c(10, 12, 13, 14, 100)<br>
+mean(values, trim = 0.1)
+</code>
+</div>
+  
+
+  <!-- Footer include -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Back to top button -->
+  <button id="backToTop">↑</button>
+
+  <script>
+    async function includeHTML(id, file) {
+      const el = document.getElementById(id);
+      const resp = await fetch(file);
+      if (resp.ok) el.innerHTML = await resp.text();
+    }
+    includeHTML("navbar-placeholder", "navbar.html");
+    includeHTML("footer-placeholder", "footer.html");
+
+    const btn = document.getElementById("backToTop");
+    window.onscroll = () => btn.style.display = document.documentElement.scrollTop > 200 ? "block" : "none";
+    btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  </script>
+            
 </body>
 </html>
