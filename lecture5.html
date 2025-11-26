@@ -117,9 +117,7 @@
     <button id="clearAll" class="mutedbtn">Clear All</button>
   </div>
 
-  <footer>
-    <p class="small">Outlier detection uses IQR + Z-score. SD uses sample formula (n-1).</p>
-  </footer>
+ 
 </div>
 
 <script>
@@ -263,6 +261,24 @@ document.getElementById('clearAll').addEventListener('click', ()=>{
   document.querySelectorAll('.population-block').forEach(p=> clearPopulation(p));
 });
 </script>
+<!-- Footer include -->
+  <div id="footer-placeholder"></div>
 
+  <!-- Back to top button -->
+  <button id="backToTop">↑</button>
+
+  <script>
+    async function includeHTML(id, file) {
+      const el = document.getElementById(id);
+      const resp = await fetch(file);
+      if (resp.ok) el.innerHTML = await resp.text();
+    }
+    includeHTML("navbar-placeholder", "navbar.html");
+    includeHTML("footer-placeholder", "footer.html");
+
+    const btn = document.getElementById("backToTop");
+    window.onscroll = () => btn.style.display = document.documentElement.scrollTop > 200 ? "block" : "none";
+    btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  </script>
 </body>
 </html>
