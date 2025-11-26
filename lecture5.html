@@ -1,28 +1,87 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecture 5 — Hypothesis Testing</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lecture 5 — 3 Populations × 10 Samples (Mean, SD, CV, Outliers)</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    :root{--bg:#f6f8fb;--card:#fff;--muted:#6b7280;--accent:#0b4c86}
+    body{font-family:Inter,Segoe UI,Roboto,Arial;margin:0;background:var(--bg);color:#0b1726}
+    .wrap{max-width:1100px;margin:24px auto;padding:18px}
+    header{display:flex;align-items:center;justify-content:space-between}
+    h1{margin:0;font-size:1.4rem}
+    p.lead{margin:6px 0 14px;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px}
+    .card{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 20px rgba(11,20,34,0.06)}
+    label{display:block;font-weight:600;margin-bottom:6px}
+    .population-block{background:#f9fbff;padding:8px;border-radius:8px;margin-bottom:12px;border:1px solid #e4e9f2}
+    .pop-title{font-weight:600;margin-bottom:6px;color:#0b4c86}
+    .row{display:flex;gap:6px;flex-wrap:wrap}
+    input[type=number]{width:60px;padding:6px;border-radius:6px;border:1px solid #e6eef6}
+    .small{font-size:0.88rem;color:var(--muted)}
+    .results{margin-top:6px;display:flex;gap:8px;flex-wrap:wrap}
+    .pill{background:#eef6ff;padding:6px 10px;border-radius:999px;font-weight:600}
+    button{background:var(--accent);color:white;border:0;padding:6px 10px;border-radius:8px;cursor:pointer}
+    .mutedbtn{background:#e6eefc;color:#0b4c86}
+    .outlier{background:rgba(255,69,58,0.12)}
+    footer{margin-top:16px;color:var(--muted);font-size:0.9rem}
+    .center{display:flex;gap:8px;justify-content:center;margin-top:14px}
+    @media (max-width:720px){input[type=number]{width:50px}}
+	  body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 40px;
-      background-color: #f9f9f9;
+      background-color: #f9fafc;
       color: #333;
       line-height: 1.7;
     }
-    h1 { color: #007acc; }
-    h2 { color: #005b99; margin-top: 30px; }
-    p { margin: 10px 0; }
-    ul, ol { margin-left: 30px; }
-    .formula {
-      background-color: #eef7ff;
-      padding: 8px;
-      border-radius: 5px;
-      font-family: "Courier New", monospace;
+    header {
+      background-color: #007acc;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+    h2 {
+      color: #005b99;
+      border-bottom: 2px solid #007acc;
+      padding-bottom: 5px;
+    }
+    p {
+      margin: 10px 0;
+    }
+    ul, ol {
+      margin-left: 30px;
+    }
+    section {
+      background-color: #ffffff;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    a.button {
       display: inline-block;
-      margin: 5px 0;
+      margin-top: 30px;
+      padding: 12px 18px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    a.button:hover {
+      background-color: #005b99;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #666;
     }
     .example {
       background-color: #eef6fb;
@@ -30,112 +89,180 @@
       padding: 10px 15px;
       margin: 10px 0;
     }
-    a.button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 16px;
-      background-color: #007acc;
-      color: white;
-      border-radius: 6px;
-      text-decoration: none;
-    }
-    a.button:hover { background-color: #005b99; }
+     .top-right-logo {
+  position: fixed;      /* or absolute */
+  top: 10px;            /* distance from top */
+  right: 10px;          /* distance from right */
+  width: 100px;         /* adjust as needed */
+  height: auto;         /* preserve aspect ratio */
+  z-index: 1000;        /* ensure it stays on top */
+}
   </style>
 </head>
+
 <body>
+   <img src="images/wos ppt.png" alt="University Logo" class="top-right-logo">
 
-  <h1>Lecture 5 — Hypothesis Testing</h1>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Lecture 5 — Students Enter Data (3 Populations × 10 Values)</h1>
+    </div>
+  </header>
 
-  <p>Hypothesis testing is a statistical procedure used to make decisions or inferences about population parameters based on sample data. It allows researchers to evaluate claims, compare groups, and determine the likelihood of observed effects being due to chance.</p>
+  <section class="grid" id="apps"></section>
 
-  <h2>1. Null and Alternative Hypotheses</h2>
-  <p>In hypothesis testing, we formulate:</p>
-  <ul>
-    <li><strong>Null Hypothesis (H₀):</strong> A statement that there is no effect or difference. It represents the status quo.</li>
-    <li><strong>Alternative Hypothesis (H₁ or Ha):</strong> A statement that there is an effect or difference.</li>
-  </ul>
-
-  <div class="example">
-    <strong>Examples:</strong>
-    <ul>
-      <li>H₀: Mean fasting glucose level in diabetic patients = 120 mg/dL; H₁: Mean fasting glucose ≠ 120 mg/dL.</li>
-      <li>H₀: A new drug has no effect on enzyme activity; H₁: The drug alters enzyme activity.</li>
-      <li>H₀: Mean blood pressure is the same in males and females; H₁: Mean blood pressure differs between sexes.</li>
-    </ul>
+  <div class="center">
+    <button id="computeAll">Compute All</button>
+    <button id="clearAll" class="mutedbtn">Clear All</button>
   </div>
 
-  <h2>2. Types of Errors</h2>
-  <ul>
-    <li><strong>Type I Error (α):</strong> Rejecting H₀ when it is true.  
-      <em>Example:</em> Concluding a drug affects cholesterol when it actually does not.</li>
-    <li><strong>Type II Error (β):</strong> Failing to reject H₀ when it is false.  
-      <em>Example:</em> Concluding a drug has no effect on enzyme activity when it actually does.</li>
-  </ul>
+  <footer>
+    <p class="small">Outlier detection uses IQR + Z-score. SD uses sample formula (n-1).</p>
+  </footer>
+</div>
 
-  <h2>3. Significance Level and P-value</h2>
-  <ul>
-    <li><strong>Significance Level (α):</strong> Predefined probability threshold for rejecting H₀ (commonly 0.05 or 0.01).</li>
-    <li><strong>P-value:</strong> Probability of obtaining results as extreme as the observed data if H₀ is true.  
-      - If P ≤ α → Reject H₀  
-      - If P > α → Fail to reject H₀
-    </li>
-  </ul>
+<script>
+const applications = [
+  'Glucose levels (mg/dL) — 3 populations',
+  'Temperature (°C) — 3 regions',
+  'Cricket scores — 3 teams',
+  'Systolic BP (mm Hg) — 3 patient groups',
+  'Daily steps — 3 age groups',
+  'Exam marks — 3 classes',
+  'Reaction time (ms) — 3 labs',
+  'Yield (kg) — 3 plots',
+  'Website visits — 3 time periods',
+  'Product ratings — 3 customer groups'
+];
 
-  <div class="example">
-    <strong>Examples:</strong>
-    <ul>
-      <li>P = 0.03 for a test comparing mean glucose levels → Reject H₀ at α = 0.05.</li>
-      <li>P = 0.12 for difference in hemoglobin levels → Fail to reject H₀ at α = 0.05.</li>
-    </ul>
-  </div>
+const appsContainer = document.getElementById('apps');
 
-  <h2>4. Test Statistics</h2>
-  <p>Test statistics quantify how far the sample statistic is from the population parameter under H₀.</p>
+applications.forEach((title)=>{
+  const card = document.createElement('section'); 
+  card.className='card';
 
-  <ul>
-    <li><strong>Z-test (for large samples, known σ):</strong>  
-      <p class="formula">Z = (X̄ - μ₀) / (σ / √n)</p>
-    </li>
-    <li><strong>t-test (for small samples, unknown σ):</strong>  
-      <p class="formula">t = (X̄ - μ₀) / (s / √n)</p>
-    </li>
-    <li><strong>Chi-square test (for categorical data):</strong>  
-      <p class="formula">χ² = Σ (O - E)² / E</p>  
-      O = observed frequency, E = expected frequency</li>
-    <li><strong>ANOVA (Analysis of Variance):</strong> Compares means across multiple groups using F-statistic.</li>
-  </ul>
+  let populationsHTML = "";
+  for(let p=1;p<=3;p++){
+    populationsHTML += `
+      <div class="population-block" data-pop="${p}">
+        <div class="pop-title">Population ${p}</div>
+        <div class="row inputs">
+          ${Array.from({length:10}).map((_,i)=>`
+            <input type="number" step="any" placeholder="v${i+1}">
+          `).join('')}
+        </div>
+        <div style="margin-top:6px;display:flex;gap:6px">
+          <button class="computeBtn">Compute</button>
+          <button class="clearBtn mutedbtn">Clear</button>
+        </div>
+        <div class="resultsArea small"></div>
+      </div>
+    `;
+  }
 
-  <div class="example">
-    <strong>Examples:</strong>
-    <ul>
-      <li>One-sample t-test: Test if mean blood glucose differs from 120 mg/dL in a sample of 25 patients.</li>
-      <li>Two-sample t-test: Compare mean cholesterol levels between males and females.</li>
-      <li>Chi-square test: Compare observed vs expected blood type frequencies in a population.</li>
-      <li>ANOVA: Compare mean enzyme activity across three different treatment groups.</li>
-    </ul>
-  </div>
+  card.innerHTML = `<label>${title}</label>${populationsHTML}`;
+  appsContainer.appendChild(card);
 
-  <h2>5. Steps in Hypothesis Testing</h2>
-  <ol>
-    <li>Formulate H₀ and H₁.</li>
-    <li>Choose significance level α.</li>
-    <li>Select the appropriate test and compute the test statistic.</li>
-    <li>Calculate P-value or compare test statistic with critical value.</li>
-    <li>Make a decision: Reject or fail to reject H₀.</li>
-    <li>Interpret results in context.</li>
-  </ol>
+  card.querySelectorAll('.computeBtn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      computePopulation(e.target.closest('.population-block'));
+    });
+  });
 
-  <h2>6. Summary</h2>
-  <ul>
-    <li>Hypothesis testing evaluates claims about population parameters using sample data.</li>
-    <li>Null and alternative hypotheses provide the framework for testing.</li>
-    <li>Type I and Type II errors indicate the risks of incorrect decisions.</li>
-    <li>Significance level and P-values guide decision-making.</li>
-    <li>Test statistics depend on data type, sample size, and variance information.</li>
-    <li>Applications in biological and medical research include comparing treatments, evaluating drug effects, and analyzing physiological data.</li>
-  </ul>
+  card.querySelectorAll('.clearBtn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      clearPopulation(e.target.closest('.population-block'));
+    });
+  });
+});
 
-  <a class="button" href="../module1.html">← Back to Module 1</a>
+
+function cleanedValues(block){
+  const inputs = Array.from(block.querySelectorAll('input'));
+  return inputs.map(i=> i.value.trim()===''?null:Number(i.value))
+               .filter(v=>v!==null && !isNaN(v));
+}
+function mean(a){ return a.reduce((x,y)=>x+y,0)/a.length; }
+function variance(a){ const m=mean(a); return a.reduce((s,x)=>s+(x-m)**2,0)/(a.length-1); }
+function sd(a){ return Math.sqrt(variance(a)); }
+function quantile(a,q){
+  const s=[...a].sort((x,y)=>x-y); const pos=(s.length-1)*q;
+  const lo=Math.floor(pos), hi=Math.ceil(pos);
+  if(lo===hi) return s[lo];
+  return s[lo]*(1-(pos-lo)) + s[hi]*(pos-lo);
+}
+function detectOutliers(a){
+  const Q1=quantile(a,0.25), Q3=quantile(a,0.75);
+  const IQR=Q3-Q1;
+  const lf=Q1-1.5*IQR, hf=Q3+1.5*IQR;
+
+  const m=mean(a), s=sd(a);
+  const zs = a.map(x => (x-m)/s);
+
+  return {
+    outIQR: a.map(x=> x<lf || x>hf),
+    outZ: zs.map(z=> Math.abs(z)>2.5),
+    Q1,Q3,IQR,zs
+  };
+}
+function format(x){ return isNaN(x)?'-':Math.round(x*100)/100; }
+
+function computePopulation(block){
+  const inputs = Array.from(block.querySelectorAll('input'));
+  const vals = cleanedValues(block);
+  const res = block.querySelector('.resultsArea');
+  res.innerHTML = '';
+
+  inputs.forEach(i=> i.classList.remove('outlier'));
+
+  if(vals.length===0){
+    res.innerHTML = "<div>No valid values.</div>";
+    return;
+  }
+
+  const m=mean(vals), s=sd(vals), cv=s/m*100;
+  const {outIQR,outZ,Q1,Q3,IQR,zs} = detectOutliers(vals);
+
+  res.innerHTML += `
+    <div class="results">
+      <div class="pill">N: ${vals.length}</div>
+      <div class="pill">Mean: ${format(m)}</div>
+      <div class="pill">SD: ${format(s)}</div>
+      <div class="pill">CV%: ${format(cv)}</div>
+    </div>
+    <div>IQR = ${format(IQR)}, Q1 = ${format(Q1)}, Q3 = ${format(Q3)}</div>
+  `;
+
+  // mark outliers
+  let idx=0;
+  inputs.forEach(inp=>{
+    if(inp.value.trim()==='') return;
+    if(outIQR[idx] || outZ[idx]){
+      inp.classList.add('outlier');
+    }
+    inp.title = `zs=${format(zs[idx])} outIQR=${outIQR[idx]} outZ=${outZ[idx]}`;
+    idx++;
+  });
+
+  const finalOut = vals.map((v,i)=> (outIQR[i]||outZ[i])?v:null).filter(v=>v!==null);
+  res.innerHTML += `<div><strong>Outliers:</strong> ${finalOut.length?finalOut.join(', '):'None'}</div>`;
+}
+
+function clearPopulation(block){
+  block.querySelectorAll('input').forEach(i=>{
+    i.value=''; i.classList.remove('outlier'); i.title='';
+  });
+  block.querySelector('.resultsArea').innerHTML='';
+}
+
+document.getElementById('computeAll').addEventListener('click', ()=>{
+  document.querySelectorAll('.population-block').forEach(p=> computePopulation(p));
+});
+document.getElementById('clearAll').addEventListener('click', ()=>{
+  document.querySelectorAll('.population-block').forEach(p=> clearPopulation(p));
+});
+</script>
 
 </body>
 </html>
