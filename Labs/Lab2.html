@@ -93,7 +93,7 @@ p3 <- sample(60:100, 20, replace = TRUE)
 p4 <- sample(60:100, 20, replace = TRUE)
 p5 <- sample(60:100, 20, replace = TRUE)
 
-patients <- data.frame(p1, p2, p3, p4, p5)
+patients <- data.frame(p1, p2, p3, p4, p5);patients
 
 # Convert to long format
 df <- do.call(rbind, lapply(names(patients), function(p){
