@@ -1,23 +1,13 @@
 <!doctype html>
 <html lang="en">
-	</div>
-        <nav class="nav">
-                    <a href="https://surnamnarendra.github.io/Data-Visualization-with-R-Programming/">Home</a>
-          <a href="lecture1.html" aria-current="page">L1</a>
-          <a href="lecture2.html">L2</a>
-          <a href="lecture3.html">L3</a>
-          <a href="lecture4.html">L4</a>
-          <a href="lecture5.html">L5</a>
-          <a href="lecture6.html">L6</a>
-          <a href="lecture7.html">L7</a>
-        
-
-        </nav>
-      </div>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Lecture 5 — 3 Populations × 10 Samples (Mean, SD, CV, Outliers)</title>
+  <title>Lecture 5 — 3 Populations Combined Visuals</title>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     :root{--bg:#f6f8fb;--card:#fff;--muted:#6b7280;--accent:#0b4c86}
     body{font-family:Inter,Segoe UI,Roboto,Arial;margin:0;background:var(--bg);color:#0b1726}
@@ -28,7 +18,7 @@
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px}
     .card{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 20px rgba(11,20,34,0.06)}
     label{display:block;font-weight:600;margin-bottom:6px}
-    .population-block{background:#f9fbff;padding:8px;border-radius:8px;margin-bottom:12px;border:1px solid #e4e9f2}
+    .population-row{background:#f9fbff;padding:8px;border-radius:8px;margin-bottom:12px;border:1px solid #e4e9f2}
     .pop-title{font-weight:600;margin-bottom:6px;color:#0b4c86}
     .row{display:flex;gap:6px;flex-wrap:wrap}
     input[type=number]{width:60px;padding:6px;border-radius:6px;border:1px solid #e6eef6}
@@ -41,100 +31,230 @@
     footer{margin-top:16px;color:var(--muted);font-size:0.9rem}
     .center{display:flex;gap:8px;justify-content:center;margin-top:14px}
     @media (max-width:720px){input[type=number]{width:50px}}
-	  body {
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 40px;
+      margin: 24px;
       background-color: #f9fafc;
       color: #333;
-      line-height: 1.7;
+      line-height: 1.6;
     }
     header {
       background-color: #007acc;
       color: white;
-      padding: 20px;
+      padding: 18px;
       border-radius: 10px;
       text-align: center;
+      margin-bottom: 12px;
     }
-    h1 {
-      margin: 0;
-      font-size: 2em;
-    }
-    h2 {
-      color: #005b99;
-      border-bottom: 2px solid #007acc;
-      padding-bottom: 5px;
-    }
-    p {
-      margin: 10px 0;
-    }
-    ul, ol {
-      margin-left: 30px;
-    }
-    section {
-      background-color: #ffffff;
-      padding: 20px;
-      margin-top: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    a.button {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 12px 18px;
-      background-color: #007acc;
-      color: white;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
-    a.button:hover {
-      background-color: #005b99;
-    }
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #666;
-    }
-    .example {
-      background-color: #eef6fb;
-      border-left: 4px solid #007acc;
-      padding: 10px 15px;
-      margin: 10px 0;
-    }
-     .top-right-logo {
-  position: fixed;      /* or absolute */
-  top: 10px;            /* distance from top */
-  right: 10px;          /* distance from right */
-  width: 100px;         /* adjust as needed */
-  height: auto;         /* preserve aspect ratio */
-  z-index: 1000;        /* ensure it stays on top */
-}
+    section { background-color: #ffffff; padding: 14px; margin-top: 8px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+    .top-right-logo { position: fixed; top: 10px; right: 10px; width: 100px; height: auto; z-index: 1000; }
+    .viz-area { display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; align-items:stretch; }
+    .viz-left { flex:1 1 460px; min-width:300px; background:#fff; padding:10px; border-radius:8px; border:1px solid #eef6ff; }
+    .viz-right { flex:1 1 260px; min-width:240px; display:flex; flex-direction:column; gap:8px; }
+    canvas { width:100% !important; height:220px !important; }
+    .box-canvas { height:150px !important; }
+    input.outlier { background: rgba(255,69,58,0.08); border-color: rgba(255,69,58,0.3); }
+    #backToTop { position:fixed; right:18px; bottom:18px; padding:10px 12px; border-radius:8px; display:none; border:0; background:#007acc; color:white; cursor:pointer; }
+    .pop-label { font-weight:700; margin-bottom:6px; color:#0b4c86 }
   </style>
 </head>
 
 <body>
-   <img src="images/wos ppt.png" alt="University Logo" class="top-right-logo">
+  <img src="images/wos ppt.png" alt="University Logo" class="top-right-logo">
 
-<div class="wrap">
-  <header>
-    <div>
-<h1>Lecture 5 — Hands on Session on Basic Statistics <h1>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Lecture 5 — Hands on Data Handaling</h1>
+      </div>
+    </header>
+
+    <nav style="margin:8px 0;">
+      <a href="https://surnamnarendra.github.io/Data-Visualization-with-R-Programming/" style="margin-right:8px">Home</a>
+      <a href="lecture1.html">L1</a> |
+      <a href="lecture2.html">L2</a> |
+      <a href="lecture3.html">L3</a> |
+      <a href="lecture4.html">L4</a> |
+      <a href="lecture5.html">L5</a> |
+      <a href="lecture6.html">L6</a> |
+      <a href="lecture7.html">L7</a>
+    </nav>
+
+    <div style="margin:12px 0; display:flex; gap:8px; flex-wrap:wrap;">
+      <button id="computeAll">Compute All Cards</button>
+      <button id="clearAll" class="mutedbtn">Clear All Cards</button>
     </div>
-  </header>
 
-  <section class="grid" id="apps"></section>
+    <section class="grid" id="apps"></section>
 
-  <div class="center">
-    <button id="computeAll">Compute All</button>
-    <button id="clearAll" class="mutedbtn">Clear All</button>
+    <footer style="text-align:center; margin-top:18px">
+      <small>Lecture 5 — Data Visualization with R (interactive JS visuals)</small>
+    </footer>
   </div>
 
- 
-</div>
+  <button id="backToTop">↑</button>
 
 <script>
+/* ---------- Basic stats & outlier detection ---------- */
+function mean(a){ return a.reduce((s,x)=>s+x,0)/a.length; }
+function variance(a){ const m=mean(a); return a.reduce((s,x)=>s+(x-m)**2,0)/(a.length-1||1); }
+function sd(a){ return Math.sqrt(variance(a)); }
+function quantile(a,q){
+  const s=[...a].sort((x,y)=>x-y);
+  const pos=(s.length-1)*q;
+  const lo=Math.floor(pos), hi=Math.ceil(pos);
+  if(lo===hi) return s[lo];
+  return s[lo]*(1-(pos-lo)) + s[hi]*(pos-lo);
+}
+function detectOutliers(a){
+  if(a.length===0) return {outIQR:[], outZ:[], Q1:NaN, Q3:NaN, IQR:NaN, zs:[]};
+  const Q1=quantile(a,0.25), Q3=quantile(a,0.75);
+  const IQR=Q3-Q1;
+  const lf = Q1 - 1.5*IQR, hf = Q3 + 1.5*IQR;
+  const m = mean(a), s = sd(a) || 1;
+  const zs = a.map(x=> (x-m)/s );
+  return {
+    outIQR: a.map(x=> x < lf || x > hf),
+    outZ: zs.map(z=> Math.abs(z) > 2.5),
+    Q1,Q3,IQR,zs,lf,hf
+  };
+}
+function cleanedValuesFromRow(row){
+  return Array.from(row.querySelectorAll('input'))
+    .map(i=> i.value.trim()===''?null:Number(i.value))
+    .filter(v=> v!==null && !isNaN(v));
+}
+function format(x){ return isNaN(x)?'-':Math.round(x*100)/100; }
+
+/* ---------- Chart helpers ---------- */
+function disposeChart(canvas){
+  if(!canvas) return;
+  if(canvas._chart){ try{ canvas._chart.destroy(); }catch(e){} canvas._chart=null; }
+}
+function drawCombinedLine(canvas, valsArray){
+  disposeChart(canvas);
+  const labels = Array.from({length: Math.max(...valsArray.map(a=>a.length))}, (_,i)=>`v${i+1}`);
+  const colors = ['#0b4c86','#c92a2a','#138000']; // blue, red, green
+  const datasets = valsArray.map((vals, idx)=>({
+    label: `P${idx+1}`,
+    data: labels.map((_,i)=> vals[i]===undefined?null:vals[i]),
+    tension: 0.25,
+    spanGaps: true,
+    borderColor: colors[idx],
+    pointBackgroundColor: colors[idx],
+    pointRadius: 4,
+    borderWidth: 2,
+    fill: false
+  }));
+  const chart = new Chart(canvas, {
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{position:'top'}}
+    }
+  });
+  canvas._chart = chart;
+}
+
+/* Horizontal box-strip for 3 populations (Option A) */
+function drawBoxStrips(canvas, arrays){
+  const ctx = canvas.getContext('2d');
+  const DPR = devicePixelRatio || 1;
+  const W = canvas.clientWidth * DPR;
+  const rowH = 40 * DPR;
+  const padding = 36 * DPR;
+  const H = Math.max( (arrays.length * (rowH + 20*DPR)) + padding, 140 * DPR);
+  canvas.width = W; canvas.height = H;
+  ctx.clearRect(0,0,W,H);
+  ctx.font = `${12*DPR}px Arial`;
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#333';
+
+  // find global min/max for scale
+  const allVals = arrays.flat().filter(v=>v!==undefined && v!==null);
+  const globalMin = (allVals.length? Math.min(...allVals) : 0);
+  const globalMax = (allVals.length? Math.max(...allVals) : 1);
+  const usableW = W - padding*2;
+  function xFor(v){ if(globalMax===globalMin) return padding + usableW/2; return padding + ((v - globalMin) / (globalMax - globalMin)) * usableW; }
+
+  arrays.forEach((arr, idx) => {
+    const yTop = padding/2 + idx*(rowH + 20*DPR);
+    ctx.fillStyle = '#0b4c86'; // label color
+    ctx.fillText(`Population ${idx+1}`, 8*DPR, yTop + rowH/2 + 4*DPR);
+
+    if(arr.length===0){
+      ctx.fillStyle = '#888';
+      ctx.fillText('No data', padding, yTop + rowH/2 + 4*DPR);
+      return;
+    }
+
+    const s = [...arr].sort((a,b)=>a-b);
+    const min = s[0], max = s[s.length-1];
+    const Q1 = quantile(s,0.25), Q3 = quantile(s,0.75), median = quantile(s,0.5);
+    const out = detectOutliers(s);
+    const outVals = s.filter((v,i)=> (out.outIQR[i] || out.outZ[i]) );
+
+    // whisker lines
+    ctx.strokeStyle = '#333'; ctx.lineWidth = Math.max(1,1.2*DPR);
+    ctx.beginPath();
+    ctx.moveTo(xFor(min), yTop + rowH/2);
+    ctx.lineTo(xFor(Q1), yTop + rowH/2);
+    ctx.moveTo(xFor(Q3), yTop + rowH/2);
+    ctx.lineTo(xFor(max), yTop + rowH/2);
+    ctx.stroke();
+
+    // whisker caps
+    const cap = 10*DPR;
+    ctx.beginPath();
+    ctx.moveTo(xFor(min), yTop + rowH/2 - cap/2);
+    ctx.lineTo(xFor(min), yTop + rowH/2 + cap/2);
+    ctx.moveTo(xFor(max), yTop + rowH/2 - cap/2);
+    ctx.lineTo(xFor(max), yTop + rowH/2 + cap/2);
+    ctx.stroke();
+
+    // box
+    const boxTop = yTop + rowH/2 - 14*DPR;
+    const boxH = 28*DPR;
+    ctx.fillStyle = 'rgba(11,76,134,0.08)';
+    ctx.strokeStyle = '#0b4c86';
+    const xq1 = xFor(Q1), xq3 = xFor(Q3);
+    ctx.fillRect(xq1, boxTop, Math.max(3, xq3 - xq1), boxH);
+    ctx.strokeRect(xq1, boxTop, Math.max(3, xq3 - xq1), boxH);
+
+    // median line
+    ctx.beginPath();
+    ctx.moveTo(xFor(median), boxTop - 4*DPR);
+    ctx.lineTo(xFor(median), boxTop + boxH + 4*DPR);
+    ctx.strokeStyle = '#ff6b6b'; ctx.lineWidth = 2*DPR;
+    ctx.stroke();
+
+    // outlier points
+    ctx.fillStyle = 'rgba(255,69,58,0.95)';
+    outVals.forEach(v=>{
+      ctx.beginPath();
+      ctx.arc(xFor(v), yTop + rowH/2, 4*DPR, 0, Math.PI*2);
+      ctx.fill();
+    });
+
+    // numeric labels (min,max)
+    ctx.fillStyle = '#333';
+    ctx.textAlign = 'center';
+    ctx.fillText(min.toFixed(2), xFor(min), yTop + rowH - 2*DPR);
+    ctx.fillText(max.toFixed(2), xFor(max), yTop + rowH - 2*DPR);
+  });
+
+  // bottom global scale ticks
+  ctx.fillStyle = '#333'; ctx.textAlign='center';
+  const ticks = 5;
+  for(let i=0;i<=ticks;i++){
+    const v = globalMin + (i/ticks)*(globalMax - globalMin);
+    const x = xFor(v);
+    ctx.fillText(v.toFixed(2), x, canvas.height - 6*DPR);
+  }
+}
+
+/* ---------- UI generation ---------- */
 const applications = [
   'Glucose levels (mg/dL) — 3 populations',
   'Temperature (°C) — 3 regions',
@@ -150,149 +270,142 @@ const applications = [
 
 const appsContainer = document.getElementById('apps');
 
-applications.forEach((title)=>{
-  const card = document.createElement('section'); 
-  card.className='card';
+applications.forEach((title, idx) => {
+  const card = document.createElement('section');
+  card.className = 'card';
+  card.innerHTML = `
+    <label>${title}</label>
 
-  let populationsHTML = "";
-  for(let p=1;p<=3;p++){
-    populationsHTML += `
-      <div class="population-block" data-pop="${p}">
-        <div class="pop-title">Population ${p}</div>
-        <div class="row inputs">
-          ${Array.from({length:10}).map((_,i)=>`
-            <input type="number" step="any" placeholder="v${i+1}">
-          `).join('')}
-        </div>
-        <div style="margin-top:6px;display:flex;gap:6px">
-          <button class="computeBtn">Compute</button>
-          <button class="clearBtn mutedbtn">Clear</button>
-        </div>
-        <div class="resultsArea small"></div>
-      </div>
-    `;
-  }
-
-  card.innerHTML = `<label>${title}</label>${populationsHTML}`;
-  appsContainer.appendChild(card);
-
-  card.querySelectorAll('.computeBtn').forEach(btn => {
-    btn.addEventListener('click', e => {
-      computePopulation(e.target.closest('.population-block'));
-    });
-  });
-
-  card.querySelectorAll('.clearBtn').forEach(btn => {
-    btn.addEventListener('click', e => {
-      clearPopulation(e.target.closest('.population-block'));
-    });
-  });
-});
-
-
-function cleanedValues(block){
-  const inputs = Array.from(block.querySelectorAll('input'));
-  return inputs.map(i=> i.value.trim()===''?null:Number(i.value))
-               .filter(v=>v!==null && !isNaN(v));
-}
-function mean(a){ return a.reduce((x,y)=>x+y,0)/a.length; }
-function variance(a){ const m=mean(a); return a.reduce((s,x)=>s+(x-m)**2,0)/(a.length-1); }
-function sd(a){ return Math.sqrt(variance(a)); }
-function quantile(a,q){
-  const s=[...a].sort((x,y)=>x-y); const pos=(s.length-1)*q;
-  const lo=Math.floor(pos), hi=Math.ceil(pos);
-  if(lo===hi) return s[lo];
-  return s[lo]*(1-(pos-lo)) + s[hi]*(pos-lo);
-}
-function detectOutliers(a){
-  const Q1=quantile(a,0.25), Q3=quantile(a,0.75);
-  const IQR=Q3-Q1;
-  const lf=Q1-1.5*IQR, hf=Q3+1.5*IQR;
-
-  const m=mean(a), s=sd(a);
-  const zs = a.map(x => (x-m)/s);
-
-  return {
-    outIQR: a.map(x=> x<lf || x>hf),
-    outZ: zs.map(z=> Math.abs(z)>2.5),
-    Q1,Q3,IQR,zs
-  };
-}
-function format(x){ return isNaN(x)?'-':Math.round(x*100)/100; }
-
-function computePopulation(block){
-  const inputs = Array.from(block.querySelectorAll('input'));
-  const vals = cleanedValues(block);
-  const res = block.querySelector('.resultsArea');
-  res.innerHTML = '';
-
-  inputs.forEach(i=> i.classList.remove('outlier'));
-
-  if(vals.length===0){
-    res.innerHTML = "<div>No valid values.</div>";
-    return;
-  }
-
-  const m=mean(vals), s=sd(vals), cv=s/m*100;
-  const {outIQR,outZ,Q1,Q3,IQR,zs} = detectOutliers(vals);
-
-  res.innerHTML += `
-    <div class="results">
-      <div class="pill">N: ${vals.length}</div>
-      <div class="pill">Mean: ${format(m)}</div>
-      <div class="pill">SD: ${format(s)}</div>
-      <div class="pill">CV%: ${format(cv)}</div>
+    <div class="population-row">
+      <div class="pop-label">Population 1</div>
+      <div class="row inputs pop1">${Array.from({length:10}).map((_,i)=>`<input type="number" step="any" placeholder="v${i+1}">`).join('')}</div>
     </div>
-    <div>IQR = ${format(IQR)}, Q1 = ${format(Q1)}, Q3 = ${format(Q3)}</div>
+
+    <div class="population-row">
+      <div class="pop-label">Population 2</div>
+      <div class="row inputs pop2">${Array.from({length:10}).map((_,i)=>`<input type="number" step="any" placeholder="v${i+1}">`).join('')}</div>
+    </div>
+
+    <div class="population-row">
+      <div class="pop-label">Population 3</div>
+      <div class="row inputs pop3">${Array.from({length:10}).map((_,i)=>`<input type="number" step="any" placeholder="v${i+1}">`).join('')}</div>
+    </div>
+
+    <div style="display:flex;gap:8px;align-items:center;margin-top:6px;">
+      <button class="computeCard">Compute</button>
+      <button class="clearCard mutedbtn">Clear</button>
+      <div class="small" style="margin-left:auto">Empty fields are skipped</div>
+    </div>
+
+    <div class="resultsPanel" style="margin-top:8px"></div>
+
+    <div class="viz-area">
+      <div class="viz-left">
+        <div style="font-weight:600; margin-bottom:6px;">Combined Line Chart</div>
+        <canvas class="lineCanvas"></canvas>
+      </div>
+      <div class="viz-right">
+        <div style="font-weight:600;">Box Strips (P1, P2, P3)</div>
+        <canvas class="boxCanvas box-canvas"></canvas>
+      </div>
+    </div>
   `;
 
-  // mark outliers
-  let idx=0;
-  inputs.forEach(inp=>{
-    if(inp.value.trim()==='') return;
-    if(outIQR[idx] || outZ[idx]){
-      inp.classList.add('outlier');
-    }
-    inp.title = `zs=${format(zs[idx])} outIQR=${outIQR[idx]} outZ=${outZ[idx]}`;
-    idx++;
+  appsContainer.appendChild(card);
+
+  card.querySelector('.computeCard').addEventListener('click', ()=> computeCard(card));
+  card.querySelector('.clearCard').addEventListener('click', ()=> clearCard(card));
+});
+
+/* ---------- Compute & rendering for a card ---------- */
+function computeCard(card){
+  // read rows
+  const row1 = card.querySelector('.pop1');
+  const row2 = card.querySelector('.pop2');
+  const row3 = card.querySelector('.pop3');
+
+  const vals1 = cleanedValuesFromRow(row1);
+  const vals2 = cleanedValuesFromRow(row2);
+  const vals3 = cleanedValuesFromRow(row3);
+
+  // clear previous styling
+  Array.from(card.querySelectorAll('input')).forEach(i=> { i.classList.remove('outlier'); i.title=''; });
+
+  // compute per-pop stats
+  const stats = [vals1, vals2, vals3].map((vals)=>{
+    if(vals.length===0) return {N:0, mean:NaN, sd:NaN, cv:NaN, Q1:NaN, Q3:NaN, IQR:NaN, outVals:[]};
+    const m = mean(vals);
+    const s = sd(vals);
+    const cv = s/m*100;
+    const out = detectOutliers(vals);
+    const outVals = vals.filter((v,i)=> out.outIQR[i] || out.outZ[i]);
+    return {N:vals.length, mean:m, sd:s, cv:cv, Q1:out.Q1, Q3:out.Q3, IQR:out.IQR, outVals, zs:out.zs, outMask: out.outIQR.map((v,i)=> v || out.outZ[i])};
   });
 
-  const finalOut = vals.map((v,i)=> (outIQR[i]||outZ[i])?v:null).filter(v=>v!==null);
-  res.innerHTML += `<div><strong>Outliers:</strong> ${finalOut.length?finalOut.join(', '):'None'}</div>`;
-}
-
-function clearPopulation(block){
-  block.querySelectorAll('input').forEach(i=>{
-    i.value=''; i.classList.remove('outlier'); i.title='';
+  // mark inputs as outlier where appropriate (z/IQR)
+  [row1,row2,row3].forEach((row, idxRow)=>{
+    const inputs = Array.from(row.querySelectorAll('input'));
+    const mask = stats[idxRow].outMask || [];
+    let k = 0;
+    inputs.forEach(inp=>{
+      if(inp.value.trim()==='') return;
+      if(mask[k]) inp.classList.add('outlier');
+      if(stats[idxRow].zs && stats[idxRow].zs[k] !== undefined) inp.title = `z=${format(stats[idxRow].zs[k])}`;
+      k++;
+    });
   });
-  block.querySelector('.resultsArea').innerHTML='';
+
+  // fill result panel
+  const res = card.querySelector('.resultsPanel');
+  res.innerHTML = '';
+  stats.forEach((st, i)=>{
+    const outText = st.outVals && st.outVals.length? st.outVals.join(', '): 'None';
+    const html = `
+      <div class="card" style="margin-bottom:8px; padding:8px;">
+        <div style="font-weight:700;">Population ${i+1}</div>
+        <div class="results" style="margin-top:6px">
+          <div class="pill">N: ${st.N}</div>
+          <div class="pill">Mean: ${format(st.mean)}</div>
+          <div class="pill">SD: ${format(st.sd)}</div>
+          <div class="pill">CV%: ${format(st.cv)}</div>
+        </div>
+        <div style="margin-top:6px">IQR=${format(st.IQR)}, Q1=${format(st.Q1)}, Q3=${format(st.Q3)}</div>
+        <div style="margin-top:6px"><strong>Outliers:</strong> ${outText}</div>
+      </div>
+    `;
+    res.insertAdjacentHTML('beforeend', html);
+  });
+
+  // Combined line chart (use Chart.js)
+  const lineCanvas = card.querySelector('.lineCanvas');
+  drawCombinedLine(lineCanvas, [vals1, vals2, vals3]);
+
+  // Combined box strips
+  const boxCanvas = card.querySelector('.boxCanvas');
+  drawBoxStrips(boxCanvas, [vals1, vals2, vals3]);
 }
 
-document.getElementById('computeAll').addEventListener('click', ()=>{
-  document.querySelectorAll('.population-block').forEach(p=> computePopulation(p));
+function clearCard(card){
+  Array.from(card.querySelectorAll('input')).forEach(i=> { i.value=''; i.classList.remove('outlier'); i.title=''; });
+  card.querySelector('.resultsPanel').innerHTML = '';
+  // clear charts
+  const line = card.querySelector('.lineCanvas'); disposeChart(line);
+  const box = card.querySelector('.boxCanvas'); if(box) box.getContext('2d').clearRect(0,0,box.width, box.height);
+}
+
+/* ---------- Compute All / Clear All controls ---------- */
+document.getElementById('computeAll').addEventListener('click', ()=> {
+  document.querySelectorAll('.card').forEach(c=> computeCard(c));
 });
-document.getElementById('clearAll').addEventListener('click', ()=>{
-  document.querySelectorAll('.population-block').forEach(p=> clearPopulation(p));
+document.getElementById('clearAll').addEventListener('click', ()=> {
+  document.querySelectorAll('.card').forEach(c=> clearCard(c));
 });
+
+/* ---------- back to top ---------- */
+const btn = document.getElementById('backToTop');
+window.onscroll = () => btn.style.display = document.documentElement.scrollTop > 200 ? "block" : "none";
+btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
 </script>
-<!-- Footer include -->
-  <div id="footer-placeholder"></div>
-
-  <!-- Back to top button -->
-  <button id="backToTop">↑</button>
-
-  <script>
-    async function includeHTML(id, file) {
-      const el = document.getElementById(id);
-      const resp = await fetch(file);
-      if (resp.ok) el.innerHTML = await resp.text();
-    }
-    includeHTML("navbar-placeholder", "navbar.html");
-    includeHTML("footer-placeholder", "footer.html");
-
-    const btn = document.getElementById("backToTop");
-    window.onscroll = () => btn.style.display = document.documentElement.scrollTop > 200 ? "block" : "none";
-    btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
-  </script>
 </body>
 </html>
