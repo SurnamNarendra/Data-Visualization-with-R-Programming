@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  </div>
+ </div>
         <nav class="nav">
                     <a href="https://surnamnarendra.github.io/Data-Visualization-with-R-Programming/">Home</a>
           <a href="lecture1.html" aria-current="page">L1</a>
@@ -15,10 +15,10 @@
         </nav>
       </div>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecture 6 — Correlation and Regression Analysis</title>
-  <style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lecture 6 — Introduction to Probability, Random Variables & Probability Distributions</title>
+    <style>
     body {
       font-family: Arial, sans-serif;
       margin: 40px;
@@ -55,94 +55,404 @@
     }
     a.button:hover { background-color: #005b99; }
   </style>
+  
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
+  <div class="container">
+    <header>
+        <h1>Lecture 6 — Introduction to Probability, Random Variables & Probability Distributions</h1>
+      </div>
+    </header>
 
-  <h1>Lecture 6 — Correlation and Regression Analysis</h1>
+    
 
-  <p>This lecture introduces correlation and regression, which are statistical methods used to examine the relationships between variables, quantify strength and direction, and make predictions.</p>
+    <div class="two-col">
+      <main class="card">
 
-  <h2>1. Correlation</h2>
-  <p>Correlation measures the strength and direction of a linear relationship between two variables. The correlation coefficient (r) ranges from -1 to +1:</p>
+        <section id="intro">
+          <h2 class="section-title">1. Introduction to Probability</h2>
+          <p> <strong>Probability</strong> measures how likely an event is to occur. It is a number between 0 and 1, where 0 means impossible and 1 means certain.</p>
 
-  <ul>
-    <li>r = +1 → Perfect positive correlation</li>
-    <li>r = -1 → Perfect negative correlation</li>
-    <li>r = 0 → No linear correlation</li>
-  </ul>
+          <h3>Basic rules (short)</h3>
+          <ul>
+            <li>For any event A: \(0 \le P(A) \le 1\).</li>
+            <li>Certainty: \(P(S)=1\) where S is the sample space.</li>
+            <li>If A and B are mutually exclusive, \(P(A\cup B)=P(A)+P(B)\).</li>
+            <li>Complement rule: \(P(A^c)=1-P(A)\).</li>
+          </ul>
 
-  <p class="formula">
-    Pearson correlation coefficient:<br>
-    <strong>r = Σ((X - X̄)(Y - Ȳ)) / √(Σ(X - X̄)² Σ(Y - Ȳ)²)</strong>
-  </p>
+          <h3>Real-life examples</h3>
+          <ol>
+            <li>Weather: Probability of rain tomorrow (e.g., 0.7 means 70% chance of rain).</li>
+            <li>Medicine: Probability a patient responds to a drug (e.g., 0.6 success rate).</li>
+            <li>Quality control: Probability a manufactured part is defective.</li>
+            <li>Sports: Probability a penalty kick is scored.</li>
+            <li>Genetics: Probability of inheriting a trait (Mendelian ratios).</li>
+          </ol>
 
-  <div class="example">
-    <strong>Examples:</strong>
-    <ul>
-      <li>Correlation between fasting glucose and HbA1c levels in diabetic patients.</li>
-      <li>Correlation between body weight and blood pressure in a population study.</li>
-      <li>Correlation between enzyme concentration and reaction rate in lab experiments.</li>
-    </ul>
-  </div>
+          <h3>Biology-related examples (5–10)</h3>
+          <ul class="biolist">
+            <li>Probability a bacterial colony survives antibiotic exposure (e.g., 0.02 resistant).</li>
+            <li>Probability that a gamete carries a specific allele (Mendelian: 1/2, 1/4, etc.).</li>
+            <li>Probability a patient with a disease tests positive (sensitivity).</li>
+            <li>Probability an insect is infected with a pathogen in a sampled population.</li>
+            <li>Probability that a seed germinates under given conditions.</li>
+            <li>Probability of mutation at a particular nucleotide per replication cycle.</li>
+            <li>Probability that a cell enters apoptosis after treatment.</li>
+            <li>Probability a species colonizes a new habitat (colonization success).</li>
+            <li>Probability of survival to maturity for an organism (life table probability).</li>
+            <li>Probability that a PCR reaction yields detectable product (assay success rate).</li>
+          </ul>
+        </section>
 
-  <h2>2. Regression Analysis</h2>
-  <p>Regression analysis is used to predict the value of a dependent variable (Y) based on one or more independent variables (X).</p>
+        <section id="random-variable" style="margin-top:16px">
+          <h2 class="section-title">2. Random Variables</h2>
+          <p>A <strong>random variable (RV)</strong> is a numerical quantity whose value depends on the outcome of a random phenomenon.</p>
+          <p>Two main types:</p>
+          <ul>
+            <li><strong>Discrete RV</strong>: takes countable values (e.g., number of mutated cells).</li>
+            <li><strong>Continuous RV</strong>: takes values in an interval (e.g., time until death).</li>
+          </ul>
 
-  <ul>
-    <li><strong>Simple Linear Regression:</strong> One independent variable.  
-      <p class="formula">Y = β₀ + β₁X + ε</p>
-      β₀ = intercept, β₁ = slope, ε = error term
-    </li>
-    <li><strong>Multiple Linear Regression:</strong> More than one independent variable.  
-      <p class="formula">Y = β₀ + β₁X₁ + β₂X₂ + ... + βnXn + ε</p>
-    </li>
-  </ul>
+          <h3>Notation and examples</h3>
+          <p>Common notation: \(X\) denotes a random variable, and we write probabilities like \(P(X=x)\) for discrete RVs or use densities for continuous RVs.</p>
 
-  <div class="example">
-    <strong>Examples:</strong>
-    <ul>
-      <li>Predicting fasting glucose level (Y) from BMI (X) using simple linear regression.</li>
-      <li>Predicting cholesterol level (Y) based on age, BMI, and exercise frequency (X₁, X₂, X₃) using multiple regression.</li>
-      <li>Predicting enzyme activity (Y) from substrate concentration (X).</li>
-    </ul>
-  </div>
+          <h3>Real-life examples of random variables</h3>
+          <ol>
+            <li>Number of infected patients in a clinic in one day (discrete).</li>
+            <li>Time (in minutes) until a lab reaction reaches threshold (continuous).</li>
+            <li>Number of mutations observed in a gene sequencing run (discrete).</li>
+            <li>Weight of a sample of mice (continuous).</li>
+            <li>Proportion of cells expressing a gene (continuous on [0,1]).</li>
+          </ol>
 
-  <h2>3. Assumptions of Regression</h2>
-  <ul>
-    <li>Linearity: Relationship between X and Y is linear.</li>
-    <li>Independence: Observations are independent.</li>
-    <li>Homoscedasticity: Constant variance of errors.</li>
-    <li>Normality: Errors are normally distributed.</li>
-  </ul>
+          <h3>Biology-related examples (5–10)</h3>
+          <ul class="biolist">
+            <li><strong>Discrete RV</strong> examples:
+              <ul>
+                <li>Number of surviving larvae out of 20 (Binomial-type).</li>
+                <li>Number of bacterial colonies on an agar plate (Poisson-like).</li>
+                <li>Count of mutant individuals in a sample.</li>
+                <li>Number of reads mapping to a gene in RNA-seq (count data).</li>
+                <li>Number of cells showing fluorescence in a field.</li>
+              </ul>
+            </li>
+            <li><strong>Continuous RV</strong> examples:
+              <ul>
+                <li>Time until recovery after treatment (survival time).</li>
+                <li>Concentration of a metabolite in blood.</li>
+                <li>Length of leaves in a plant population.</li>
+                <li>Gene expression level measured as normalized continuous value.</li>
+                <li>Body temperature of individuals over time.</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
 
-  <h2>4. Interpreting Results</h2>
-  <ul>
-    <li><strong>Correlation:</strong> Direction (+/-) and strength (closer to 1 or -1) indicate relationship between variables.</li>
-    <li><strong>Regression coefficients:</strong> β₁ represents change in Y for a unit change in X.</li>
-    <li><strong>R² (Coefficient of Determination):</strong> Proportion of variance in Y explained by X.  
-      <p class="formula">R² = 1 - (SS_res / SS_tot)</p>
-    </li>
-  </ul>
+        <section id="prob-dist" style="margin-top:16px">
+          <h2 class="section-title">3. Probability Distributions</h2>
+          <p>A <strong>probability distribution</strong> specifies how probabilities are assigned to values (discrete) or ranges (continuous) of a random variable.</p>
 
-  <div class="example">
-    <strong>Examples:</strong>
-    <ul>
-      <li>A strong positive correlation (r = 0.85) between fasting glucose and HbA1c.</li>
-      <li>Regression equation: Glucose = 80 + 1.5 × BMI predicts average glucose based on BMI.</li>
-      <li>R² = 0.72 indicates 72% of variation in blood pressure explained by BMI and age.</li>
-    </ul>
-  </div>
+          <h3>Key functions</h3>
+          <ul>
+            <li><strong>PMF</strong> (Probability Mass Function) for discrete variables: \(p_X(x)=P(X=x)\).</li>
+            <li><strong>PDF</strong> (Probability Density Function) for continuous variables: \(f_X(x)\) with \(P(a\le X\le b)=\int_a^b f_X(x)\,dx\).</li>
+            <li><strong>CDF</strong> (Cumulative Distribution Function): \(F_X(x)=P(X\le x)\).</li>
+          </ul>
 
-  <h2>5. Summary</h2>
-  <ul>
-    <li>Correlation quantifies the strength and direction of linear relationships between variables.</li>
-    <li>Regression allows prediction of a dependent variable based on independent variable(s).</li>
-    <li>Assumptions of regression must be checked for valid inference.</li>
-    <li>R² measures how well independent variable(s) explain the variation in the dependent variable.</li>
-    <li>Biological and medical examples demonstrate real-world applications in research and clinical studies.</li>
-  </ul>
+          <h3>Real-life examples</h3>
+          <ol>
+            <li>Binomial distribution for number of successes in repeated trials (e.g., proportion of infected seeds that germinate).</li>
+            <li>Poisson distribution for rare counts (e.g., counts of rare mutations per genome).</li>
+            <li>Normal distribution for measurements with many small independent sources of variation (e.g., heights).</li>
+            <li>Exponential distribution for waiting times (e.g., time until cell division in a simple model).</li>
+            <li>Uniform distribution for a randomly selected point in an interval.</li>
+          </ol>
 
-  <a class="button" href="../module1.html">← Back to Module 1</a>
+          <h3>Biology-related examples (5–10)</h3>
+          <ul class="biolist">
+            <li>Number of bacteria colonies on plates: often modeled by Poisson or Negative Binomial.</li>
+            <li>Proportion of individuals with a genotype: Binomial.</li>
+            <li>Distribution of body sizes across a population: approximate Normal after transformation if needed.</li>
+            <li>Time between infections in an epidemic model: Exponential.</li>
+            <li>Counts of reads per gene in RNA-seq: Negative Binomial (overdispersed counts).</li>
+            <li>Survival times of patients in a clinical trial: survival distributions (Weibull, Exponential).</li>
+            <li>Proportion of cells stained positive in microscopy: Beta distribution for continuous proportions.</li>
+            <li>Number of offspring per individual in ecological studies: often Poisson or overdispersed variants.</li>
+            <li>Mutation counts per coding region across samples: Poisson or Negative Binomial.</li>
+            <li>Latency periods of pathogens (time-to-symptom): Gamma or Weibull.</li>
+          </ul>
+        </section>
 
+        <section id="types" style="margin-top:16px">
+          <h2 class="section-title">4. Types of Probability Distributions — Definitions, Formula & Applications</h2>
+
+          <h3>Discrete distributions</h3>
+
+          <h4>Bernoulli</h4>
+          <p><strong>Definition:</strong> One trial with two outcomes — success (1) with probability \(p\), failure (0) with probability \(1-p\).</p>
+          <p class="small"><strong>PMF:</strong> \(P(X=1)=p,\ P(X=0)=1-p\). Mean: \(p\). Var: \(p(1-p)\).</p>
+          <p><strong>Real-life example:</strong> Whether a patient responds to a single-dose vaccine (Yes/No).</p>
+          <p><strong>Biology examples (5):</strong></p>
+          <ul class="biolist">
+            <li>Single cell survives a stress test (yes/no).</li>
+            <li>PCR reaction yields product (success/failure) in one tube.</li>
+            <li>Presence/absence of a pathogen in a sample (screening test).</li>
+            <li>Cell expresses a marker (on/off) in a binary assay.</li>
+            <li>Germination of a single seed under controlled conditions.</li>
+
+          </ul>
+
+          <h4>Binomial</h4>
+          <p><strong>Definition:</strong> Number of successes in \(n\) independent Bernoulli trials with success probability \(p\).</p>
+          <p class="small"><strong>PMF:</strong> \(P(X=k)=\binom{n}{k} p^k (1-p)^{n-k},\ k=0,1,...,n.\) Mean: \(np\). Var: \(np(1-p)\).</p>
+          <p><strong>Real-life example:</strong> Number of infected plants out of 20 inoculated.</p>
+          <p><strong>Biology examples (8):</strong></p>
+          <ul class="biolist">
+            <li>Number of mutant offspring among \(n\) progeny (Mendelian predictions).</li>
+            <li>Number of successes in antimicrobial assays across replicate wells.</li>
+            <li>Number of embryos that develop normally out of a set.</li>
+            <li>Number of patients responding to a drug in a small clinical trial sample.</li>
+            <li>Number of pollen grains that germinate out of \(n\) tested.</li>
+            <li>Number of colonies with resistance marker out of plated cells.</li>
+            <li>Number of plants showing a phenotype after treatment among \(n\).</li>
+            <li>Number of larvae surviving after exposure out of \(n\) larvae.</li>
+          </ul>
+
+          <h4>Poisson</h4>
+          <p><strong>Definition:</strong> Models counts of events occurring independently in a fixed interval when events are rare and mean rate is \(\lambda\).</p>
+          <p class="small"><strong>PMF:</strong> \(P(X=k)=e^{-\lambda} \dfrac{\lambda^k}{k!},\ k=0,1,2,...\) Mean=Var=\(\lambda\).</p>
+          <p><strong>Real-life example:</strong> Number of mutations observed in a gene per sequencing run when mutations are rare.</p>
+          <p><strong>Biology examples (8):</strong></p>
+          <ul class="biolist">
+            <li>Number of mutation events per gene per genome.</li>
+            <li>Number of bacteria colonies appearing by chance in a field sample.</li>
+            <li>Number of insect bites per person in a fixed time window.</li>
+            <li>Number of rare pathogen detections in environmental samples.</li>
+            <li>Number of spontaneous cell division errors in a culture per day.</li>
+            <li>Number of transposition events detected in a genome region.</li>
+            <li>Number of sequencing errors per read (approximate in some contexts).</li>
+            <li>Number of tumors appearing in a model organism in a year (rare events).
+          </ul>
+
+          <h4>Discrete Uniform</h4>
+          <p><strong>Definition:</strong> Finite set of outcomes equally likely.</p>
+          <p class="small"><strong>PMF:</strong> If values are \(a,...,b\), then \(P(X=x)=1/(b-a+1)\).</p>
+          <p><strong>Real-life example:</strong> Choosing a random chromosome (if all equally likely) from a small set.
+          <p><strong>Biology examples (5):</strong></p>
+          <ul class="biolist">
+            <li>Randomly choosing one of several equally abundant species for a pilot observation.</li>
+            <li>Random assignment of equal treatments to experimental units when all choices are equally likely.</li>
+            <li>Selecting a random gene from a small curated list for follow-up.</li>
+            <li>Randomly sampling one of \(k\) cultures when they are identical.</li>
+            <li>Choosing a random locus from a small panel for genotyping.</li>
+          </ul>
+
+          <h3>Continuous distributions</h3>
+
+          <h4>Uniform (continuous)</h4>
+          <p><strong>Definition:</strong> All values in \([a,b]\) equally likely per unit length.</p>
+          <p class="small"><strong>PDF:</strong> \(f(x)=1/(b-a)\) for \(a\le x\le b\). Mean: \((a+b)/2\), Var: \((b-a)^2/12\).</p>
+          <p><strong>Biology examples (5):</strong></p>
+          <ul class="biolist">
+            <li>Random time of day that an experimental sample is processed when processing is uniform across a shift.</li>
+            <li>Random selection of a position along a homogeneous fiber for measurement.</li>
+            <li>Selecting a random angle for orientation in a behavioral assay (if uniform).</li>
+            <li>Random placement of a marker along a uniform DNA construct in simulation.</li>
+            <li>Assuming uniform prior for a parameter in a simple Bayesian example (educational).
+          </ul>
+
+          <h4>Normal (Gaussian)</h4>
+          <p><strong>Definition:</strong> Continuous distribution shaped like a bell curve, used for many natural measurements.</p>
+          <p class="small"><strong>PDF:</strong> \(f(x)=\dfrac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu)^2/(2\sigma^2)}\). Mean=\(\mu\), Var=\(\sigma^2\).</p>
+          <p><strong>Real-life example:</strong> Distribution of heights in a large population (approx Normal).</p>
+          <p><strong>Biology examples (8):</strong></p>
+          <ul class="biolist">
+            <li>Body weight or length measurements in a well-mixed population.</li>
+            <li>Distribution of enzyme activity across individuals under controlled conditions.</li>
+            <li>Measurement errors around a true lab value (instrument noise tends to be Gaussian).</li>
+            <li>Distribution of blood pressure in a sample from a population.</li>
+            <li>Normalized gene expression values after suitable transformation.</li>
+            <li>Distribution of sizes of eggs in a bird species (approx Normal often).</li>
+            <li>Phenotypic traits influenced by many small genetic and environmental effects.</li>
+            <li>Residuals in many regression models (assumption of Normality for errors).
+          </ul>
+
+          <h4>Exponential</h4>
+          <p><strong>Definition:</strong> Models waiting times between independent events occurring at constant rate.</p>
+          <p class="small"><strong>PDF:</strong> \(f(x)=\lambda e^{-\lambda x},\ x\ge 0.\) Mean: \(1/\lambda\), Var: \(1/\lambda^2\).</p>
+          <p><strong>Biology examples (7):</strong></p>
+          <ul class="biolist">
+            <li>Time until first infection event in a simple Poisson process model.</li>
+            <li>Time until a cell divides in a memoryless model.</li>
+            <li>Time until failure (death) for a simple lifespan model with constant hazard.</li>
+            <li>Time between arrivals of individuals to a trap when arrivals are Poisson.</li>
+            <li>Time until detection of a rare event in continuous monitoring (approx Exponential locally).</li>
+            <li>Inter-event times between mutations under a constant-rate assumption.</li>
+            <li>Waiting time to observe the first successful culture in high-throughput screening under certain assumptions.
+          </ul>
+
+          <h4>Gamma</h4>
+          <p><strong>Definition:</strong> Family of continuous distributions generalizing Exponential (sum of k exponentials).</p>
+          <p class="small">Useful for modeling waiting times that are sums of multiple exponential stages.</p>
+          <p><strong>Biology examples (5):</strong></p>
+          <ul class="biolist">
+            <li>Time until completion of a multi-step biological process (e.g., multi-stage infection).</li>
+            <li>Distribution of incubation periods that are sums of several exponential phases.</li>
+            <li>Modeling dispersed waiting times for cell cycle stages.</li>
+            <li>Modeling aggregate enzyme reaction times in serial steps.
+            <li>Modeling rainfall amounts in ecohydrology (affects biological processes).
+          </ul>
+
+          <h4>Beta</h4>
+          <p><strong>Definition:</strong> Continuous distribution on [0,1], flexible for modeling proportions.</p>
+          <p class="small">Useful as a prior in Bayesian models for probabilities or to model proportions.</p>
+          <p><strong>Biology examples (6):</strong></p>
+          <ul class="biolist">
+            <li>Proportion of cells expressing a marker in microscopy images.</li>
+            <li>Proportion of infected individuals in a sample (when modeling uncertainty).</li>
+            <li>Allele frequency estimates in small samples (as a prior/posterior).</li>
+            <li>Proportion of time an animal spends foraging versus resting.</li>
+            <li>Proportion of target mRNA expressed relative to housekeeping genes (normalized proportion).
+            <li>Modeling efficacy rate of treatments when bounded between 0 and 1.
+          </ul>
+
+          <h4>Negative Binomial</h4>
+          <p><strong>Definition:</strong> Discrete distribution generalizing Poisson to allow overdispersion (variance > mean).</p>
+          <p class="small">Commonly used for count data with extra variability, e.g., RNA-seq gene counts.</p>
+          <p><strong>Biology examples (6):</strong></p>
+          <ul class="biolist">
+            <li>RNA-seq read counts per gene across replicate samples (overdispersed counts).</li>
+            <li>Counts of parasites per host when aggregation occurs.</li>
+            <li>Number of insects captured in traps across variable locations.</li>
+            <li>Counts of bacterial colonies with patchy distribution on plates or fields.</li>
+            <li>Number of disease cases across regions with heterogeneity.
+            <li>Modeling overdispersed mutation counts across genomic regions.
+          </ul>
+
+        </section>
+
+        <section id="r-examples" style="margin-top:16px">
+          <h2 class="section-title">5. Quick R Examples</h2>
+          <p>Copy these into R or RStudio to run.</p>
+          <div class="code-wrapper card" style="padding:12px">
+            <button class="copy-btn" onclick="copyCode('r1')">Copy</button>
+            <pre id="r1"><code># 1) Bernoulli (simulate 100 trials with p=0.3)
+ber <- rbinom(100, size=1, prob=0.3)
+table(ber)
+
+# 2) Binomial probabilities (n=20, p=0.2)
+dbinom(0:20, size=20, prob=0.2)
+
+# 3) Poisson (lambda=2.5)
+dpois(0:10, lambda=2.5)
+ppois(3, lambda=2.5)   # P(X <= 3)
+
+# 4) Negative Binomial (simulate overdispersed counts)
+rnb <- rnbinom(1000, size=2, mu=5)
+hist(rnb, main='NegBin sample', breaks=30)
+
+# 5) Normal sample and plot
+x <- rnorm(1000, mean=50, sd=5)
+hist(x, main='Normal sample', breaks=30)
+
+# 6) Beta for proportions (alpha=2, beta=5)
+prop <- rbeta(500, 2, 5)
+hist(prop, main='Beta(2,5)', breaks=25)
+</code></pre>
+          </div>
+          <p class="note small">Tip: R's functions follow the pattern <code>d*</code> (density/pmf), <code>p*</code> (cdf), <code>q*</code> (quantile), <code>r*</code> (random sample) — e.g., <code>dbinom, ppois, qnorm, rbeta</code>.</p>
+        </section>
+
+        <section id="quiz" style="margin-top:16px">
+          <h2 class="section-title">6. Short In-class Quiz</h2>
+          <div class="quiz">
+            <div class="q">
+              <strong>Q1.</strong> A plate receives on average 0.5 contamination events. Which distribution is appropriate for modeling the count of contaminations per plate? Why?<br>
+              <button class="toggle-answer" onclick="toggle(this)">Show / Hide answer</button>
+              <div class="answer" style="display:none;margin-top:8px;color:var(--muted)"><strong>Answer:</strong> Poisson(\(\lambda=0.5\)) — appropriate for rare independent events in a fixed unit.</div>
+            </div>
+
+            <div class="q">
+              <strong>Q2.</strong> You measure enzyme activity 100 times and the distribution looks bell-shaped. Which distribution might you assume for modelling measurement error?<br>
+              <button class="toggle-answer" onclick="toggle(this)">Show / Hide answer</button>
+              <div class="answer" style="display:none;margin-top:8px;color:var(--muted)"><strong>Answer:</strong> Normal distribution — Gaussian errors are common for measurement noise.</div>
+            </div>
+
+            <div class="q">
+              <strong>Q3.</strong> True / False: The probability that a continuous random variable equals exactly 2.5 can be greater than zero.<br>
+              <button class="toggle-answer" onclick="toggle(this)">Show / Hide answer</button>
+              <div class="answer" style="display:none;margin-top:8px;color:var(--muted)"><strong>Answer:</strong> False — for continuous RVs, point probabilities are zero; probabilities are for intervals.</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="further" style="margin-top:16px">
+          <h2 class="section-title">7. Further reading & next steps</h2>
+          <ul>
+            <li>Central Limit Theorem — why sums/averages tend to Normal.</li>
+            <li>Parameter estimation: method of moments & maximum likelihood.</li>
+            <li>Model checking: goodness-of-fit tests and visual checks (QQ-plot).</li>
+            <li>Extensions: mixture models, hierarchical models for biology data.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <aside style="min-width:0">
+        <div class="card">
+          <h3>Lecture at a glance</h3>
+          <ul style="color:var(--muted);margin-top:6px">
+            <li>Intro to probability & rules</li>
+            <li>Random variables: discrete & continuous</li>
+            <li>Probability distributions & key functions</li>
+            <li>Discrete & continuous examples with biology cases</li>
+            <li>R code snippets and mini quiz</li>
+          </ul>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3>Quick formula cheat-sheet</h3>
+          <p style="color:var(--muted);font-size:0.95rem">
+            <strong>Binomial:</strong> \(P(X=k)=\binom{n}{k}p^k(1-p)^{n-k}\).<br>
+            <strong>Poisson:</strong> \(P(X=k)=e^{-\lambda}\lambda^k/k!\).<br>
+            <strong>Normal:</strong> see main formula above.<br>
+            <strong>Exponential:</strong> \(f(x)=\lambda e^{-\lambda x}\) for \(x\ge0\).
+          </p>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3>Class activities</h3>
+          <ol style="color:var(--muted);margin-left:14px">
+            <li>Simulate Binomial, Poisson and NegBin samples in R and compare histograms to real data.</li>
+            <li>Use a small dataset to fit a Poisson vs Negative Binomial model and check overdispersion.</li>
+            <li>Design a short experiment: estimate germination probability of seeds and compute a confidence interval.</li>
+          </ol>
+        </div>
+      </aside>
+    </div>
+
+   
+  <!-- Footer include -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Back to top button -->
+  <button id="backToTop">↑</button>
+
+  <script>
+    async function includeHTML(id, file) {
+      const el = document.getElementById(id);
+      const resp = await fetch(file);
+      if (resp.ok) el.innerHTML = await resp.text();
+    }
+    includeHTML("navbar-placeholder", "navbar.html");
+    includeHTML("footer-placeholder", "footer.html");
+
+    const btn = document.getElementById("backToTop");
+    window.onscroll = () => btn.style.display = document.documentElement.scrollTop > 200 ? "block" : "none";
+    btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  </script>
 </body>
 </html>
