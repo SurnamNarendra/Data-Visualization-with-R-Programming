@@ -57,7 +57,7 @@
   <section class="mb-8">
     <h2 class="text-2xl font-semibold text-blue-700 mb-3">Aim</h2>
     <p>
-      To perform descriptive statistical analysis of heart rate data from 5 patients (20 measurements each) in R, including mean, median, mode, range, variance, standard deviation, coefficient of variation, skewness, kurtosis, and outlier detection, and determine the most consistent patient.
+      To perform descriptive statistical analysis of heart rate data from 5 patients (20 measurements each) in R, including mean, median, mode, range, variance, standard deviation, coefficient of variation, skewness, kurtosis, and outlier detection using quartiles and boxplots.
     </p>
   </section>
 
@@ -65,71 +65,93 @@
   <section class="mb-8">
     <h2 class="text-2xl font-semibold text-blue-700 mb-3">Algorithm</h2>
     <ol class="list-decimal list-inside space-y-1">
-      <li>Collect or input heart rate data of 20 samples for 5 patients.</li>
-      <li>Calculate mean, median, and mode for each patient.</li>
-      <li>Compute range, variance, and standard deviation.</li>
-      <li>Compute coefficient of variation (CV) to assess consistency.</li>
-      <li>Compute skewness and kurtosis for data distribution analysis.</li>
-      <li>Detect any outliers using descriptive methods or boxplot visualization.</li>
-      <li>Compare CV values to identify the most consistent patient.</li>
-      <li>Visualize distributions using boxplots.</li>
+      <li>Generate heart rate data for 20 samples of 5 patients.</li>
+      <li>Convert the data into long format for analysis.</li>
+      <li>Compute descriptive statistics (mean, median, SD, range, variance, etc.).</li>
+      <li>Compute quartiles (Q1, Q3), IQR, and detect outliers using boxplot fences.</li>
+      <li>Create line chart to show heart rate trend for each patient.</li>
+      <li>Create boxplot to study distribution and variability.</li>
+      <li>Create density plot to analyze distribution shape.</li>
+      <li>Identify the most consistent patient using coefficient of variation.</li>
     </ol>
   </section>
 
   <!-- SOURCE CODE -->
   <section class="mb-8">
     <h2 class="text-2xl font-semibold text-blue-700 mb-3">Source Code</h2>
+
 <pre class="bg-gray-900 text-green-200 p-4 rounded-lg overflow-x-auto text-sm"><code># Lab 2: Heart Rate Analysis of 5 Patients
 
-# Heart rate data (20 measurements each)
-patient1 <- c(72,75,74,71,73,72,76,74,73,72,74,75,73,72,71,74,73,75,72,73)
-patient2 <- c(80,82,78,81,79,80,81,82,79,80,78,81,80,79,82,80,81,79,80,82)
-patient3 <- c(65,67,66,65,66,65,67,66,65,66,67,66,65,66,65,66,65,67,66,65)
-patient4 <- c(90,88,91,89,90,91,89,90,88,90,89,91,90,89,90,91,90,89,90,88)
-patient5 <- c(78,77,79,78,77,78,79,78,77,78,79,77,78,77,79,78,77,78,79,78)
-
-patients <- list(P1=patient1, P2=patient2, P3=patient3, P4=patient4, P5=patient5)
-
-# Install moments package if not installed
-if(!require(moments)) install.packages("moments")
+library(dplyr)
+library(ggplot2)
 library(moments)
 
-# Function to calculate descriptive stats
-descriptive_stats <- function(data){
-  mean_val <- mean(data)
-  median_val <- median(data)
-  mode_val <- as.numeric(names(sort(table(data), decreasing=TRUE)[1]))
-  range_val <- max(data)-min(data)
-  variance_val <- var(data)
-  sd_val <- sd(data)
-  cv <- (sd_val/mean_val)*100
-  skew <- skewness(data)
-  kurt <- kurtosis(data)
-  list(Mean=mean_val, Median=median_val, Mode=mode_val,
-       Range=range_val, Variance=variance_val, SD=sd_val, CV=cv,
-       Skewness=skew, Kurtosis=kurt)
-}
+# Simulated patient data
+p1 <- sample(60:100, 20, replace = TRUE)
+p2 <- sample(60:100, 20, replace = TRUE)
+p3 <- sample(60:100, 20, replace = TRUE)
+p4 <- sample(60:100, 20, replace = TRUE)
+p5 <- sample(60:100, 20, replace = TRUE)
 
-# Calculate stats for each patient
-stats <- lapply(patients, descriptive_stats)
+patients <- data.frame(p1, p2, p3, p4, p5)
 
-# Print descriptive stats
-for(p in names(stats)){
-  cat("\\nDescriptive Statistics for", p, ":\\n")
-  print(stats[[p]])
-}
+# Convert to long format
+df <- do.call(rbind, lapply(names(patients), function(p){
+  data.frame(Patient = p, HR = patients[[p]])
+}))
 
-# Identify most consistent patient
-cv_values <- sapply(stats, function(x) x$CV)
-most_consistent <- names(cv_values)[which.min(cv_values)]
-cat("\\nMost consistent patient (lowest CV):", most_consistent, "with CV =", round(min(cv_values),2), "%\\n")
+# Descriptive statistics + Q1 Q3 Outliers
+simple_stats <- df %>%
+  group_by(Patient) %>%
+  summarise(
+    Mean = mean(HR),
+    Median = median(HR),
+    SD = sd(HR),
+    Range = max(HR) - min(HR),
+    Variariance = var(HR),
+    CV = (sd(HR) / mean(HR)) * 100,
+    Skewness = skewness(HR),
+    Kurtosis = kurtosis(HR),
 
-# Boxplot visualization
-boxplot(patient1, patient2, patient3, patient4, patient5,
-        names=c("P1","P2","P3","P4","P5"),
-        col="lightgreen",
-        main="Heart Rate Distribution of 5 Patients",
-        ylab="Heart Rate (bpm)")
+    Q1 = quantile(HR, 0.25),
+    Q3 = quantile(HR, 0.75),
+    IQR = IQR(HR),
+
+    Lower_Fence = Q1 - 1.5 * IQR,
+    Upper_Fence = Q3 + 1.5 * IQR,
+
+    Outliers = paste(HR[HR < Lower_Fence | HR > Upper_Fence], collapse = ", ")
+  )
+
+print(simple_stats, width = Inf)
+
+# Line chart
+df$Index <- ave(df$HR, df$Patient, FUN = seq_along)
+
+ggplot(df, aes(x = Index, y = HR, color = Patient)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 1.2) +
+  theme_minimal(base_size = 14) +
+  labs(title = "Heart Rate Trend for All Patients",
+       x = "Observation Index", y = "Heart Rate (bpm)") +
+  scale_color_brewer(palette = "Dark2")
+
+# Boxplot
+ggplot(df, aes(x = Patient, y = HR, fill = Patient)) +
+  geom_boxplot(alpha = 0.8, outlier.color = "red", outlier.size = 3) +
+  theme_minimal(base_size = 14) +
+  labs(title = "Heart Rate Distribution by Patient",
+       y = "Heart Rate (bpm)") +
+  scale_fill_brewer(palette = "Set2")
+
+# Density plot
+ggplot(df, aes(x = HR, color = Patient, fill = Patient)) +
+  geom_density(alpha = 0.3) +
+  theme_minimal(base_size = 14) +
+  labs(title = "Density Plot of Heart Rates",
+       x = "Heart Rate (bpm)", y = "Density") +
+  scale_fill_brewer(palette = "Set1") +
+  scale_color_brewer(palette = "Set1")
 </code></pre>
   </section>
 
@@ -137,12 +159,17 @@ boxplot(patient1, patient2, patient3, patient4, patient5,
   <section class="mb-8">
     <h2 class="text-2xl font-semibold text-blue-700 mb-3">Expected Output (Sample)</h2>
 <pre class="bg-gray-100 text-gray-800 p-4 rounded-lg overflow-x-auto text-sm"><code>
-Descriptive Statistics for P1:
-$Mean 73.25   Median 73   Mode 72
-$Range 5      Variance 2.76  SD 1.66  CV 2.27  Skewness 0.05  Kurtosis 2.1
-...
-Most consistent patient (lowest CV): P3 with CV = 1.52 %
-Boxplot shows P3 has least variability, P4 has highest variability
+Descriptive Statistics Table (Q1, Q3, IQR, Outliers also displayed)
+
+Line Chart:
+  Shows HR trend for all patients over 20 readings.
+
+Boxplot:
+  Displays distribution and outliers for each patient.
+
+Density Plot:
+  Shows smooth distribution curve for all 5 patients.
+
 </code></pre>
   </section>
 
@@ -150,14 +177,15 @@ Boxplot shows P3 has least variability, P4 has highest variability
   <section class="mb-8">
     <h2 class="text-2xl font-semibold text-blue-700 mb-3">Conclusion</h2>
     <p>
-      In this lab, we analyzed heart rate measurements of 5 patients using descriptive statistics in R. We calculated measures of central tendency, dispersion, coefficient of variation, skewness, and kurtosis. Boxplot visualization helped observe variability and detect outliers. The patient with the lowest CV was identified as the most consistent, demonstrating the importance of variability analysis in biostatistical studies.
+      In this lab, heart rate data of 5 patients was analyzed using descriptive statistics, quartiles, and outlier detection. Line charts, boxplots, and density plots provided visual insights into consistency and variability. Coefficient of Variation (CV) helps identify the most stable patient, while IQR and fences indicate outliers in the dataset.
     </p>
   </section>
 
   <!-- ONLINE COMPILER -->
   <section class="text-center mt-8">
     <h2 class="text-2xl font-semibold text-blue-700 mb-4">Try It Online</h2>
-    <a href="https://onecompiler.com/r" target="_blank" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+    <a href="https://onecompiler.com/r" target="_blank"
+       class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
        🔹 Open Online R Compiler
     </a>
     <p class="text-sm text-gray-500 mt-2">
@@ -168,7 +196,7 @@ Boxplot shows P3 has least variability, P4 has highest variability
 </main>
 
 <footer class="text-center text-gray-600 py-6 border-t mt-10">
-  <p> Surnam Narendra © 2025 Data Visualization With R </p>
+  <p>Surnam Narendra © 2025 — Data Visualization With R</p>
 </footer>
 
 </body>
