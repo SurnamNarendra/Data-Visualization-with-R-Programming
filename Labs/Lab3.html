@@ -1,31 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Probability Distributions</title>
-<style>
-body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 40px; }
-.container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-h1 { color: #2c3e50; }
-pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Practical 3: Frequency Distribution & Probability Visualization</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <style>
+    * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 40px;
+      background-color: #f9fafc;
+      color: #333;
+      line-height: 1.7;
+    }
+    header { background-color: #007acc; color: white; padding: 20px; border-radius: 10px; text-align: center; }
+    h1 { margin: 0; font-size: 2em; }
+    h2 { color: #005b99; border-bottom: 2px solid #007acc; padding-bottom: 5px; }
+    p { margin: 10px 0; }
+    ul, ol { margin-left: 30px; }
+    section { background-color: #ffffff; padding: 20px; margin-top: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    a.button { display: inline-block; margin-top: 30px; padding: 12px 18px; background-color: #007acc; color: white; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background-color 0.3s ease; }
+    a.button:hover { background-color: #005b99; }
+    footer { text-align: center; margin-top: 40px; font-size: 0.9em; color: #666; }
+    .example { background-color: #eef6fb; border-left: 4px solid #007acc; padding: 10px 15px; margin: 10px 0; }
+    .top-right-logo { position: fixed; top: 10px; right: 10px; width: 100px; height: auto; z-index: 1000; }
+    pre { white-space: pre-wrap; word-wrap: break-word; }
+  </style>
+
+  <script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    ['copy', 'cut', 'paste'].forEach(evt => document.addEventListener(evt, e => e.preventDefault()));
+    document.addEventListener('keydown', function(e) { if (e.key === "PrintScreen") { alert("Screenshots are disabled on this page."); e.preventDefault(); } });
+    window.addEventListener('keyup', function(e) { if (e.key === "PrintScreen") { document.body.style.filter = "blur(6px)"; setTimeout(() => { document.body.style.filter = "none"; }, 2500); } });
+  </script>
 </head>
-<body>
-<div class="container">
-  <h1>Probability Distributions</h1>
-  <h2>Aim</h2>
-  <p>To understand and simulate Normal, Binomial, and Poisson distributions in R.</p>
-  <h2>Algorithm / Procedure</h2>
-  <ul><li>Use rnorm(), rbinom(), rpois() to generate random samples.</li><li>Plot histograms and overlay density curves.</li></ul>
-  <h2>Input / Output</h2>
-  <pre>Input:
-> x <- rnorm(100, mean=0, sd=1)
-> hist(x)
-Output:
-Histogram of Normal distribution</pre>
-  <h2>Result</h2>
-  <p>Simulated and visualized key probability distributions.</p>
-</div>
+
+<body class="text-gray-800 leading-relaxed">
+
+<img src="../images/wos%20ppt.png" class="top-right-logo" alt="Logo">
+
+<header class="bg-blue-700 text-white py-6 text-center shadow-md">
+  <h1 class="text-3xl font-bold">Lab 2: Probability distribution</h1>
+  <p class="text-lg mt-2">Frequency Distribution and Probability Visualization Using R Built-in Datasets</p>
+</header>
+
+<main class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-8 mt-8 mb-10">
+
+  <!-- AIM -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Aim</h2>
+   <p>
+To generate and visualize random data from different statistical distributions (Binomial, Poisson, Normal, Uniform), 
+compute frequency distributions, and understand the probability and density characteristics using R built-in datasets.
+</p>
+  </section>
+
+
+    <!-- ALGORITHM -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Theorey</h2>
+ <p>
+Statistical distributions describe how values of a variable are spread or how often they occur. 
+Random data can be generated in R to simulate these distributions. Density functions describe 
+the likelihood of different outcomes, and probability functions give the expected frequency of events.
+</p>
+
+<h4>1. Binomial Distribution</h4>
+<p>
+The Binomial distribution models the number of successes in a fixed number of independent 
+Bernoulli trials with the same probability of success. Random data can be generated using <code>rbinom()</code>, 
+and probability density can be visualized using <code>dbinom()</code>. The histogram shows the frequency of each outcome.
+</p>
+
+<h4>2. Poisson Distribution</h4>
+<p>
+The Poisson distribution describes the number of events occurring in a fixed interval of time or space,
+assuming the events occur independently at a constant rate. Random data is generated with <code>rpois()</code>, 
+and <code>dpois()</code> provides the probability mass function. It is useful for modeling counts of rare events.
+</p>
+
+<h4>3. Normal Distribution</h4>
+<p>
+The Normal distribution is a continuous distribution that is symmetric around its mean. Random data can be 
+generated using <code>rnorm()</code>. The density function <code>dnorm()</code> and histogram with density overlay 
+help visualize the bell-shaped distribution, showing how values cluster around the mean.
+</p>
+
+<h4>4. Uniform Distribution</h4>
+<p>
+The Uniform distribution represents equally likely outcomes within a specific interval. Random data can 
+be generated with <code>runif()</code>, and <code>dunif()</code> gives the probability density. The histogram should 
+be approximately flat, indicating that each value within the range is equally likely.
+</p>
+  </section>
+
+  
+  <!-- ALGORITHM -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Algorithm</h2>
+ <ol>
+    <li>Load a built-in dataset in R.</li>
+    <li>Select a numeric variable.</li>
+    <li>Create frequency distribution using <code>cut()</code> and <code>table()</code>.</li>
+    <li>Plot histogram and density curve.</li>
+    <li>Generate random data from Binomial, Poisson, Normal, and Uniform distributions.</li>
+    <li>Visualize probability or density functions using <code>dbinom()</code>, <code>dpois()</code>, <code>dnorm()</code>, <code>dunif()</code>.</li>
+</ol>
+
+  </section>
+
+  <h2>1. Binomial Distribution using <code>quakes</code> Dataset</h2>
+<p>
+The <b>earthquakes</b> dataset contains earthquake magnitudes.  
+We convert magnitudes into a binary outcome:  
+<b>Success = magnitude &gt; 5</b>, Failure = otherwise. Random data and probabilities are visualized.
+</p>
+
+<pre>
+# Load built-in dataset
+data("quakes")
+
+# Convert magnitudes to Binomial outcomes
+success <- ifelse(quakes$mag > 5, 1, 0)
+
+# Frequency table
+table(success)
+
+# Binomial probability plot
+x <- 0:1
+plot(x, dbinom(x, size=1, prob=mean(success)),
+     type="h", col="blue", lwd=3,
+     main="Binomial Distribution from Earthquake Magnitudes",
+     xlab="Outcome (0 = Low, 1 = High)",
+     ylab="Probability")
+</pre>
+
+<hr>
+
+<h2>2. Poisson Distribution using <code>airquality</code> Dataset</h2>
+<p>
+High ozone days per month (Ozone &gt; 80) behave like a Poisson process. Random data and Poisson probability mass 
+function are visualized to understand the distribution of rare events.
+</p>
+
+<pre>
+data("airquality")
+
+# Count high-ozone days per month
+high_ozone <- table(airquality$Month[airquality$Ozone > 80])
+high_ozone
+
+# Estimate lambda
+lambda <- mean(high_ozone)
+
+# Poisson probability bars
+x <- 0:max(high_ozone)
+plot(x, dpois(x, lambda),
+     type="h", col="darkgreen", lwd=3,
+     main="Poisson Distribution (High Ozone Days per Month)",
+     xlab="High Ozone Days", ylab="Probability")
+</pre>
+
+<hr>
+
+<h2>3. Normal Distribution using <code>iris</code> Dataset</h2>
+<p>
+The <b>Petal Length</b> in the iris dataset closely follows a normal distribution. Histograms with 
+density curves and the theoretical normal curve are plotted to visualize data distribution.
+</p>
+
+<pre>
+data("iris")
+
+# Histogram + Density
+hist(iris$Petal.Length, probability = TRUE,
+     col="lightblue",
+     main="Normal Distribution Example (Iris Petal Length)",
+     xlab="Petal Length")
+
+lines(density(iris$Petal.Length), col="red", lwd=2)
+
+# Superimpose normal curve
+x <- seq(min(iris$Petal.Length), max(iris$Petal.Length), 0.1)
+curve(dnorm(x, mean=mean(iris$Petal.Length),
+               sd=sd(iris$Petal.Length)),
+      add=TRUE, col="blue", lwd=2)
+</pre>
+
+<hr>
+
+<h2>4. Uniform Distribution using <code>faithful</code> Dataset</h2>
+<p>
+We take the range of the waiting time variable and generate uniform data within that range. Histogram and 
+density function demonstrate equally likely outcomes within the interval.
+</p>
+
+<pre>
+data("faithful")
+
+min_w <- min(faithful$waiting)
+max_w <- max(faithful$waiting)
+
+# Generate uniform sample
+u <- runif(200, min=min_w, max=max_w)
+
+hist(u, probability=TRUE,
+     col="khaki",
+     main="Uniform Distribution (Based on Faithful Waiting Range)",
+     xlab="Uniform Values")
+
+curve(dunif(x, min_w, max_w),
+      add=TRUE, col="purple", lwd=3)
+</pre>
+
+<hr>
+
+<h2>Conclusion</h2>
+<p>
+This practical demonstrated the generation and visualization of random data from classical statistical distributions.
+<ul>
+<li>Binomial distribution models binary outcomes and its probability function shows the likelihood of success or failure.</li>
+<li>Poisson distribution models counts of rare events, visualized using probability mass function.</li>
+<li>Normal distribution models continuous variables with bell-shaped density curves.</li>
+<li>Uniform distribution models equally likely outcomes within an interval.</li>
+</ul>
+By combining R built-in datasets with random data and probability functions, we gain a clear understanding of frequency, probability, and density concepts.
+</p>
+
+  <!-- ONLINE COMPILER -->
+  <section class="text-center mt-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-4">Try It Online</h2>
+    <a href="https://onecompiler.com/r" target="_blank"
+       class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+       🔹 Open Online R Compiler
+    </a>
+    <p class="text-sm text-gray-500 mt-2">
+      Opens in new tab — powered by OneCompiler.
+    </p>
+  </section>
+
+</main>
+
+<footer class="text-center text-gray-600 py-6 border-t mt-10">
+  <p>Surnam Narendra © 2025 — Data Visualization With R</p>
+</footer>
+
 </body>
 </html>
