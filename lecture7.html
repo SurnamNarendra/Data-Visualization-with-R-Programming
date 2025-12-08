@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecture 7 — Introduction to R (Expanded)</title>
+  <title>Lecture 7 — Introduction to R </title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -41,14 +41,70 @@
       text-decoration: none;
     }
     a.button:hover { background-color: #005b99; }
+  .top-right-logo {
+  position: fixed;      /* or absolute */
+  top: 10px;            /* distance from top */
+  right: 10px;          /* distance from right */
+  width: 100px;         /* adjust as needed */
+  height: auto;         /* preserve aspect ratio */
+  z-index: 1000;        /* ensure it stays on top */
+}
   </style>
 </head>
 <body>
+<body>
+ <img src="images/wos ppt.png" alt="University Logo" class="top-right-logo">
 
-  <h1>Lecture 7 — Introduction to R (Expanded Version)</h1>
+  <h1>Lecture 7 — Introduction to R </h1>
 
-  <p>This expanded lecture provides a deeper introduction to R, including the environment, data structures, indexing, functions, and plotting. Additional examples are included to help strengthen understanding.</p>
+  <h2>What is R?</h2>
+<p><strong>R is a programming language and software environment</strong> used for statistical computing, data analysis, and data visualization. It is widely used in academia, research, bioinformatics, machine learning, and industry because of its powerful libraries, graphical capabilities, and open-source nature.</p>
+<p>R allows users to perform tasks such as data cleaning, statistical modeling, hypothesis testing, plotting, machine learning, and report generation.</p>
+<div class="example"><strong>Simple Example:</strong> Running <code>mean(c(1,2,3,4,5))</code> in R returns the average value, which is 3.</div>
 
+<h2>RStudio Layout</h2>
+<p>RStudio is one of the most popular Integrated Development Environments (IDEs) for R. 
+It provides an organized workspace divided into four main panels:</p>
+
+<ul>
+  <li><strong>1. Source Panel (Top-Left)</strong><br>
+      Used for writing and editing R scripts, RMarkdown files, and projects. 
+      You can save, run, and organize your code here.</li>
+
+  <li><strong>2. Console Panel (Bottom-Left)</strong><br>
+      Executes R commands. Anything you type directly into R runs here.
+      Output, messages, and errors are displayed in this section.</li>
+
+  <li><strong>3. Environment / History Panel (Top-Right)</strong><br>
+      <ul>
+        <li><strong>Environment:</strong> Shows all stored objects such as vectors, data frames, and functions.</li>
+        <li><strong>History:</strong> Displays previously executed commands.</li>
+      </ul>
+  </li>
+
+  <li><strong>4. Plots / Files / Packages / Help / Viewer Panel (Bottom-Right)</strong><br>
+      <ul>
+        <li><strong>Plots:</strong> Displays graphs generated using functions like <code>plot()</code> or <code>ggplot()</code>.</li>
+        <li><strong>Files:</strong> Shows your project directory.</li>
+        <li><strong>Packages:</strong> Lists installed packages and lets you load/unload them.</li>
+        <li><strong>Help:</strong> Displays documentation for R functions.</li>
+        <li><strong>Viewer:</strong> Opens HTML outputs, reports, or interactive apps (e.g., Shiny).</li>
+      </ul>
+  </li>
+</ul>
+
+<div style="background:#eef6fb; border-left:4px solid #007acc; padding:10px; margin:15px 0;">
+  <strong>Example:</strong><br>
+  When you run <code>summary(data)</code> from the Source panel:
+  <ul>
+    <li>The command appears in the Console.</li>
+    <li>The output is shown below it.</li>
+    <li>If it generates a plot, it appears in the Plots tab.</li>
+    <li>The data frame <code>data</code> appears in the Environment.</li>
+  </ul>
+</div>
+
+  
   <h2>1. R Environment</h2>
   <p>You can work with R in various environments:</p>
   <ul>
@@ -188,7 +244,24 @@
     <li>Learning R improves reproducibility and efficiency in research.</li>
   </ul>
 
-  <a class="button" href="../module1.html">← Back to Module 1</a>
+    <!-- Footer include -->
+  <div id="footer-placeholder"></div>
 
+  <!-- Back to top button -->
+  <button id="backToTop">↑</button>
+
+  <script>
+    async function includeHTML(id, file) {
+      const el = document.getElementById(id);
+      const resp = await fetch(file);
+      if (resp.ok) el.innerHTML = await resp.text();
+    }
+    includeHTML("navbar-placeholder", "navbar.html");
+    includeHTML("footer-placeholder", "footer.html");
+
+    const btn = document.getElementById("backToTop");
+    window.onscroll = () => btn.style.display = document.documentElement.scrollTop > 200 ? "block" : "none";
+    btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  </script>
 </body>
 </html>
