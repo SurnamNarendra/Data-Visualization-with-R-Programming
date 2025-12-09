@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dataset Files</title>
+
+<style>
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        background: #f6f8fa;
+        padding: 20px 40px;
+    }
+    h2 {
+        color: #24292f;
+        font-weight: 600;
+    }
+    .file-list {
+        margin-top: 20px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 6px;
+        border: 1px solid #d0d7de;
+    }
+    .file-item {
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid #eaecef;
+    }
+    .file-item:last-child {
+        border-bottom: none;
+    }
+    .file-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 12px;
+        opacity: 0.7;
+    }
+    a {
+        font-size: 16px;
+        color: #0969da;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+</head>
+<body>
+
+<h2>Dataset Files</h2>
+
+<div class="file-list">
+
+<!-- Automatically generated file list -->
+<!-- Data_1.csv to Data_30.csv -->
+
+<script>
+    for (let i = 1; i <= 30; i++) {
+        document.write(`
+        <div class="file-item">
+            <img class="file-icon" src="https://cdn-icons-png.flaticon.com/512/337/337946.png">
+            <a href="Data_${i}.csv" download>Data_${i}.csv</a>
+        </div>
+        `);
+    }
+</script>
+
+</div>
+
+</body>
+</html>
