@@ -1,30 +1,265 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Download dataset from GitHub RAW by Roll</title>
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;margin:20px;color:#0b1220;background:#f7fafc}
-    .card{max-width:980px;margin:0 auto;background:#fff;border-radius:10px;padding:18px;box-shadow:0 6px 18px rgba(2,6,23,0.06)}
-    label{display:block;margin-bottom:6px;font-weight:600}
-    input,button,select{padding:8px 10px;border-radius:8px;border:1px solid #dbe7ef;font-size:14px}
-    .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-    table{width:100%;border-collapse:collapse;margin-top:12px}
-    th,td{border:1px solid #e6edf3;padding:8px;text-align:left;font-size:13px}
-    th{background:#f3f6f9}
-    .muted{color:#6b7280}
-    .small{font-size:13px}
-    .actions{margin-top:10px;display:flex;gap:8px}
-    #status{margin-top:8px}
-    .hint{margin-top:8px;color:#155e75}
-    a.small{font-size:13px;color:#0b71b5}
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Practical 4:  Data Cleaning and Transformation using dplyr</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+<style>
+    * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    /* Global Typography */
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 20px;
+      background-color: #f7fafc;
+      color: #0b1220;
+      line-height: 1.7;
+      font-size: 16px; /* BASE SIZE */
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px; /* Main title */
+      font-weight: 700;
+    }
+
+    h2 {
+      color: #005b99;
+      border-bottom: 2px solid #007acc;
+      padding-bottom: 5px;
+      font-size: 22px; /* Section title */
+      font-weight: 600;
+    }
+
+    p,
+    ul,
+    ol,
+    li {
+      font-size: 16px; /* Body text consistent */
+    }
+
+    /* Basic Layout */
+    header {
+      background-color: #007acc;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    section {
+      background-color: #ffffff;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    /* Highlight Example Box */
+    .example {
+      background-color: #eef6fb;
+      border-left: 4px solid #007acc;
+      padding: 10px 15px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    .top-right-logo {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 100px;
+      height: auto;
+      z-index: 1000;
+    }
+
+    /* Code block */
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 15px;
+    }
+
+    /* Card Container */
+    .card {
+      max-width: 980px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.06);
+      font-size: 16px;
+    }
+
+    /* Form Elements */
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    input,
+    button,
+    select {
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #dbe7ef;
+      font-size: 16px; /* MATCH BODY */
+    }
+
+    button {
+      cursor: pointer;
+      background: #007acc;
+      color: white;
+      border: none;
+      transition: 0.25s ease;
+    }
+
+    button:hover {
+      background: #005b99;
+    }
+
+    /* Buttons inside content */
+    a.button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 18px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    a.button:hover { background-color: #005b99; }
+
+    /* Controls layout */
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* Table – now readable */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 16px;
+    }
+
+    th, td {
+      border: 1px solid #e6edf3;
+      padding: 8px;
+      text-align: left;
+      font-size: 16px; /* FIX small text */
+    }
+
+    th {
+      background: #f3f6f9;
+      font-weight: 600;
+    }
+
+    .muted { color: #6b7280; }
+    .small { font-size: 14px; }
+
+    .actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+    }
+
+    #status { margin-top: 8px; font-size: 16px; }
+
+    .hint {
+      margin-top: 8px;
+      color: #155e75;
+      font-size: 16px;
+    }
+
+    a.small {
+      font-size: 14px;
+      color: #0b71b5;
+    }
+</style>
+
+
+
+  <script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    ['copy', 'cut', 'paste'].forEach(evt => document.addEventListener(evt, e => e.preventDefault()));
+    document.addEventListener('keydown', function(e) { if (e.key === "PrintScreen") { alert("Screenshots are disabled on this page."); e.preventDefault(); } });
+    window.addEventListener('keyup', function(e) { if (e.key === "PrintScreen") { document.body.style.filter = "blur(6px)"; setTimeout(() => { document.body.style.filter = "none"; }, 2500); } });
+  </script>
 </head>
+
+<body class="text-gray-800 leading-relaxed">
+
+<img src="../images/wos%20ppt.png" class="top-right-logo" alt="Logo">
+
+<header class="bg-blue-700 text-white py-6 text-center shadow-md">
+  <h1 class="text-3xl font-bold">Lab 4:  Data Cleaning and Transformation using dplyr</h1>
+</header>
+
+<main class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-8 mt-8 mb-10">
+
+</head>
+
 <body>
   <div class="card">
-    <h2>Fetch dataset by roll number (from GitHub RAW)</h2>
-    <p class="small muted">This tool tries multiple common filename patterns and several repo branches on <strong>raw.githubusercontent.com</strong> — it will stop on the first CSV that exists and enable download/preview.</p>
+
+<h3>Aim</h3>
+  <p>
+    To import a dataset in R, identify and handle missing values, detect and remove outliers,
+    perform basic data cleaning, and summarize the cleaned dataset using the
+    <strong>dplyr</strong> package.
+  </p>
+  <div>
+    <div class="card">
+
+  <h3>Algorithm</h3>
+  <ol >
+    <li>Start RStudio and set the working directory.</li>
+    <li>Import the CSV dataset using <code>read.csv()</code>.</li>
+    <li>Display the structure and summary of the dataset.</li>
+    <li>Check for missing values using <code>is.na()</code> and <code>colSums()</code>.</li>
+    <li>If the dataset has no missing values, generate synthetic missing values (~5%).</li>
+    <li>Handle missing values using removal (<code>na.omit()</code>) or imputation.</li>
+    <li>Detect outliers using the IQR method for numeric variables.</li>
+    <li>Remove or cap outliers to create a cleaned dataset.</li>
+    <li>Calculate summary statistics (mean, SD) before and after outlier removal.</li>
+    <li>Apply data transformations (mutate, select, arrange) using <code>dplyr</code>.</li>
+    <li>Compare the original, missing-data-added, and cleaned datasets.</li>
+    <li>Draw conclusions on how cleaning affects data quality and analysis.</li>
+  </ol>
+  <div>
+  
+  <div class="card">
+    <h2> Step-1 Fetch dataset by roll number (from GitHub RAW)</h2>
+<p class="small muted">
+  Enter the <strong>last digits of your roll number</strong> (for example: if your roll number is <b>24WU1021</b>, enter <b>21</b>).
+  This tool will automatically search for your dataset file in the repository based on several common naming patterns.
+  It checks multiple possible filenames and folders on <strong>raw.githubusercontent.com</strong> and stops when it finds the first matching CSV.
+  Once found, the file can be previewed and downloaded for analysis.
+</p>
 
     <label for="roll">Enter roll number (e.g. <em>11</em>)</label>
     <div class="controls">
@@ -213,6 +448,30 @@ write.csv(normalized_data, "dataset_cleaned.csv", row.names = FALSE)
     ✔ Now you have handled missing values, optionally detected outliers, normalized numeric columns, and summarized your dataset.
   </p>
 </div>
+
+<div class="card" style="margin-top:20px;">
+  <h2>Step 5 — Conclusion</h2>
+
+  <p class="small muted">
+    In this lab, you learned how to perform end-to-end data cleaning and transformation using
+    <strong>R</strong> and the <strong>dplyr</strong> package. You started with downloading your assigned
+    dataset, explored its structure, checked for data quality issues, handled missing values, and applied
+    essential cleaning operations.
+  </p>
+
+  <h3>✔ Key Takeaways</h3>
+  <ul>
+    <li>You can import and explore raw CSV datasets in R.</li>
+    <li>Basic cleaning tasks such as removing duplicates and converting data types were performed.</li>
+    <li>You detected and removed outliers using the IQR method and compared summary statistics before and after cleaning.</li>
+    <li>You introduced ~5% missing values to simulate real-world data issues and handled them effectively.</li>
+    <li>You used dplyr functions like <code>filter()</code>, <code>mutate()</code>, <code>select()</code>, <code>summarise()</code>, <code>arrange()</code>, and <code>across()</code>.</li>
+    <li>You understood how data cleaning impacts analysis results such as mean, standard deviation, and distribution shape.</li>
+  </ul>
+
+ 
+</div>
+
 
 
 <script>
