@@ -337,12 +337,26 @@ detect_outliers <- function(x) {
 # Identify rows with any outliers
 outlier_rows <- apply(data_numeric, 1, function(row) any(detect_outliers(row)))
 
-# Compare statistics
-stats_before <- data_numeric %>% summarise(across(everything(), list(mean=mean, sd=sd), na.rm=TRUE))
-stats_after  <- data_numeric[!outlier_rows, ] %>% summarise(across(everything(), list(mean=mean, sd=sd), na.rm=TRUE))
+# Compare statistics before
+stats_before <- data_numeric %>% 
+  summarise(across(everything(),
+                   list(mean = ~mean(.x, na.rm = TRUE),
+                        sd   = ~sd(.x, na.rm = TRUE))
+  ))
 
-stats_before
-stats_after
+# Compare statistics after removing outliers
+stats_after <- data_numeric[!outlier_rows, ] %>%
+  summarise(across(everything(),
+                   list(mean = ~mean(.x, na.rm = TRUE),
+                        sd   = ~sd(.x, na.rm = TRUE))
+  ))
+
+comparison <- bind_rows(
+  stats_before %>% mutate(Status = "Before"),
+  stats_after  %>% mutate(Status = "After")
+) %>% relocate(Status)
+
+comparison
 
 # Remove duplicate rows (if any)
 data_clean <- data %>% distinct()
@@ -435,7 +449,15 @@ normalized_data <- data_imputed %>%
 
 # Summary of numeric variables
 summary_stats <- normalized_data %>%
-  summarise(across(where(is.numeric), list(mean = mean, median = median, sd = sd)))
+  summarise(across(
+    where(is.numeric),
+    list(
+      mean   = ~ mean(.x, na.rm = TRUE),
+      median = ~ median(.x, na.rm = TRUE),
+      sd     = ~ sd(.x, na.rm = TRUE)
+    )
+  ))
+
 summary_stats
   </code></pre>
 
