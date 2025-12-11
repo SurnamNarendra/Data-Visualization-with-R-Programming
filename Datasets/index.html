@@ -57,15 +57,50 @@
 <!-- Data_1.csv to Data_30.csv -->
 
 <script>
-    for (let i = 1; i <= 30; i++) {
+    // Put the *actual* existing file names here:
+    const files = [
+        "Data_1.csv",
+        "Data_2.csv",
+        "Data_4.csv",
+        "Data_5.csv",
+        "Data_6.csv",
+        "Data_7.csv",
+        "Data_8.csv",
+        "Data_9.csv",
+        "Data_10.csv",
+        "Data_12.csv",
+        "Data_13.csv",
+        "Data_14.csv",
+        "Data_15.csv",
+        "Data_16.csv",
+        "Data_17.csv",
+        "Data_18.csv",
+        "Data_19.csv",
+        "Data_20.csv",
+        "Data_21.csv",
+        "Data_22.csv",
+        "Data_24.csv",
+        "Data_25.csv",
+        "Data_26.csv",
+        "Data_27.csv",
+                "Data_30.csv",
+                "Data_31.csv", // instead of 3
+                "Data_32.csv", // instead of 11
+        "Data_39.csv", // instead of 23
+        "Data_42.csv",
+        "Data_43.csv",
+    ];
+
+    files.forEach(file => {
         document.write(`
-        <div class="file-item">
-            <img class="file-icon" src="https://cdn-icons-png.flaticon.com/512/337/337946.png">
-            <a href="Data_${i}.csv" download>Data_${i}.csv</a>
-        </div>
+            <div class="file-item">
+                <img class="file-icon" src="https://cdn-icons-png.flaticon.com/512/337/337946.png">
+                <a href="${file}" download>${file}</a>
+            </div>
         `);
-    }
+    });
 </script>
+
 
 </div>
 
