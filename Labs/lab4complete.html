@@ -1,1 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Practical 4:  Data Cleaning and Transformation using dplyr</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
+<style>
+    * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    /* Global Typography */
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 20px;
+      background-color: #f7fafc;
+      color: #0b1220;
+      line-height: 1.7;
+      font-size: 16px; /* BASE SIZE */
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px; /* Main title */
+      font-weight: 700;
+    }
+
+    h2 {
+      color: #005b99;
+      border-bottom: 2px solid #007acc;
+      padding-bottom: 5px;
+      font-size: 22px; /* Section title */
+      font-weight: 600;
+    }
+
+    p,
+    ul,
+    ol,
+    li {
+      font-size: 16px; /* Body text consistent */
+    }
+
+    /* Basic Layout */
+    header {
+      background-color: #007acc;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    section {
+      background-color: #ffffff;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    /* Highlight Example Box */
+    .example {
+      background-color: #eef6fb;
+      border-left: 4px solid #007acc;
+      padding: 10px 15px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    .top-right-logo {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 100px;
+      height: auto;
+      z-index: 1000;
+    }
+
+    /* Code block */
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 15px;
+    }
+
+    /* Card Container */
+    .card {
+      max-width: 980px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.06);
+      font-size: 16px;
+    }
+
+    /* Form Elements */
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    input,
+    button,
+    select {
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #dbe7ef;
+      font-size: 16px; /* MATCH BODY */
+    }
+
+    button {
+      cursor: pointer;
+      background: #007acc;
+      color: white;
+      border: none;
+      transition: 0.25s ease;
+    }
+
+    button:hover {
+      background: #005b99;
+    }
+
+    /* Buttons inside content */
+    a.button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 18px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    a.button:hover { background-color: #005b99; }
+
+    /* Controls layout */
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* Table – now readable */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 16px;
+    }
+
+    th, td {
+      border: 1px solid #e6edf3;
+      padding: 8px;
+      text-align: left;
+      font-size: 16px; /* FIX small text */
+    }
+
+    th {
+      background: #f3f6f9;
+      font-weight: 600;
+    }
+
+    .muted { color: #6b7280; }
+    .small { font-size: 14px; }
+
+    .actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+    }
+
+    #status { margin-top: 8px; font-size: 16px; }
+
+    .hint {
+      margin-top: 8px;
+      color: #155e75;
+      font-size: 16px;
+    }
+
+    a.small {
+      font-size: 14px;
+      color: #0b71b5;
+    }
+</style>
+
+
+
+  <script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    ['copy', 'cut', 'paste'].forEach(evt => document.addEventListener(evt, e => e.preventDefault()));
+    document.addEventListener('keydown', function(e) { if (e.key === "PrintScreen") { alert("Screenshots are disabled on this page."); e.preventDefault(); } });
+    window.addEventListener('keyup', function(e) { if (e.key === "PrintScreen") { document.body.style.filter = "blur(6px)"; setTimeout(() => { document.body.style.filter = "none"; }, 2500); } });
+  </script>
+</head>
+
+<body class="text-gray-800 leading-relaxed">
+
+<img src="../images/wos%20ppt.png" class="top-right-logo" alt="Logo">
+
+<header class="bg-blue-700 text-white py-6 text-center shadow-md">
+  <h1 class="text-3xl font-bold">Lab 4:  Data Cleaning and Transformation using dplyr</h1>
+</header>
+
+<main class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-8 mt-8 mb-10">
+
+</head>
+
+<body>
+  <div class="card">
+
+<h3>Aim</h3>
+  <p>
+    To import a dataset in R, identify and handle missing values, detect and remove outliers,
+    perform basic data cleaning, and summarize the cleaned dataset using the
+    <strong>dplyr</strong> package.
+  </p>
+  <div>
+    <div class="card">
+
+  <h3>Algorithm</h3>
+  <ol >
+    <li>Start RStudio and set the working directory.</li>
+    <li>Import the CSV dataset using <code>read.csv()</code>.</li>
+    <li>Display the structure and summary of the dataset.</li>
+    <li>Check for missing values using <code>is.na()</code> and <code>colSums()</code>.</li>
+    <li>If the dataset has no missing values, generate synthetic missing values (~5%).</li>
+    <li>Handle missing values using removal (<code>na.omit()</code>) or imputation.</li>
+    <li>Detect outliers using the IQR method for numeric variables.</li>
+    <li>Remove or cap outliers to create a cleaned dataset.</li>
+    <li>Calculate summary statistics (mean, SD) before and after outlier removal.</li>
+    <li>Apply data transformations (mutate, select, arrange) using <code>dplyr</code>.</li>
+    <li>Compare the original, missing-data-added, and cleaned datasets.</li>
+    <li>Draw conclusions on how cleaning affects data quality and analysis.</li>
+  </ol>
+  <div>
+  
+  <div class="card">
+    <h2> Step-1 Fetch dataset by roll number (from GitHub RAW)</h2>
+<p class="small muted">
+  Enter the <strong>last digits of your roll number</strong> (for example: if your roll number is <b>24WU1021</b>, enter <b>21</b>).
+  This tool will automatically search for your dataset file in the repository based on several common naming patterns.
+  It checks multiple possible filenames and folders on <strong>raw.githubusercontent.com</strong> and stops when it finds the first matching CSV.
+  Once found, the file can be previewed and downloaded for analysis.
+</p>
+
+    <label for="roll">Enter roll number (e.g. <em>11</em>)</label>
+    <div class="controls">
+      <input id="roll" type="number" min="1" placeholder="Roll number" />
+      <select id="pattern">
+        <option value="Data_">Data_ (data_11.csv)</option>
+        <option value="data">data (data11.csv)</option>
+        <option value="dataset_">dataset_ (dataset_11.csv)</option>
+        <option value="dataset">dataset (dataset11.csv)</option>
+        <option value="data-">data- (data-11.csv)</option>
+      </select>
+
+      <!-- You can change user/repo/dir if needed -->
+      <label style="margin-left:8px;font-weight:600">Repo</label>
+      <input id="user" placeholder="github username" value="surnamnarendra" style="width:170px" />
+      <input id="repo" placeholder="repo name" value="Data-Visualization-with-R-Programming" style="width:280px" />
+      <input id="dir" placeholder="path in repo" value="Datasets" style="width:160px" />
+
+      <button id="fetchBtn">Fetch CSV</button>
+      <button id="downloadBtn" disabled>Download CSV</button>
+    </div>
+
+    <div id="status" class="muted small"></div>
+    <div id="tableWrap" style="overflow:auto;margin-top:12px"></div>
+
+    <div class="hint">If nothing is found, open the repository on GitHub and confirm file names & branch. You can also try toggling the filename <em>pattern</em> above.</div>
+    <div style="margin-top:8px"><a class="small" id="repoLink" target="_blank">Open repo on GitHub</a></div>
+  </div>
+
+<!-- STEP 2 — R Code for Basic Cleaning & Outlier Analysis -->
+<div class="card" style="margin-top:20px">
+  <h2>Step 2 — Basic Data Cleaning & Outlier Analysis (R)</h2>
+  <p class="small muted">
+    Run this code in R / RStudio after downloading your dataset. It performs import, basic cleaning, and compares statistics before and after outlier removal.
+  </p>
+
+  <h3>📌 R Code — Import Dataset & View Structure</h3>
+  <pre><code class="language-r">
+library(dplyr)
+
+# Replace 'data_XX.csv' with your downloaded file
+data <- read.csv("data_XX.csv")
+
+# View first rows
+head(data)
+
+# Check structure and summary
+str(data)
+summary(data)
+  </code></pre>
+
+  <h3>📌 Check for Missing Values (should be zero)</h3>
+  <pre><code class="language-r">
+# Count missing in each column
+colSums(is.na(data))
+
+# Total missing
+sum(is.na(data))
+  </code></pre>
+
+  <h3>📌 Detect Outliers & Compare Statistics</h3>
+  <pre><code class="language-r">
+# Select numeric columns
+numeric_cols <- sapply(data, is.numeric)
+data_numeric <- data[, numeric_cols]
+
+# Function to detect outliers using IQR
+detect_outliers <- function(x) {
+  Q1 <- quantile(x, 0.25, na.rm=TRUE)
+  Q3 <- quantile(x, 0.75, na.rm=TRUE)
+  IQR <- Q3 - Q1
+  return(x < (Q1 - 1.5*IQR) | x > (Q3 + 1.5*IQR))
+}
+
+# Identify rows with any outliers
+outlier_rows <- apply(data_numeric, 1, function(row) any(detect_outliers(row)))
+
+# Compare statistics before
+stats_before <- data_numeric %>% 
+  summarise(across(everything(),
+                   list(mean = ~mean(.x, na.rm = TRUE),
+                        sd   = ~sd(.x, na.rm = TRUE))
+  ))
+
+# Compare statistics after removing outliers
+stats_after <- data_numeric[!outlier_rows, ] %>%
+  summarise(across(everything(),
+                   list(mean = ~mean(.x, na.rm = TRUE),
+                        sd   = ~sd(.x, na.rm = TRUE))
+  ))
+
+comparison <- bind_rows(
+  stats_before %>% mutate(Status = "Before"),
+  stats_after  %>% mutate(Status = "After")
+) %>% relocate(Status)
+
+comparison
+
+# Remove duplicate rows (if any)
+data_clean <- data %>% distinct()
+
+# Optional: convert character columns to factors
+data_clean <- data_clean %>% mutate(across(where(is.character), as.factor))
+  </code></pre>
+
+  <h3>📌 Export Cleaned Dataset</h3>
+  <pre><code class="language-r">
+write.csv(data_clean, "data_cleaned.csv", row.names = FALSE)
+  </code></pre>
+
+  <p class="small muted">
+    ✔ At this stage, the dataset has no missing values.  
+    You can now proceed to Step 3 to introduce 5% missing values interactively.
+  </p>
+</div>
+
+
+
+<!-- STEP 3 — Generate Missing Data -->
+<div class="card" style="margin-top:20px">
+  <h2>Step 3 — Introduce 5% Missing Data (Interactive)</h2>
+  <p class="small muted">Use this tool to randomly introduce ~5% missing values into your fetched dataset.</p>
+
+  <label for="missingPct">Missing %</label>
+  <input id="missingPct" type="number" value="5" min="1" max="50" style="width:60px">
+  <button id="generateMissingBtn" disabled>Generate Missing Data</button>
+  <button id="resetMissingBtn" disabled>Reset</button>
+  <button id="downloadMissingBtn" disabled>Download CSV with Missing</button>
+
+  <div id="missingStatus" class="muted small" style="margin-top:8px"></div>
+  <div id="missingTableWrap" style="overflow:auto;margin-top:12px"></div>
+</div>
+<div class="card" style="margin-top:20px">
+  <h2>Step 4 — Data Cleaning with dplyr (After Missing Values)</h2>
+  <p class="small muted">
+    After generating your ~5% missing dataset, download it and use the following R code to handle missing values,
+    detect outliers, normalize numeric columns, and summarize the cleaned data.
+  </p>
+
+  <h3>📌 Import the Dataset with Missing Values</h3>
+  <pre><code class="language-r">
+library(dplyr)
+
+# Replace 'dataset_missing.csv' with your downloaded file
+data_missing <- read.csv("dataset_missing.csv")
+
+# View first rows
+head(data_missing)
+
+# Check structure
+str(data_missing)
+
+# Count missing values
+colSums(is.na(data_missing))
+  </code></pre>
+
+  <h3>📌 Handle Missing Values (Imputation)</h3>
+  <pre><code class="language-r">
+# Impute numeric columns with mean, factors/characters with mode
+mode_value <- function(x){names(sort(table(x), decreasing = TRUE))[1]}
+
+data_imputed <- data_missing %>%
+  mutate(across(where(is.numeric), ~ ifelse(is.na(.), mean(., na.rm = TRUE), .))) %>%
+  mutate(across(where(is.character), ~ ifelse(is.na(.), mode_value(.), .)))
+
+# Verify missing values are handled
+colSums(is.na(data_imputed))
+  </code></pre>
+
+  <h3>📌 Outlier Detection (IQR) & Normalization</h3>
+  <pre><code class="language-r">
+# Detect outliers using IQR
+numeric_cols <- sapply(data_imputed, is.numeric)
+outliers <- lapply(data_imputed[, numeric_cols], function(x){
+  Q1 <- quantile(x, 0.25)
+  Q3 <- quantile(x, 0.75)
+  IQR <- Q3 - Q1
+  x < (Q1 - 1.5*IQR) | x > (Q3 + 1.5*IQR)
+})
+
+# Optionally remove or flag outliers
+# data_clean <- data_imputed[!rowSums(do.call(cbind, outliers)), ]
+
+# Min-max normalization
+normalized_data <- data_imputed %>%
+  mutate(across(where(is.numeric), ~ (.-min(.))/(max(.)-min(.))))
+
+# Summary of numeric variables
+summary_stats <- normalized_data %>%
+  summarise(across(
+    where(is.numeric),
+    list(
+      mean   = ~ mean(.x, na.rm = TRUE),
+      median = ~ median(.x, na.rm = TRUE),
+      sd     = ~ sd(.x, na.rm = TRUE)
+    )
+  ))
+
+summary_stats
+  </code></pre>
+
+  <h3>📌 Export Cleaned Dataset</h3>
+  <pre><code class="language-r">
+write.csv(normalized_data, "dataset_cleaned.csv", row.names = FALSE)
+  </code></pre>
+
+  <p class="small muted">
+    ✔ Now you have handled missing values, optionally detected outliers, normalized numeric columns, and summarized your dataset.
+  </p>
+</div>
+
+<div class="card" style="margin-top:20px;">
+  <h2>Step 5 — Conclusion</h2>
+
+  <p class="small muted">
+    In this lab, you learned how to perform end-to-end data cleaning and transformation using
+    <strong>R</strong> and the <strong>dplyr</strong> package. You started with downloading your assigned
+    dataset, explored its structure, checked for data quality issues, handled missing values, and applied
+    essential cleaning operations.
+  </p>
+
+  <h3>✔ Key Takeaways</h3>
+  <ul>
+    <li>You can import and explore raw CSV datasets in R.</li>
+    <li>Basic cleaning tasks such as removing duplicates and converting data types were performed.</li>
+    <li>You detected and removed outliers using the IQR method and compared summary statistics before and after cleaning.</li>
+    <li>You introduced ~5% missing values to simulate real-world data issues and handled them effectively.</li>
+    <li>You used dplyr functions like <code>filter()</code>, <code>mutate()</code>, <code>select()</code>, <code>summarise()</code>, <code>arrange()</code>, and <code>across()</code>.</li>
+    <li>You understood how data cleaning impacts analysis results such as mean, standard deviation, and distribution shape.</li>
+  </ul>
+
+ 
+</div>
+
+
+
+<script>
+/* Global variables to store fetched data */
+let globalCSV = null;        // original fetched CSV
+let missingCSV = null;       // dataset with missing values
+
+// Helper to render table
+function renderTableStep3(headers, data) {
+  const container = document.getElementById('missingTableWrap');
+  container.innerHTML = '';
+  if(!data || data.length===0){ container.innerHTML='<div class="muted">No data</div>'; return; }
+  const table=document.createElement('table');
+  const thead=document.createElement('thead');
+  const tr=document.createElement('tr');
+  headers.forEach(h=>{ const th=document.createElement('th'); th.textContent=h; tr.appendChild(th); });
+  thead.appendChild(tr);
+  table.appendChild(thead);
+  const tbody=document.createElement('tbody');
+  data.slice(0,200).forEach(row=>{
+    const trRow=document.createElement('tr');
+    headers.forEach(h=>{
+      const td=document.createElement('td');
+      td.textContent=(row[h]===''?'NA':row[h]);
+      trRow.appendChild(td);
+    });
+    tbody.appendChild(trRow);
+  });
+  table.appendChild(tbody);
+  container.appendChild(table);
+}
+
+// Enable Step 3 buttons after fetching CSV
+function enableStep3(parsedCSV){
+  globalCSV = JSON.parse(JSON.stringify(parsedCSV));
+  missingCSV = JSON.parse(JSON.stringify(parsedCSV));
+  document.getElementById('generateMissingBtn').disabled=false;
+  document.getElementById('resetMissingBtn').disabled=false;
+  document.getElementById('downloadMissingBtn').disabled=false;
+  renderTableStep3(globalCSV.headers, globalCSV.data.slice(0,50));
+  document.getElementById('missingStatus').textContent = 'Ready to introduce missing data.';
+}
+
+// Hook this function after your fetch is successful, e.g. inside fetchBtn click after parsing CSV:
+// enableStep3(parsed);
+
+// Generate Missing
+document.getElementById('generateMissingBtn').addEventListener('click', ()=>{
+  if(!missingCSV) return;
+  const pct = Number(document.getElementById('missingPct').value) || 5;
+  const headers = missingCSV.headers;
+  const rows = missingCSV.data.length;
+  const totalCells = rows * headers.length;
+  const toRemove = Math.floor(totalCells * pct / 100);
+
+  // Flatten indices
+  const indices = [];
+  for(let r=0;r<rows;r++) for(let c=0;c<headers.length;c++) indices.push([r,c]);
+  for(let i=indices.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [indices[i],indices[j]]=[indices[j],indices[i]]; }
+
+  for(let k=0;k<toRemove;k++){
+    const [r,c] = indices[k];
+    missingCSV.data[r][headers[c]] = '';
+  }
+
+  renderTableStep3(headers, missingCSV.data.slice(0,50));
+  document.getElementById('missingStatus').textContent = `~${pct}% missing values introduced (${toRemove} cells).`;
+});
+
+// Reset
+document.getElementById('resetMissingBtn').addEventListener('click', ()=>{
+  if(!globalCSV) return;
+  missingCSV = JSON.parse(JSON.stringify(globalCSV));
+  renderTableStep3(missingCSV.headers, missingCSV.data.slice(0,50));
+  document.getElementById('missingStatus').textContent = 'Reset to original data.';
+});
+
+// Download CSV with missing values
+document.getElementById('downloadMissingBtn').addEventListener('click', ()=>{
+  if(!missingCSV) return;
+  const csvRows = [missingCSV.headers.join(',')];
+  missingCSV.data.forEach(row=>{
+    const vals = missingCSV.headers.map(h=>{
+      const v = row[h]===undefined||row[h]===null?'':String(row[h]);
+      if(v.includes(',')||v.includes('"')||v.includes('\n')) return '"'+v.replace(/"/g,'""')+'"';
+      return v;
+    });
+    csvRows.push(vals.join(','));
+  });
+  const blob = new Blob([csvRows.join('\n')], {type:'text/csv'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='dataset_missing.csv'; a.click();
+});
+</script>
+
+
+
+
+
+
+
+<script>
+/* Try raw.githubusercontent.com for multiple branches & filename patterns.
+   - Uses public raw URLs: https://raw.githubusercontent.com/{user}/{repo}/{branch}/{path}/{file}
+   - Tries branches: main, master, gh-pages (common)
+   - Tries several filename patterns (selected + fallbacks)
+*/
+
+const rollEl = document.getElementById('roll');
+const fetchBtn = document.getElementById('fetchBtn');
+const status = document.getElementById('status');
+const tableWrap = document.getElementById('tableWrap');
+const downloadBtn = document.getElementById('downloadBtn');
+const patternSel = document.getElementById('pattern');
+const userEl = document.getElementById('user');
+const repoEl = document.getElementById('repo');
+const dirEl = document.getElementById('dir');
+const repoLink = document.getElementById('repoLink');
+
+function updateRepoLink(){
+  const user = userEl.value.trim() || 'surnamnarendra';
+  const repo = repoEl.value.trim() || 'Data-Visualization-with-R-Programming';
+  repoLink.href = `https://github.com/${user}/${repo}/tree/main/${dirEl.value.trim() || 'Datasets'}`;
+  repoLink.textContent = `Open ${user}/${repo} on GitHub`;
+}
+updateRepoLink();
+[userEl, repoEl, dirEl].forEach(el => el.addEventListener('input', updateRepoLink));
+
+function parseCSV(text) {
+  // Small CSV parser (handles quoted fields & commas)
+  const rows = [];
+  let cur = '';
+  let row = [];
+  let inQuotes = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    const nxt = text[i+1];
+    if (ch === '"') {
+      if (inQuotes && nxt === '"') { cur += '"'; i++; continue; }
+      inQuotes = !inQuotes;
+      continue;
+    }
+    if (ch === ',' && !inQuotes) { row.push(cur); cur = ''; continue; }
+    if ((ch === '\n' || ch === '\r') && !inQuotes) {
+      if (ch === '\r' && nxt === '\n') { /* skip */ }
+      if (cur !== '' || row.length > 0) { row.push(cur); rows.push(row); row = []; cur = ''; }
+      if (ch === '\r' && nxt === '\n') i++;
+      continue;
+    }
+    cur += ch;
+  }
+  if (cur !== '' || row.length > 0) { row.push(cur); rows.push(row); }
+  if (rows.length === 0) return { headers: [], data: [] };
+  const headers = rows[0].map(h => h.trim());
+  const data = rows.slice(1).map(r => {
+    const obj = {};
+    for (let i = 0; i < headers.length; i++) obj[headers[i]] = r[i] !== undefined ? r[i] : '';
+    return obj;
+  });
+  return { headers, data };
+}
+
+function renderTable(headers, data) {
+  tableWrap.innerHTML = '';
+  if (!data || data.length === 0) { tableWrap.innerHTML = '<div class="muted">No rows to display</div>'; return; }
+  const table = document.createElement('table');
+  const thead = document.createElement('thead');
+  const htr = document.createElement('tr');
+  headers.forEach(h => { const th = document.createElement('th'); th.textContent = h; htr.appendChild(th); });
+  thead.appendChild(htr);
+  table.appendChild(thead);
+  const tbody = document.createElement('tbody');
+  data.slice(0, 200).forEach(row => {
+    const tr = document.createElement('tr');
+    headers.forEach(h => {
+      const td = document.createElement('td');
+      const v = row[h];
+      td.textContent = (v === null || v === undefined || v === '') ? 'NA' : v;
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  tableWrap.appendChild(table);
+}
+
+function toCSV(headers, data) {
+  const rows = [headers.join(',')];
+  data.forEach(row => {
+    const vals = headers.map(h => {
+      const v = row[h] === null || row[h] === undefined ? '' : String(row[h]);
+      if (v.includes(',') || v.includes('"') || v.includes('\n')) return '"' + v.replace(/"/g, '""') + '"';
+      return v;
+    });
+    rows.push(vals.join(','));
+  });
+  return rows.join('\n');
+}
+
+async function tryFetch(url) {
+  try {
+    const resp = await fetch(url, {cache: "no-store"});
+    if (!resp.ok) return { ok: false, status: resp.status };
+    const text = await resp.text();
+    const head = text.slice(0,200).toLowerCase();
+    if (head.includes('<!doctype') || head.includes('<html')) return { ok: false, status: 404, reason: 'HTML returned' };
+    return { ok: true, text };
+  } catch (err) {
+    return { ok: false, status: 0, reason: err.message };
+  }
+}
+
+fetchBtn.addEventListener('click', async () => {
+  tableWrap.innerHTML = '';
+  downloadBtn.disabled = true;
+  const roll = String(Number(rollEl.value)).trim();
+  if (!roll || isNaN(roll)) { status.textContent = 'Please enter a valid roll number.'; return; }
+  status.textContent = 'Searching for dataset...';
+
+  const user = (userEl.value || 'surnamnarendra').trim();
+  const repo = (repoEl.value || 'Data-Visualization-with-R-Programming').trim();
+  const dir = (dirEl.value || 'Datasets').trim().replace(/^\/|\/$/g,''); // trim slashes
+
+  // patterns to try (starting with user-selected primary)
+  const selected = patternSel.value;
+  const attempts = [
+    selected + roll + '.csv',
+    selected + String(Number(roll)).padStart(2,'0') + '.csv', // zero pad 01
+    selected + String(Number(roll)).padStart(3,'0') + '.csv', // zero pad 001
+    'Data_' + roll + '.csv',
+    'data' + roll + '.csv',
+    'dataset_' + roll + '.csv',
+    'dataset' + roll + '.csv',
+    'data-' + roll + '.csv',
+    roll + '.csv'
+  ];
+  const uniqueAttempts = [...new Set(attempts)];
+
+  // try probable branches
+  const branches = ['main','master','gh-pages'];
+
+  let found = null;
+  for (let b = 0; b < branches.length && !found; b++) {
+    const branch = branches[b];
+    for (let i = 0; i < uniqueAttempts.length && !found; i++) {
+      const filename = uniqueAttempts[i];
+      const url = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${dir}/${filename}`;
+      status.textContent = `Trying ${filename} on branch ${branch} (${i+1}/${uniqueAttempts.length})...`;
+      const res = await tryFetch(url);
+      if (res.ok) {
+        found = { filename, url, text: res.text, branch };
+      } else {
+        // small delay to be polite
+        await new Promise(r => setTimeout(r, 120));
+      }
+    }
+  }
+
+  if (!found) {
+    status.innerHTML = 'No CSV found on raw.githubusercontent.com using common filename patterns and branches.<br><span class="muted small">Tip: open the repository and confirm the exact filename & branch (case-sensitive).</span>';
+    return;
+  }
+
+  status.textContent = `Loaded: ${found.filename} (branch: ${found.branch})`;
+  const parsed = parseCSV(found.text);
+  if (parsed.headers.length === 0) {
+    status.textContent = `File found (${found.filename}) but parsing failed or file is empty.`;
+    return;
+  }
+  renderTable(parsed.headers, parsed.data);
+  downloadBtn.disabled = false;
+  enableStep3(parsed);  // <-- enable Step 3 with fetched CSV
+
+
+  // prepare download button
+  downloadBtn.onclick = () => {
+    const csv = toCSV(parsed.headers, parsed.data);
+    const blob = new Blob([csv], {type: 'text/csv'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = found.filename;
+    a.click();
+  };
+});
+</script>
+  <footer class="text-center text-gray-600 py-6 border-t mt-10">
+  <p>Surnam Narendra © 2025 — Data Visualization With R</p>
+</footer>
+</body>
+</html>
