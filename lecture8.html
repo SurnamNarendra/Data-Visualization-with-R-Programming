@@ -1,9 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+   </div>
+        <nav class="nav">
+                    <a href="https://surnamnarendra.github.io/Data-Visualization-with-R-Programming/">Home</a>
+          <a href="lecture8.html" aria-current="page">L8</a>
+          <a href="lecture9.html">L9</a>
+          <a href="lectur10.html">L10</a>
+          <a href="lecture11.html">L11</a>
+          <a href="lecture12.html">L12</a>
+          <a href="lecture13.html">L13</a>
+          <a href="lecture14.html">L14</a>
+		            <a href="lecture15.html">L15</a>
+
+        
+
+        </nav>
+      </div>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lecture 8 — Data Visualization and Interpretation</title>
+  <title>Lecture 8 — Correlation </title>
+  
+ 
+ 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -14,6 +38,7 @@
     }
     h1 { color: #007acc; }
     h2 { color: #005b99; margin-top: 30px; }
+    h3 { color: #004b80; }
     p { margin: 10px 0; }
     ul, ol { margin-left: 30px; }
     .code {
@@ -40,99 +65,282 @@
       text-decoration: none;
     }
     a.button:hover { background-color: #005b99; }
+  .top-right-logo {
+  position: fixed;      /* or absolute */
+  top: 10px;            /* distance from top */
+  right: 10px;          /* distance from right */
+  width: 100px;         /* adjust as needed */
+  height: auto;         /* preserve aspect ratio */
+  z-index: 1000;        /* ensure it stays on top */
+}
   </style>
 </head>
 <body>
+<body>
+ <img src="images/wos ppt.png" alt="University Logo" class="top-right-logo">
 
-  <h1>Lecture 8 — Data Visualization and Interpretation</h1>
+  <h1>    📊 Correlation — Definition, Formula, Types & Examples
+ </h1>
+<body>
 
-  <p>Data visualization is an essential step in data analysis. It helps summarize data, identify patterns, detect outliers, and communicate results effectively.</p>
 
-  <h2>1. Importance of Data Visualization</h2>
-  <ul>
-    <li>Exploratory Data Analysis (EDA) to understand trends and distribution.</li>
-    <li>Detect anomalies or missing data.</li>
-    <li>Compare groups or variables easily.</li>
-    <li>Communicate findings in research papers or presentations.</li>
-  </ul>
+<div class="container">
 
-  <div class="example">
-    <strong>Example:</strong> Plotting blood glucose levels across a patient group can highlight abnormal values and variability.
-  </div>
+    <!-- Definition -->
+    <div class="card">
+        <h2>What is Correlation?</h2>
+        <p>Correlation measures the strength and direction of a relationship between two variables.
+           It helps us understand how changes in one variable are related to changes in another.</p>
 
-  <h2>2. Types of Graphs and Plots</h2>
+        <div class="formula-box">
+            <b>Pearson Correlation Formula:</b><br><br>
 
-  <h3>a) Bar Plot</h3>
-  <p>Used for categorical data to compare counts or percentages.</p>
-  <div class="code">
-    barplot(table(df$BloodType), col="lightgreen", main="Blood Type Distribution")
-  </div>
-  <div class="example">
-    Count of blood types (A, B, AB, O) in a sample of 200 patients.
-  </div>
+            $$ r = 
+            \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}
+            {\sqrt{\sum (x_i - \bar{x})^2 \sum (y_i - \bar{y})^2}} $$
+        </div>
+    </div>
 
-  <h3>b) Histogram</h3>
-  <p>Shows frequency distribution of continuous variables.</p>
-  <div class="code">
-    hist(df$Glucose, breaks=10, col="lightblue", main="Histogram of Glucose Levels", xlab="Glucose (mg/dL)")
-  </div>
-  <div class="example">
-    Visualize distribution of fasting glucose levels in diabetic patients.
-  </div>
+    <!-- Types -->
+    <div class="card">
+        <h2>Types of Correlation (Expanded with Examples)</h2>
 
-  <h3>c) Box Plot</h3>
-  <p>Displays median, quartiles, and outliers.</p>
-  <div class="code">
-    boxplot(df$Cholesterol ~ df$Gender, col=c("pink","lightblue"), main="Cholesterol by Gender")
-  </div>
-  <div class="example">
-    Compare cholesterol levels between males and females, identify outliers.
-  </div>
+        <p>
+            <span class="type-title">1️⃣ Positive Correlation</span><br>
+            When one variable increases, the other also increases.
+        </p>
+        <div class="example-box">
+            Example:  
+            <b>Study Hours (X)</b> ↑ → <b>Marks (Y)</b> ↑  
+            If students who study more get higher marks, then X and Y are positively correlated.
+        </div>
 
-  <h3>d) Scatter Plot</h3>
-  <p>Used to observe relationship between two continuous variables.</p>
-  <div class="code">
-    plot(df$Weight, df$Glucose, xlab="Weight (kg)", ylab="Glucose (mg/dL)", main="Glucose vs Weight")
-  </div>
-  <div class="example">
-    Detect trends or correlations between patient weight and blood glucose levels.
-  </div>
+        <p>
+            <span class="type-title">2️⃣ Negative Correlation</span><br>
+            When one variable increases, the other decreases.
+        </p>
+        <div class="example-box">
+            Example:  
+            <b>Speed of Car (X)</b> ↑ → <b>Travel Time (Y)</b> ↓  
+            Higher speed reduces travel time → negative correlation.
+        </div>
 
-  <h3>e) Line Plot</h3>
-  <p>Useful for time-series data.</p>
-  <div class="code">
-    plot(df$Time, df$Glucose, type="l", col="red", main="Glucose over Time", xlab="Time (hours)", ylab="Glucose")
-  </div>
-  <div class="example">
-    Track glucose levels of a patient over 24 hours to monitor fluctuations.
-  </div>
+        <p>
+            <span class="type-title">3️⃣ Zero Correlation</span><br>
+            No relationship between the variables.
+        </p>
+        <div class="example-box">
+            Example:  
+            <b>Shoe Size (X)</b> and <b>IQ Level (Y)</b>  
+            One does not affect the other → no correlation.
+        </div>
 
-  <h3>f) Pie Chart</h3>
-  <p>Shows proportion of categories as slices of a circle.</p>
-  <div class="code">
-    pie(table(df$Medication), col=rainbow(length(unique(df$Medication))), main="Medication Usage")
-  </div>
-  <div class="example">
-    Percentage of patients taking different types of medications.
-  </div>
+        <p>
+            <span class="type-title">4️⃣ Pearson Correlation</span><br>
+            Measures linear relationship between two continuous variables.
+        </p>
+        <div class="example-box">
+            Example:  
+            Height vs Weight analysis in a classroom using continuous numeric data.
+        </div>
 
-  <h2>3. Interpretation of Plots</h2>
-  <ul>
-    <li>Look at central tendency and spread (mean, median, variance) from histograms and box plots.</li>
-    <li>Identify relationships or correlations in scatter plots.</li>
-    <li>Detect outliers, missing values, or unusual patterns.</li>
-    <li>Use color, labels, and legends for clarity.</li>
-  </ul>
+        <p>
+            <span class="type-title">5️⃣ Spearman Rank Correlation</span><br>
+            Uses rank-order (non-parametric). Good for monotonic trends.
+        </p>
+        <div class="example-box">
+            Example:  
+            Ranking students by performance vs ranking by attendance.
+        </div>
 
-  <h2>4. Summary</h2>
-  <ul>
-    <li>Data visualization is essential for understanding, summarizing, and communicating data.</li>
-    <li>Different types of plots are suitable for different types of data (categorical vs continuous, time-series vs grouped data).</li>
-    <li>Proper interpretation allows identification of trends, anomalies, and relationships.</li>
-    <li>Visualization is a critical skill in biological, clinical, and research-based datasets.</li>
-  </ul>
+        <p>
+            <span class="type-title">6️⃣ Kendall Tau Correlation</span><br>
+            Measures concordant/discordant pairs—good for small datasets.
+        </p>
+        <div class="example-box">
+            Example:  
+            Ranking judges’ scores for contestants.
+        </div>
 
-  <a class="button" href="../module1.html">← Back to Module 1</a>
+        <p>
+            <span class="type-title">7️⃣ Partial Correlation</span><br>
+            Correlation between two variables while controlling the effect of another.
+        </p>
+        <div class="example-box">
+            Example:  
+            Relationship between Exercise and Weight Loss after controlling for Diet.
+        </div>
+    </div>
 
+ <!-- INTERACTIVE DEMO -->
+  <section class="card">
+    <h2>Interactive Demo: Generate Data With Target Correlation</h2>
+    <p>Select number of points and desired correlation.</p>
+
+    <label>Points: <input id="nPts" type="number" value="200" min="10" max="1000"></label><br><br>
+    <label>Target ρ: <input id="rho" type="range" min="-95" max="95" value="60">
+      <span id="rhoVal">0.60</span></label>
+    <button id="gen">Generate</button>
+
+    <p>Sample Pearson r: <b id="rSample">—</b></p>
+    <canvas id="plot" width="820" height="400"></canvas>
+
+    <script>
+      function randn(){let u=0,v=0;while(u===0)u=Math.random();while(v===0)v=Math.random();
+        return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+      function generate(n,rho){
+        const pts=[]; let s=Math.sqrt(1-rho*rho);
+        for(let i=0;i<n;i++){let x=randn(), z=randn(), y=rho*x+s*z; pts.push([x,y]);}
+        return pts;
+      }
+      function samplePearson(pts){
+        const n=pts.length; let sx=0,sy=0;
+        pts.forEach(p=>{sx+=p[0]; sy+=p[1];});
+        let mx=sx/n,my=sy/n; let num=0,dx=0,dy=0;
+        pts.forEach(p=>{num+=(p[0]-mx)*(p[1]-my);
+                        dx+=(p[0]-mx)**2; dy+=(p[1]-my)**2;});
+        return num/Math.sqrt(dx*dy);
+      }
+      function draw(pts){
+        const c=document.getElementById('plot'); const ctx=c.getContext('2d');
+        ctx.clearRect(0,0,c.width,c.height);
+        let xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]);
+        let xmin=Math.min(...xs), xmax=Math.max(...xs);
+        let ymin=Math.min(...ys), ymax=Math.max(...ys);
+        function tx(x){return 40+(x-xmin)/(xmax-xmin)*(c.width-80);}
+        function ty(y){return c.height-40-(y-ymin)/(ymax-ymin)*(c.height-80);}
+        ctx.fillStyle='#0055cc99';
+        pts.forEach(p=>{ctx.beginPath();ctx.arc(tx(p[0]),ty(p[1]),3,0,6.28);ctx.fill();});
+        ctx.strokeStyle="#ccc"; ctx.strokeRect(40,40,c.width-80,c.height-80);
+      }
+      rho.oninput=()=>{rhoVal.innerText=(rho.value/100).toFixed(2);}
+      gen.onclick=()=>{
+        let pts=generate(+nPts.value, rho.value/100);
+        draw(pts);
+        rSample.innerText = samplePearson(pts).toFixed(3);
+      }
+      gen.click();
+    </script>
+  </section>
+
+<div class="container">
+
+    <!-- Definition -->
+    <div class="card">
+
+   <h2>Real-Time Applications of Correlation</h2>
+
+    <div class="types-grid">
+
+        <div class="app-box">
+            <h3>1. Stock Market & Economic Indicators</h3>
+            <p>Correlation helps see if NIFTY moves with inflation, GDP, or gold prices.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>2. Temperature vs Electricity Usage</h3>
+            <p>High positive correlation — as temperature increases, AC usage increases.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>3. Study Hours vs Exam Scores</h3>
+            <p>Generally positive correlation — more study hours lead to better performance.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>4. Height vs Weight</h3>
+            <p>Strong positive correlation in most populations.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>5. Advertising Spend vs Sales</h3>
+            <p>More marketing often leads to higher product sales.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>6. Rainfall vs Crop Yield</h3>
+            <p>Moderate positive correlation — agricultural output depends partly on rainfall.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>7. Blood Pressure vs Age</h3>
+            <p>Medical studies show positive association as age increases.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>8. Traffic Flow vs Time of Day</h3>
+            <p>Peak hours show clear positive trends in vehicle count.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>9. Social Media Usage vs Screen Time</h3>
+            <p>Higher usage strongly correlates with overall screen-time duration.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>10. Employee Experience vs Salary</h3>
+            <p>As experience increases, salary tends to increase — strong positive correlation.</p>
+        </div>
+
+    </div>
+
+    </div>
+
+
+    <!-- JS Demo -->
+    <div class="card">
+        <h2>Interactive JavaScript Correlation Calculator</h2>
+        <p>Enter values separated by commas.</p>
+
+        <div class="demo-box">
+            X values: <input id="x" type="text" placeholder="e.g. 10,20,30,40"><br><br>
+            Y values: <input id="y" type="text" placeholder="e.g. 15,25,35,45"><br><br>
+            <button onclick="calculateCorr()">Calculate Correlation</button><br><br>
+            <div>Correlation (r): <span id="result">—</span></div>
+        </div>
+
+        <script>
+            function calculateCorr(){
+                let xs = document.getElementById("x").value.split(",").map(Number);
+                let ys = document.getElementById("y").value.split(",").map(Number);
+
+                let n = xs.length;
+                let meanX = xs.reduce((a,b)=>a+b)/n;
+                let meanY = ys.reduce((a,b)=>a+b)/n;
+
+                let num=0, dx=0, dy=0;
+                for(let i=0;i<n;i++){
+                    num += (xs[i]-meanX)*(ys[i]-meanY);
+                    dx  += (xs[i]-meanX)**2;
+                    dy  += (ys[i]-meanY)**2;
+                }
+
+                let r = num / Math.sqrt(dx*dy);
+                document.getElementById("result").innerHTML = r.toFixed(4);
+            }
+        </script>
+    </div>
+
+</div>
+ <!-- Footer include -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Back to top button -->
+  <button id="backToTop">↑</button>
+
+  <script>
+    async function includeHTML(id, file) {
+      const el = document.getElementById(id);
+      const resp = await fetch(file);
+      if (resp.ok) el.innerHTML = await resp.text();
+    }
+    includeHTML("navbar-placeholder", "navbar.html");
+    includeHTML("footer-placeholder", "footer.html");
+
+    const btn = document.getElementById("backToTop");
+    window.onscroll = () => btn.style.display = document.documentElement.scrollTop > 200 ? "block" : "none";
+    btn.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  </script>
+  
 </body>
 </html>
