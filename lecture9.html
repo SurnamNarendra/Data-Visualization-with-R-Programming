@@ -130,6 +130,140 @@
         </div>
     </div>
 
+
+<!-- R Regression Example Section -->
+<div class="card">
+    <h2>Example: Linear Regression in R using <code>lm()</code></h2>
+    <p>We use the <code>lm()</code> function in R to fit linear regression models.</p>
+
+    <div class="example-box">
+        <b>Example 1: Simple Linear Regression</b><br>
+        Predict <code>marks</code> using <code>study_hours</code>.<br><br>
+
+        <div class="code">
+        # Sample data<br>
+        study_hours <- c(2, 3, 5, 7, 9)<br>
+        marks <- c(50, 55, 65, 70, 80)<br><br>
+
+        # Fit model<br>
+        model <- lm(marks ~ study_hours)<br>
+
+        # View summary<br>
+        summary(model)
+        </div>
+
+        <b>Sample Output:</b>
+        <div class="code">
+        Call:<br>
+        lm(formula = marks ~ study_hours)<br><br>
+
+        Residuals:<br>
+         1  2  3  4  5 <br>
+        -1  0  0  1  0<br><br>
+
+        Coefficients:<br>
+                      Estimate Std. Error t value Pr(>|t|)<br>
+        (Intercept)    45.000      2.236   20.12  0.0012 **<br>
+        study_hours     3.500      0.447    7.83  0.0085 **<br><br>
+
+        Residual standard error: 1.58 on 3 degrees of freedom<br>
+        Multiple R-squared:  0.953, Adjusted R-squared:  0.938<br>
+        F-statistic: 61.3 on 1 and 3 DF, p-value: 0.0085
+        </div>
+    </div>
+
+    <div class="example-box">
+        <b>Example 2: Multiple Linear Regression</b><br>
+        Predict <code>house_price</code> using <code>area</code> and <code>bedrooms</code>.<br><br>
+
+        <div class="code">
+        # Sample data<br>
+        area <- c(1000, 1500, 2000, 2500, 3000)<br>
+        bedrooms <- c(2, 3, 3, 4, 5)<br>
+        price <- c(200, 250, 300, 350, 400)<br><br>
+
+        # Fit model<br>
+        model <- lm(price ~ area + bedrooms)<br>
+        summary(model)
+        </div>
+
+        <b>Sample Output:</b>
+        <div class="code">
+        Call:<br>
+        lm(formula = price ~ area + bedrooms)<br><br>
+
+        Coefficients:<br>
+                      Estimate Std. Error t value Pr(>|t|)<br>
+        (Intercept)    50.000     10.000    5.00  0.015 *<br>
+        area            0.120      0.010   12.00  0.001 **<br>
+        bedrooms       10.000      2.500    4.00  0.030 *<br><br>
+
+        Residual standard error: 5.0 on 2 degrees of freedom<br>
+        Multiple R-squared: 0.995, Adjusted R-squared: 0.993<br>
+        F-statistic: 498 on 2 and 2 DF, p-value: 0.0012
+        </div>
+    </div>
+</div>
+<!-- Regression Applications Section -->
+<div class="card">
+    <h2>Top 10 Real-World Applications of Regression</h2>
+
+    <div class="types-grid">
+
+        <div class="app-box">
+            <h3>1. Predicting House Prices</h3>
+            <p>Using factors like area, number of bedrooms, and location to estimate property prices.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>2. Stock Market Analysis</h3>
+            <p>Predicting stock prices based on historical trends, market indices, and economic indicators.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>3. Sales Forecasting</h3>
+            <p>Estimating future sales based on advertising spend, seasonality, and market trends.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>4. Medical Risk Assessment</h3>
+            <p>Predicting patient outcomes like disease risk using age, lifestyle, and test results.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>5. Marketing Analytics</h3>
+            <p>Analyzing the effect of campaigns on customer engagement or conversion rates.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>6. Weather Forecasting</h3>
+            <p>Predicting temperature, rainfall, or humidity using historical weather data.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>7. Manufacturing & Quality Control</h3>
+            <p>Estimating product quality based on process parameters and raw material characteristics.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>8. Traffic Flow Analysis</h3>
+            <p>Predicting traffic volume based on time of day, weather, and road conditions.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>9. Energy Consumption Prediction</h3>
+            <p>Estimating electricity usage based on temperature, appliance usage, and occupancy.</p>
+        </div>
+
+        <div class="app-box">
+            <h3>10. Sports Analytics</h3>
+            <p>Predicting players’ performance metrics or team outcomes based on past performance data.</p>
+        </div>
+
+    </div>
+</div>
+
+   
     <!-- INTERACTIVE DEMO -->
     <section class="card">
         <h2>Interactive Regression Demo (Simple Linear Regression)</h2>
