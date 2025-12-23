@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Practical 3: Frequency Distribution & Probability Visualization</title>
+  <title>Practical 5: Correlation Analysis</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
   <style>
@@ -47,109 +47,93 @@
 <img src="../images/wos%20ppt.png" class="top-right-logo" alt="Logo">
 
 <header class="bg-blue-700 text-white py-6 text-center shadow-md">
-
   <h1 class="text-3xl font-bold">Lab 5: Correlation Analysis Using R</h1>
-  <p class="text-lg mt-2">Frequency Distribution and Probability Visualization Using R Built-in Datasets</p>
+  <p class="text-lg mt-2">Explore Relationships Between Variables Using Correlation Coefficients and Visualization</p>
 </header>
 
 <main class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-8 mt-8 mb-10">
 
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Aim</h2>
+    <p>To calculate, interpret, and visualize correlation coefficients between variables using R, and understand the strength and direction of relationships.</p>
+  </section>
 
-    <!-- AIM -->
-    <h3>Aim</h3>
-    <p>To compute correlation between variables in a dataset, interpret correlation results, visualize the relationship and perform correlation tests using R programming.</p>
-
-    <!-- OBJECTIVES -->
-    <h3>Objectives</h3>
-    <ol>
-        <li>Load a dataset and inspect the variables.</li>
-        <li>Compute Pearson correlation coefficient using <code>cor()</code>.</li>
-        <li>Perform correlation hypothesis test using <code>cor.test()</code>.</li>
-        <li>Visualize correlations with scatter plots and correlogram.</li>
-        <li>Interpret correlation coefficients and statistical significance.</li>
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Procedure</h2>
+    <ol class="list-decimal list-inside space-y-1">
+        <li>Load a dataset and inspect its structure.</li>
+        <li>Compute correlation coefficients using <code>cor()</code>.</li>
+        <li>Visualize correlations with scatter plots and heatmaps.</li>
+        <li>Interpret correlation strength and direction.</li>
+        <li>Identify significant correlations for analysis.</li>
     </ol>
+  </section>
 
-    <!-- ALGORITHM -->
-    <h3>Algorithm</h3>
-    <ol>
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Algorithm</h2>
+    <ol class="list-decimal list-inside space-y-1">
         <li>Start RStudio and set working directory.</li>
-        <li>Load the dataset into R using <code>read.csv()</code>.</li>
-        <li>Check structure and summary of data.</li>
-        <li>Compute correlation coefficient using <code>cor()</code>.</li>
-        <li>Perform correlation test using <code>cor.test()</code>.</li>
-        <li>Visualize the correlation using scatter plot and correlation matrix.</li>
-        <li>Interpret the results.</li>
+        <li>Load the dataset using <code>read.csv()</code> or use built-in datasets like <code>mtcars</code>.</li>
+        <li>Inspect dataset with <code>str()</code> and <code>summary()</code>.</li>
+        <li>Calculate correlation matrix: <code>cor(data)</code>.</li>
+        <li>Visualize correlation using <code>plot()</code> or libraries like <code>corrplot</code>.</li>
+        <li>Interpret the correlation coefficients and identify relationships.</li>
     </ol>
+  </section>
 
-    <!-- R CODE SECTION -->
-    <h3>R Code – Correlation Analysis</h3>
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Source Code</h2>
     <div class="code">
     # Load dataset<br>
     data <- read.csv("your_dataset.csv")<br><br>
 
-    # Display structure and summary<br>
+    # Inspect dataset<br>
     str(data)<br>
     summary(data)<br><br>
 
-    # Compute Pearson correlation between two numeric variables<br>
-    corr_value <- cor(data$X, data$Y, method="pearson")<br>
-    print(corr_value)<br><br>
+    # Compute correlation matrix<br>
+    cor_matrix <- cor(data)<br>
+    cor_matrix<br><br>
 
-    # Perform correlation test<br>
-    corr_test <- cor.test(data$X, data$Y, method="pearson")<br>
-    print(corr_test)<br><br>
+    # Visualize scatter plot<br>
+    plot(data$X1, data$X2, main="Scatter Plot of X1 vs X2", xlab="X1", ylab="X2")<br><br>
 
-    # Scatter plot with correlation coefficient (optional)<br>
-    plot(data$X, data$Y, main="Scatter Plot of X vs Y", xlab="X", ylab="Y")<br>
-    abline(lm(data$Y ~ data$X), col="red")<br><br>
-
-    # Correlation matrix for multiple numeric columns<br>
-    num_data <- data[, sapply(data, is.numeric)]<br>
-    corr_matrix <- cor(num_data, method="pearson")<br>
-    print(round(corr_matrix, 2))  
+    # Using corrplot for heatmap<br>
+    library(corrplot)<br>
+    corrplot(cor_matrix, method="color", addCoef.col="black")
     </div>
+  </section>
 
-    <!-- SAMPLE OUTPUT -->
+  <section class="mb-8">
     <h3>Sample Output</h3>
     <div class="code">
-    # Example correlation coefficient<br>
-    [1] 0.85<br><br>
-
-    # cor.test() output excerpt<br>
-    Pearson's correlation<br>
-    data: data$X and data$Y<br>
-    t = 3.92, df = 28, p‑value = 0.0005<br>
-    sample estimates:<br>
-         cor<br>
-    0.85  
+    # Correlation Matrix<br>
+        X1       X2       Y<br>
+    X1  1.0000  0.7563  0.6541<br>
+    X2  0.7563  1.0000  0.8124<br>
+    Y   0.6541  0.8124  1.0000
     </div>
+  </section>
 
-    <!-- INTERPRETATION -->
+  <section class="mb-8">
     <h3>Interpretation</h3>
     <ul>
-        <li>A correlation coefficient close to +1 indicates strong positive linear relationship.</li>
-        <li>A coefficient close to –1 indicates strong negative linear relationship.</li>
-        <li>If the p‑value &lt; 0.05, the correlation is statistically significant at 5% level.</li>
+        <li><b>Correlation Coefficient (r):</b> Ranges from -1 to 1. Positive values indicate positive association, negative values indicate negative association.</li>
+        <li><b>Strength:</b> |r| &gt; 0.7 is strong, 0.3–0.7 is moderate, &lt; 0.3 is weak.</li>
+        <li><b>Direction:</b> Positive r → variables increase together, Negative r → one increases while other decreases.</li>
+        <li>Use visualizations to confirm linear relationships and detect patterns.</li>
     </ul>
 
-    <!-- CORRELATION MATRIX -->
-    <h3>Correlation Matrix Example</h3>
-    <div class="code">
-    # For multiple variables<br>
-         mpg  disp    hp  wt<br>
-    mpg  1.00 -0.85 -0.78 -0.87<br>
-    disp -0.85  1.00  0.79  0.89<br>
-    hp   -0.78  0.79  1.00  0.66<br>
-    wt   -0.87  0.89  0.66  1.00  
-    </div>
-    <p>This matrix shows pairwise correlation values among variables.</p>
 
-
-
-    <!-- CONCLUSION -->
+  <section class="mb-8">
     <h3>Conclusion</h3>
-    <p>This lab helps understand how to compute and interpret correlation measures in R. Correlation analysis is a foundation for regression and predictive modeling. You have learned how to compute correlation coefficients, perform hypothesis testing, and visualize the relationships using simple R commands. Correlation helps identify linear relationships between variables before deeper statistical modeling. :contentReference[oaicite:0]{index=0}</p>
+    <p>In this lab, you learned how to compute and interpret correlation coefficients in R. You visualized relationships using scatter plots and correlation heatmaps, enabling better understanding of variable associations. Correlation analysis is essential before applying regression or other predictive models.</p>
+  </section>
+
+</main>
+
 <footer class="text-center text-gray-600 py-6 border-t mt-10">
   <p>Surnam Narendra © 2025 — Data Visualization With R</p>
 </footer>
-</div>
+</body>
+</html>
