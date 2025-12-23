@@ -1,1 +1,211 @@
 
+<!DOCTYPE html>
+<html lang="en">
+   </div>
+        <nav class="nav">
+            <a href="https://surnamnarendra.github.io/Data-Visualization-with-R-Programming/">Home</a>
+            <a href="lecture8.html">L8</a>
+            <a href="lecture9.html">L9</a>
+            <a href="lecture10.html">L10</a>
+            <a href="lecture11.html">L11</a>
+            <a href="lecture12.html">L12</a>
+            <a href="lecture13.html">L13</a>
+            <a href="lecture14.html">L14</a>
+            <a href="lecture15.html" aria-current="page">L15</a>
+        </nav>
+   </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lecture 15 — Regression</title>
+  
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.7;
+    }
+    h1 { color: #007acc; }
+    h2 { color: #005b99; margin-top: 30px; }
+    h3 { color: #004b80; }
+    p { margin: 10px 0; }
+    ul, ol { margin-left: 30px; }
+    .code {
+      background-color: #eef7ff;
+      padding: 8px;
+      border-radius: 5px;
+      font-family: "Courier New", monospace;
+      display: block;
+      margin: 10px 0;
+    }
+    .example {
+      background-color: #eef6fb;
+      border-left: 4px solid #007acc;
+      padding: 10px 15px;
+      margin: 10px 0;
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 16px;
+      background-color: #007acc;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    a.button:hover { background-color: #005b99; }
+    .top-right-logo {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      width: 100px;
+      height: auto;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+ <img src="images/wos ppt.png" alt="University Logo" class="top-right-logo">
+
+  <h1>📈 Regression — Definition, Formula, Types & Examples</h1>
+
+<div class="container">
+
+    <!-- Definition -->
+    <div class="card">
+        <h2>What is Regression?</h2>
+        <p>Regression analysis predicts the relationship between a dependent variable (Y) and one or more independent variables (X).</p>
+
+        <div class="formula-box">
+            <b>Simple Linear Regression Formula:</b><br><br>
+            $$ Y = \beta_0 + \beta_1 X + \epsilon $$
+        </div>
+
+        <div class="formula-box">
+            <b>Multiple Linear Regression Formula:</b><br><br>
+            $$ Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_n X_n + \epsilon $$
+        </div>
+    </div>
+
+    <!-- Types -->
+    <div class="card">
+        <h2>Types of Regression (With Examples)</h2>
+
+        <p>
+            <span class="type-title">1️⃣ Simple Linear Regression</span><br>
+            Predict Y using a single X.
+        </p>
+        <div class="example-box">
+            Example: Predict students' marks (Y) using study hours (X).
+        </div>
+
+        <p>
+            <span class="type-title">2️⃣ Multiple Linear Regression</span><br>
+            Predict Y using multiple X variables.
+        </p>
+        <div class="example-box">
+            Example: Predict house price (Y) using area, bedrooms, and location (X1, X2, X3).
+        </div>
+
+        <p>
+            <span class="type-title">3️⃣ Polynomial Regression</span><br>
+            Fits non-linear relationships by using powers of X.
+        </p>
+        <div class="example-box">
+            Example: Predict growth curve of plants over time.
+        </div>
+
+        <p>
+            <span class="type-title">4️⃣ Logistic Regression</span><br>
+            Predict binary outcomes.
+        </p>
+        <div class="example-box">
+            Example: Predict if a student passes (1) or fails (0) based on study hours.
+        </div>
+    </div>
+
+    <!-- INTERACTIVE DEMO -->
+    <section class="card">
+        <h2>Interactive Regression Demo (Simple Linear Regression)</h2>
+        <p>Enter X and Y values separated by commas to calculate regression line.</p>
+
+        X values: <input id="xValues" type="text" placeholder="e.g. 10,20,30,40"><br><br>
+        Y values: <input id="yValues" type="text" placeholder="e.g. 15,25,35,45"><br><br>
+        <button onclick="calculateRegression()">Calculate Regression</button><br><br>
+
+        <div>Slope (β₁): <span id="slope">—</span></div>
+        <div>Intercept (β₀): <span id="intercept">—</span></div>
+        <div>Predicted Y for last X: <span id="predicted">—</span></div>
+
+        <canvas id="regPlot" width="820" height="400"></canvas>
+
+        <script>
+        function calculateRegression(){
+            const xs = document.getElementById("xValues").value.split(",").map(Number);
+            const ys = document.getElementById("yValues").value.split(",").map(Number);
+            const n = xs.length;
+            const meanX = xs.reduce((a,b)=>a+b)/n;
+            const meanY = ys.reduce((a,b)=>a+b)/n;
+
+            let num=0, den=0;
+            for(let i=0;i<n;i++){
+                num += (xs[i]-meanX)*(ys[i]-meanY);
+                den += (xs[i]-meanX)**2;
+            }
+            const beta1 = num/den;
+            const beta0 = meanY - beta1*meanX;
+
+            document.getElementById("slope").innerText = beta1.toFixed(4);
+            document.getElementById("intercept").innerText = beta0.toFixed(4);
+            document.getElementById("predicted").innerText = (beta0 + beta1*xs[n-1]).toFixed(4);
+
+            // Draw plot
+            const c=document.getElementById('regPlot'); const ctx=c.getContext('2d');
+            ctx.clearRect(0,0,c.width,c.height);
+            const xmin=Math.min(...xs), xmax=Math.max(...xs);
+            const ymin=Math.min(...ys), ymax=Math.max(...ys);
+            function tx(x){return 40+(x-xmin)/(xmax-xmin)*(c.width-80);}
+            function ty(y){return c.height-40-(y-ymin)/(ymax-ymin)*(c.height-80);}
+            ctx.fillStyle='#0055cc99';
+            xs.forEach((x,i)=>{ctx.beginPath(); ctx.arc(tx(x),ty(ys[i]),4,0,2*Math.PI); ctx.fill();});
+            // Regression line
+            ctx.strokeStyle='red';
+            ctx.beginPath();
+            ctx.moveTo(tx(xmin), ty(beta0+beta1*xmin));
+            ctx.lineTo(tx(xmax), ty(beta0+beta1*xmax));
+            ctx.stroke();
+            ctx.strokeStyle="#ccc"; ctx.strokeRect(40,40,c.width-80,c.height-80);
+        }
+        </script>
+    </section>
+
+</div>
+
+<!-- Footer include -->
+<div id="footer-placeholder"></div>
+
+<!-- Back to top button -->
+<button id="backToTop">↑</button>
+
+<script>
+async function includeHTML(id, file){
+  const el=document.getElementById(id);
+  const resp=await fetch(file);
+  if(resp.ok) el.innerHTML=await resp.text();
+}
+includeHTML("navbar-placeholder","navbar.html");
+includeHTML("footer-placeholder","footer.html");
+
+const btn=document.getElementById("backToTop");
+window.onscroll = () => btn.style.display=document.documentElement.scrollTop>200?"block":"none";
+btn.onclick = () => window.scrollTo({ top:0, behavior:"smooth" });
+</script>
+
+</body>
+</html>
