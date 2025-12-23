@@ -1,6 +1,59 @@
-<!-- Lab 5: Correlation Analysis in R -->
-<div class="card">
-    <h2>Lab 5: Correlation Analysis Using R</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Practical 3: Frequency Distribution & Probability Visualization</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <style>
+    * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 40px;
+      background-color: #f9fafc;
+      color: #333;
+      line-height: 1.7;
+    }
+    header { background-color: #007acc; color: white; padding: 20px; border-radius: 10px; text-align: center; }
+    h1 { margin: 0; font-size: 2em; }
+    h2 { color: #005b99; border-bottom: 2px solid #007acc; padding-bottom: 5px; }
+    p { margin: 10px 0; }
+    ul, ol { margin-left: 30px; }
+    section { background-color: #ffffff; padding: 20px; margin-top: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    a.button { display: inline-block; margin-top: 30px; padding: 12px 18px; background-color: #007acc; color: white; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background-color 0.3s ease; }
+    a.button:hover { background-color: #005b99; }
+    footer { text-align: center; margin-top: 40px; font-size: 0.9em; color: #666; }
+    .example { background-color: #eef6fb; border-left: 4px solid #007acc; padding: 10px 15px; margin: 10px 0; }
+    .top-right-logo { position: fixed; top: 10px; right: 10px; width: 100px; height: auto; z-index: 1000; }
+    pre { white-space: pre-wrap; word-wrap: break-word; }
+  </style>
+
+  <script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    ['copy', 'cut', 'paste'].forEach(evt => document.addEventListener(evt, e => e.preventDefault()));
+    document.addEventListener('keydown', function(e) { if (e.key === "PrintScreen") { alert("Screenshots are disabled on this page."); e.preventDefault(); } });
+    window.addEventListener('keyup', function(e) { if (e.key === "PrintScreen") { document.body.style.filter = "blur(6px)"; setTimeout(() => { document.body.style.filter = "none"; }, 2500); } });
+  </script>
+</head>
+
+<body class="text-gray-800 leading-relaxed">
+
+<img src="../images/wos%20ppt.png" class="top-right-logo" alt="Logo">
+
+<header class="bg-blue-700 text-white py-6 text-center shadow-md">
+
+  <h1 class="text-3xl font-bold">Lab 5: Correlation Analysis Using R</h1>
+  <p class="text-lg mt-2">Frequency Distribution and Probability Visualization Using R Built-in Datasets</p>
+</header>
+
+<main class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-8 mt-8 mb-10">
+
 
     <!-- AIM -->
     <h3>Aim</h3>
@@ -96,5 +149,7 @@
     <!-- CONCLUSION -->
     <h3>Conclusion</h3>
     <p>This lab helps understand how to compute and interpret correlation measures in R. Correlation analysis is a foundation for regression and predictive modeling. You have learned how to compute correlation coefficients, perform hypothesis testing, and visualize the relationships using simple R commands. Correlation helps identify linear relationships between variables before deeper statistical modeling. :contentReference[oaicite:0]{index=0}</p>
-
+<footer class="text-center text-gray-600 py-6 border-t mt-10">
+  <p>Surnam Narendra © 2025 — Data Visualization With R</p>
+</footer>
 </div>
