@@ -1,31 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Correlation and Regression Analysis</title>
-<style>
-body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 40px; }
-.container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-h1 { color: #2c3e50; }
-pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Practical 6: Regression Analysis</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <style>
+    * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 40px;
+      background-color: #f9fafc;
+      color: #333;
+      line-height: 1.7;
+    }
+    header { background-color: #007acc; color: white; padding: 20px; border-radius: 10px; text-align: center; }
+    h1 { margin: 0; font-size: 2em; }
+    h2 { color: #005b99; border-bottom: 2px solid #007acc; padding-bottom: 5px; }
+    p { margin: 10px 0; }
+    ul, ol { margin-left: 30px; }
+    section { background-color: #ffffff; padding: 20px; margin-top: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    a.button { display: inline-block; margin-top: 30px; padding: 12px 18px; background-color: #007acc; color: white; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background-color 0.3s ease; }
+    a.button:hover { background-color: #005b99; }
+    footer { text-align: center; margin-top: 40px; font-size: 0.9em; color: #666; }
+    .example { background-color: #eef6fb; border-left: 4px solid #007acc; padding: 10px 15px; margin: 10px 0; }
+    .top-right-logo { position: fixed; top: 10px; right: 10px; width: 100px; height: auto; z-index: 1000; }
+    pre { white-space: pre-wrap; word-wrap: break-word; }
+  </style>
+
+  <script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    ['copy', 'cut', 'paste'].forEach(evt => document.addEventListener(evt, e => e.preventDefault()));
+    document.addEventListener('keydown', function(e) { if (e.key === "PrintScreen") { alert("Screenshots are disabled on this page."); e.preventDefault(); } });
+    window.addEventListener('keyup', function(e) { if (e.key === "PrintScreen") { document.body.style.filter = "blur(6px)"; setTimeout(() => { document.body.style.filter = "none"; }, 2500); } });
+  </script>
 </head>
-<body>
-<div class="container">
-  <h1>Correlation and Regression Analysis</h1>
-  <h2>Aim</h2>
-  <p>To compute correlation and fit simple linear regression using R.</p>
-  <h2>Algorithm / Procedure</h2>
-  <ul><li>Use cor() for correlation and lm() for regression.</li><li>Plot regression line with ggplot2.</li></ul>
-  <h2>Input / Output</h2>
-  <pre>Input:
-> model <- lm(y~x, data=mydata)
-> summary(model)
-Output:
-Regression coefficients</pre>
-  <h2>Result</h2>
-  <p>Performed correlation and regression analysis on sample dataset.</p>
+
+<body class="text-gray-800 leading-relaxed">
+
+<img src="../images/wos%20ppt.png" class="top-right-logo" alt="Logo">
+
+<header class="bg-blue-700 text-white py-6 text-center shadow-md">
+
+  <h1 class="text-3xl font-bold">Lab 6: Regression Analysis Using R</h1>
+  <p class="text-lg mt-2">Frequency Distribution and Probability Visualization Using R Built-in Datasets</p>
+</header>
+
+<main class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-8 mt-8 mb-10">
+
+<div class="card">
+
+    <!-- AIM -->
+    <h3>Aim</h3>
+    <p>To fit and analyze simple and multiple linear regression models, interpret coefficients, predict values, and assess model fit using R programming.</p>
+
+    <!-- OBJECTIVES -->
+    <h3>Objectives</h3>
+    <ol>
+        <li>Load a dataset and inspect its structure.</li>
+        <li>Fit a simple linear regression model using <code>lm()</code>.</li>
+        <li>Fit a multiple linear regression model using <code>lm()</code>.</li>
+        <li>Interpret regression coefficients, R-squared, and p-values.</li>
+        <li>Predict new values using the fitted model.</li>
+        <li>Visualize regression line with scatter plots.</li>
+    </ol>
+
+    <!-- ALGORITHM -->
+    <h3>Algorithm</h3>
+    <ol>
+        <li>Start RStudio and set working directory.</li>
+        <li>Load the dataset using <code>read.csv()</code> or built-in datasets.</li>
+        <li>Inspect dataset structure using <code>str()</code> and <code>summary()</code>.</li>
+        <li>Fit simple linear regression: <code>lm(Y ~ X)</code>.</li>
+        <li>Fit multiple regression: <code>lm(Y ~ X1 + X2 + ...)</code>.</li>
+        <li>Use <code>summary(model)</code> to examine coefficients and R-squared.</li>
+        <li>Predict new values using <code>predict(model, newdata)</code>.</li>
+        <li>Visualize data and regression line using <code>plot()</code> and <code>abline()</code>.</li>
+    </ol>
+
+    <!-- R CODE SECTION -->
+    <h3>R Code – Regression Analysis</h3>
+    <div class="code">
+    # Load dataset<br>
+    data <- read.csv("your_dataset.csv")<br><br>
+
+    # Inspect dataset<br>
+    str(data)<br>
+    summary(data)<br><br>
+
+    # Simple Linear Regression<br>
+    model1 <- lm(Y ~ X, data=data)<br>
+    summary(model1)<br><br>
+
+    # Multiple Linear Regression<br>
+    model2 <- lm(Y ~ X1 + X2, data=data)<br>
+    summary(model2)<br><br>
+
+    # Predict new values<br>
+    new_data <- data.frame(X=10, X1=5, X2=3)<br>
+    predict(model2, newdata=new_data)<br><br>
+
+    # Scatter plot with regression line<br>
+    plot(data$X, data$Y, main="Scatter Plot with Regression Line", xlab="X", ylab="Y")<br>
+    abline(model1, col="red")
+    </div>
+
+    <!-- SAMPLE OUTPUT -->
+    <h3>Sample Output</h3>
+    <div class="code">
+    # Simple Linear Regression Summary<br>
+    Coefficients:<br>
+                  Estimate Std. Error t value Pr(>|t|)<br>
+    (Intercept)   45.000      2.236    20.12 0.0012 **<br>
+    X              3.500      0.447     7.83 0.0085 **<br>
+    Residual standard error: 1.58 on 3 DF<br>
+    Multiple R-squared: 0.953, Adjusted R-squared: 0.938<br><br>
+
+    # Multiple Regression Summary<br>
+    Coefficients:<br>
+                  Estimate Std. Error t value Pr(>|t|)<br>
+    (Intercept)   50.000      10.000    5.00  0.015 *<br>
+    X1             0.120       0.010   12.00 0.001 **<br>
+    X2            10.000       2.500    4.00 0.030 *<br>
+    Residual standard error: 5.0 on 2 DF<br>
+    Multiple R-squared: 0.995, Adjusted R-squared: 0.993
+    </div>
+
+    <!-- INTERPRETATION -->
+    <h3>Interpretation</h3>
+    <ul>
+        <li><b>Intercept (β0):</b> Expected value of Y when all Xs are 0.</li>
+        <li><b>Slope (βi):</b> Change in Y for a unit change in Xi, holding other variables constant.</li>
+        <li><b>R-squared:</b> Proportion of variation in Y explained by Xs.</li>
+        <li><b>p-values:</b> Test significance of coefficients; p &lt; 0.05 indicates significant predictor.</li>
+    </ul>
+
+    <!-- EXERCISES -->
+    <h3>Exercises</h3>
+    <ol>
+        <li>Load <code>mtcars</code> dataset and fit regression of <code>mpg ~ wt</code>.</li>
+        <li>Fit multiple regression: <code>mpg ~ wt + hp + disp</code> and interpret coefficients.</li>
+        <li>Predict mpg for a car with <code>wt=3.0</code>, <code>hp=110</code>, <code>disp=200</code>.</li>
+        <li>Create scatter plots with regression lines for each predictor variable.</li>
+        <li>Check residuals for normality and homoscedasticity.</li>
+    </ol>
+
+    <!-- CONCLUSION -->
+    <h3>Conclusion</h3>
+    <p>In this lab, you learned how to perform both simple and multiple linear regression in R. You learned how to interpret model coefficients, R-squared, and p-values, make predictions for new data, and visualize relationships between variables. Regression is a key tool for predictive analytics and understanding relationships between variables in data.</p>
 </div>
-</body>
-</html>
+
+
+<footer class="text-center text-gray-600 py-6 border-t mt-10">
+  <p>Surnam Narendra © 2025 — Data Visualization With R</p>
+</footer>
+</div>
