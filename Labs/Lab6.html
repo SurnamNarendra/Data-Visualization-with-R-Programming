@@ -54,15 +54,20 @@
 
 <main class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-8 mt-8 mb-10">
 
-<div class="card">
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Aim</h2>
+    <p>
 
-    <!-- AIM -->
-    <h3>Aim</h3>
     <p>To fit and analyze simple and multiple linear regression models, interpret coefficients, predict values, and assess model fit using R programming.</p>
+ </p>
+  </section>
 
-    <!-- OBJECTIVES -->
-    <h3>Objectives</h3>
-    <ol>
+  
+  <!-- ALGORITHM -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Procedure</h2>
+    <ol class="list-decimal list-inside space-y-1">
+      
         <li>Load a dataset and inspect its structure.</li>
         <li>Fit a simple linear regression model using <code>lm()</code>.</li>
         <li>Fit a multiple linear regression model using <code>lm()</code>.</li>
@@ -70,10 +75,13 @@
         <li>Predict new values using the fitted model.</li>
         <li>Visualize regression line with scatter plots.</li>
     </ol>
+  </section>
 
     <!-- ALGORITHM -->
-    <h3>Algorithm</h3>
-    <ol>
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Algorithm</h2>
+    <ol class="list-decimal list-inside space-y-1">
+      
         <li>Start RStudio and set working directory.</li>
         <li>Load the dataset using <code>read.csv()</code> or built-in datasets.</li>
         <li>Inspect dataset structure using <code>str()</code> and <code>summary()</code>.</li>
@@ -83,9 +91,12 @@
         <li>Predict new values using <code>predict(model, newdata)</code>.</li>
         <li>Visualize data and regression line using <code>plot()</code> and <code>abline()</code>.</li>
     </ol>
+    </section>
 
     <!-- R CODE SECTION -->
-    <h3>R Code – Regression Analysis</h3>
+    <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Source Code</h2>
+      
     <div class="code">
     # Load dataset<br>
     data <- read.csv("your_dataset.csv")<br><br>
@@ -110,7 +121,8 @@
     plot(data$X, data$Y, main="Scatter Plot with Regression Line", xlab="X", ylab="Y")<br>
     abline(model1, col="red")
     </div>
-
+    </section>
+      
     <!-- SAMPLE OUTPUT -->
     <h3>Sample Output</h3>
     <div class="code">
