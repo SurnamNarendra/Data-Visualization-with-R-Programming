@@ -97,7 +97,6 @@
     <section class="mb-8">
     <h2 class="text-2xl font-semibold text-blue-700 mb-3">Source Code</h2>
       
-    <div class="code">
     # Load dataset<br>
     data <- read.csv("your_dataset.csv")<br><br>
 
@@ -120,12 +119,13 @@
     # Scatter plot with regression line<br>
     plot(data$X, data$Y, main="Scatter Plot with Regression Line", xlab="X", ylab="Y")<br>
     abline(model1, col="red")
-    </div>
+
     </section>
       
     <!-- SAMPLE OUTPUT -->
-    <h3>Sample Output</h3>
-    <div class="code">
+          <section class="mb-8">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-3">Sample Output</h2>
+  
     # Simple Linear Regression Summary<br>
     Coefficients:<br>
                   Estimate Std. Error t value Pr(>|t|)<br>
@@ -142,7 +142,7 @@
     X2            10.000       2.500    4.00 0.030 *<br>
     Residual standard error: 5.0 on 2 DF<br>
     Multiple R-squared: 0.995, Adjusted R-squared: 0.993
-    </div>
+          </section>
 
     <!-- INTERPRETATION -->
     <h3>Interpretation</h3>
@@ -153,19 +153,11 @@
         <li><b>p-values:</b> Test significance of coefficients; p &lt; 0.05 indicates significant predictor.</li>
     </ul>
 
-    <!-- EXERCISES -->
-    <h3>Exercises</h3>
-    <ol>
-        <li>Load <code>mtcars</code> dataset and fit regression of <code>mpg ~ wt</code>.</li>
-        <li>Fit multiple regression: <code>mpg ~ wt + hp + disp</code> and interpret coefficients.</li>
-        <li>Predict mpg for a car with <code>wt=3.0</code>, <code>hp=110</code>, <code>disp=200</code>.</li>
-        <li>Create scatter plots with regression lines for each predictor variable.</li>
-        <li>Check residuals for normality and homoscedasticity.</li>
-    </ol>
+    
 
     <!-- CONCLUSION -->
     <h3>Conclusion</h3>
-    <p>In this lab, you learned how to perform both simple and multiple linear regression in R. You learned how to interpret model coefficients, R-squared, and p-values, make predictions for new data, and visualize relationships between variables. Regression is a key tool for predictive analytics and understanding relationships between variables in data.</p>
+    <p>In this lab, learned how to perform both simple and multiple linear regression in R. learned how to interpret model coefficients, R-squared, and p-values, make predictions for new data, and visualize relationships between variables. Regression is a key tool for predictive analytics and understanding relationships between variables in data.</p>
 </div>
 
 
