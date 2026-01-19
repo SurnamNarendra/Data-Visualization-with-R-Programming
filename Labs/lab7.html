@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab 7: Creating Basic Visualizations using ggplot2</title>
+
+  <style>
+    * {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 40px;
+      background-color: #f9fafc;
+      color: #333;
+      line-height: 1.7;
+    }
+    header { background-color: #007acc; color: white; padding: 20px; border-radius: 10px; text-align: center; }
+    h1 { margin: 0; font-size: 2em; }
+    h2 { color: #005b99; border-bottom: 2px solid #007acc; padding-bottom: 5px; }
+    p { margin: 10px 0; }
+    ul, ol { margin-left: 30px; }
+    section { background-color: #ffffff; padding: 20px; margin-top: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    a.button { display: inline-block; margin-top: 30px; padding: 12px 18px; background-color: #007acc; color: white; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background-color 0.3s ease; }
+    a.button:hover { background-color: #005b99; }
+    footer { text-align: center; margin-top: 40px; font-size: 0.9em; color: #666; }
+    .example { background-color: #eef6fb; border-left: 4px solid #007acc; padding: 10px 15px; margin: 10px 0; }
+    .top-right-logo { position: fixed; top: 10px; right: 10px; width: 100px; height: auto; z-index: 1000; }
+    pre { white-space: pre-wrap; word-wrap: break-word; }
+  </style>
+ <script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    ['copy', 'cut', 'paste'].forEach(evt => document.addEventListener(evt, e => e.preventDefault()));
+    document.addEventListener('keydown', function(e) { if (e.key === "PrintScreen") { alert("Screenshots are disabled on this page."); e.preventDefault(); } });
+    window.addEventListener('keyup', function(e) { if (e.key === "PrintScreen") { document.body.style.filter = "blur(6px)"; setTimeout(() => { document.body.style.filter = "none"; }, 2500); } });
+  </script>
+</head>
+
+<body class="text-gray-800 leading-relaxed">
+
+<img src="../images/wos%20ppt.png" class="top-right-logo" alt="Logo">
+
+<header class="bg-blue-700 text-white py-6 text-center shadow-md">
+  <h1 class="text-3xl font-bold">Lab 3: Probability Distributions</h1>
+  <p class="text-lg mt-2">Frequency Distribution and Probability Visualization Using R Built-in Datasets</p>
+</header>
+
+<main class="max-w-5xl mx-auto bg-white shadow-md rounded-xl p-8 mt-8 mb-10">
+
+<div class="section">
+    <h2>Aim</h2>
+    <p>
+        To create basic data visualizations such as bar plots, histograms, and pie charts
+        using the <strong>ggplot2</strong> package in R, and to customize titles, axes, and colors
+        using the grammar of graphics.
+    </p>
+</div>
+
+<div class="section">
+    <h2>Software Requirements</h2>
+    <ul>
+        <li>R (version 4.0 or above)</li>
+        <li>RStudio</li>
+        <li>ggplot2 package</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Procedure</h2>
+    <ol>
+        <li>Open RStudio.</li>
+        <li>Install and load the <code>ggplot2</code> package.</li>
+        <li>Create or load a sample dataset.</li>
+        <li>Use <code>ggplot()</code> to initialize the plot.</li>
+        <li>Add appropriate geometry layers such as <code>geom_bar()</code>, <code>geom_histogram()</code>, or <code>geom_col()</code>.</li>
+        <li>Customize titles, axes labels, and colors.</li>
+        <li>Execute the code and observe the output plots.</li>
+    </ol>
+</div>
+
+<div class="section">
+    <h2>Input</h2>
+
+    <h3>Step 1: Load Library & Set Seed</h3>
+    <pre>
+
+    </pre>
+
+    <h3>Step 2: Bar Plot (Random Data)</h3>
+    <pre>
+
+    </pre>
+
+    <h3>Step 3: Histogram (Random Distribution)</h3>
+    <pre>
+
+    </pre>
+
+    <h3>Step 4: Pie Chart (Random Proportions)</h3>
+    <pre>
+
+    </pre>
+</div>
+
+
+
+<div class="section">
+    <h2>Output</h2>
+    <ul>
+        <li>A bar plot displaying values for different categories with customized colors and labels.</li>
+        <li>A histogram showing the distribution of mileage values from the dataset.</li>
+        <li>A pie chart representing proportions of different fruit types.</li>
+    </ul>
+    <p>
+        Each plot clearly represents the data with appropriate titles, axes labels, and visual styling
+        using the ggplot2 grammar.
+    </p>
+</div>
+
+<footer class="text-center text-gray-600 py-6 border-t mt-10">
+  <p>Surnam Narendra © 2026 — Data Visualization With R</p>
+</footer>
+
+</body>
+</html>
