@@ -85,47 +85,71 @@
 <div class="section">
     <h2>Input</h2>
 
-    <h3>1. Bar Plot</h3>
+    <h3>Step 1: Load Library & Set Seed</h3>
     <pre>
 library(ggplot2)
 
-data <- data.frame(
-  Category = c("A", "B", "C", "D"),
-  Values = c(12, 19, 7, 15)
+# Replace 101 with your Roll Number
+set.seed(101)
+    </pre>
+
+    <h3>Step 2: Bar Plot (Random Data)</h3>
+    <pre>
+bar_data <- data.frame(
+  Category = paste("Category", 1:5),
+  Values = sample(10:100, 5)
 )
 
-ggplot(data, aes(x = Category, y = Values, fill = Category)) +
+ggplot(bar_data, aes(x = Category, y = Values, fill = Category)) +
   geom_bar(stat = "identity") +
-  labs(title = "Bar Plot Example",
-       x = "Category",
-       y = "Values") +
+  labs(
+    title = "Bar Plot with Random Values",
+    x = "Categories",
+    y = "Values"
+  ) +
   theme_minimal()
     </pre>
 
-    <h3>2. Histogram</h3>
+    <h3>Step 3: Histogram (Random Distribution)</h3>
     <pre>
-ggplot(mtcars, aes(x = mpg)) +
-  geom_histogram(binwidth = 5, fill = "steelblue", color = "black") +
-  labs(title = "Histogram of Mileage",
-       x = "Miles Per Gallon",
-       y = "Frequency") +
+hist_data <- data.frame(
+  Marks = rnorm(100, mean = sample(60:80, 1), sd = sample(5:15, 1))
+)
+
+ggplot(hist_data, aes(x = Marks)) +
+  geom_histogram(binwidth = 5, fill = "darkorange", color = "black") +
+  labs(
+    title = "Histogram of Random Marks",
+    x = "Marks",
+    y = "Frequency"
+  ) +
   theme_minimal()
     </pre>
 
-    <h3>3. Pie Chart</h3>
+    <h3>Step 4: Pie Chart (Random Proportions)</h3>
     <pre>
 pie_data <- data.frame(
-  Type = c("Apple", "Banana", "Orange"),
-  Count = c(10, 15, 20)
+  Section = paste("Section", LETTERS[1:4]),
+  Count = sample(10:50, 4)
 )
 
-ggplot(pie_data, aes(x = "", y = Count, fill = Type)) +
+ggplot(pie_data, aes(x = "", y = Count, fill = Section)) +
   geom_col(width = 1) +
   coord_polar(theta = "y") +
-  labs(title = "Pie Chart Example") +
+  labs(title = "Pie Chart with Random Data") +
   theme_void()
     </pre>
 </div>
+
+<div class="section">
+    <h2>Output</h2>
+    <ul>
+        <li>Each student obtains a unique bar plot based on randomly generated values.</li>
+        <li>The histogram varies for every student due to different mean and standard deviation.</li>
+        <li>The pie chart displays different proportions for each student.</li>
+    </ul>
+</div>
+
 
 <div class="section">
     <h2>Output</h2>
@@ -140,13 +164,9 @@ ggplot(pie_data, aes(x = "", y = Count, fill = Type)) +
     </p>
 </div>
 
-<div class="section">
-    <h2>Result</h2>
-    <p>
-        Thus, basic visualizations such as bar plots, histograms, and pie charts were successfully
-        created and customized using the <strong>ggplot2</strong> package in R.
-    </p>
-</div>
+<footer class="text-center text-gray-600 py-6 border-t mt-10">
+  <p>Surnam Narendra © 2026 — Data Visualization With R</p>
+</footer>
 
 </body>
 </html>
