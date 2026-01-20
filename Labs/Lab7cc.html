@@ -141,6 +141,31 @@ ggplot(pie_data, aes(x = "", y = Count, fill = Section)) +
     </pre>
 </div>
 
+<h3>Step 5: Boxplot (Random Data Distribution)</h3>
+<pre>
+# Create random data for boxplot
+set.seed(sample(1:1000, 1))
+
+box_data <- data.frame(
+  Category = rep(c("Group A", "Group B", "Group C"), each = 20),
+  Values = c(
+    rnorm(20, mean = sample(40:60, 1), sd = sample(5:10, 1)),
+    rnorm(20, mean = sample(60:80, 1), sd = sample(5:10, 1)),
+    rnorm(20, mean = sample(80:100, 1), sd = sample(5:10, 1))
+  )
+)
+
+# Boxplot using ggplot2
+ggplot(box_data, aes(x = Category, y = Values, fill = Category)) +
+  geom_boxplot() +
+  labs(
+    title = "Boxplot of Randomly Generated Data",
+    x = "Category",
+    y = "Values"
+  ) +
+  theme_minimal()
+</pre>
+</div>
 
 
 <div class="section">
@@ -149,6 +174,8 @@ ggplot(pie_data, aes(x = "", y = Count, fill = Section)) +
         <li>A bar plot displaying values for different categories with customized colors and labels.</li>
         <li>A histogram showing the distribution of mileage values from the dataset.</li>
         <li>A pie chart representing proportions of different fruit types.</li>
+              <li>A boxplot to detect outlier</li>
+
     </ul>
     <p>
         Each plot clearly represents the data with appropriate titles, axes labels, and visual styling
