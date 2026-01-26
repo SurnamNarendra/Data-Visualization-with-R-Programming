@@ -2,27 +2,156 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exploratory Data Analysis (EDA)</title>
+<title>Lab 8: Gene Sequence EDA using seqinr</title>
+
 <style>
-body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 40px; }
-.container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-h1 { color: #2c3e50; }
-pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+body {
+  font-family: Arial, sans-serif;
+  margin: 40px;
+  line-height: 1.6;
+}
+h1, h2, h3 {
+  color: #2c3e50;
+}
+table {
+  border-collapse: collapse;
+  width: 70%;
+  margin-bottom: 20px;
+}
+th, td {
+  border: 1px solid #555;
+  padding: 8px;
+}
+th {
+  background-color: #e8f5e9;
+}
+code {
+  background: #f4f4f4;
+  padding: 2px 4px;
+}
+pre {
+  background: #f8f8f8;
+  padding: 15px;
+  overflow-x: auto;
+}
 </style>
 </head>
+
 <body>
-<div class="container">
-  <h1>Exploratory Data Analysis (EDA)</h1>
-  <h2>Aim</h2>
-  <p>To perform univariate, bivariate, and multivariate EDA using R.</p>
-  <h2>Algorithm / Procedure</h2>
-  <ul><li>Generate descriptive summaries and multiple plots for dataset exploration.</li></ul>
-  <h2>Input / Output</h2>
-  <pre>Input:
-> pairs(~Sepal.Length+Petal.Length, data=iris)</pre>
-  <h2>Result</h2>
-  <p>Explored data structure and relationships using EDA techniques.</p>
-</div>
+
+<h1>Lab 8: Exploratory Data Analysis of Gene Sequences using R</h1>
+
+<h2>Aim</h2>
+<p>
+To perform exploratory data analysis (EDA) on DNA gene sequences using the
+<code>seqinr</code> package in R by analyzing nucleotide composition, GC content,
+and relationships between sequence features.
+</p>
+
+<h2>Dataset Description</h2>
+<p>
+The dataset consists of <b>30 synthetic gene sequences</b>, each of length
+<b>1000 base pairs (bp)</b>, stored in FASTA format. Each student must download
+one gene sequence based on their roll number.
+</p>
+
+<h2>Dataset Download (Roll Number Based)</h2>
+
+<table>
+<tr>
+  <th>Roll No</th>
+  <th>FASTA File</th>
+</tr>
+
+<tr><td>01</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R01.fasta" download>gene_R01.fasta</a></td></tr>
+<tr><td>02</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R02.fasta" download>gene_R02.fasta</a></td></tr>
+<tr><td>03</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R03.fasta" download>gene_R03.fasta</a></td></tr>
+<tr><td>04</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R04.fasta" download>gene_R04.fasta</a></td></tr>
+<tr><td>05</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R05.fasta" download>gene_R05.fasta</a></td></tr>
+<tr><td>06</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R06.fasta" download>gene_R06.fasta</a></td></tr>
+<tr><td>07</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R07.fasta" download>gene_R07.fasta</a></td></tr>
+<tr><td>08</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R08.fasta" download>gene_R08.fasta</a></td></tr>
+<tr><td>09</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R09.fasta" download>gene_R09.fasta</a></td></tr>
+<tr><td>10</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R10.fasta" download>gene_R10.fasta</a></td></tr>
+
+<tr><td>11</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R11.fasta" download>gene_R11.fasta</a></td></tr>
+<tr><td>12</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R12.fasta" download>gene_R12.fasta</a></td></tr>
+<tr><td>13</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R13.fasta" download>gene_R13.fasta</a></td></tr>
+<tr><td>14</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R14.fasta" download>gene_R14.fasta</a></td></tr>
+<tr><td>15</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R15.fasta" download>gene_R15.fasta</a></td></tr>
+
+<tr><td>16</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R16.fasta" download>gene_R16.fasta</a></td></tr>
+<tr><td>17</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R17.fasta" download>gene_R17.fasta</a></td></tr>
+<tr><td>18</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R18.fasta" download>gene_R18.fasta</a></td></tr>
+<tr><td>19</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R19.fasta" download>gene_R19.fasta</a></td></tr>
+<tr><td>20</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R20.fasta" download>gene_R20.fasta</a></td></tr>
+
+<tr><td>21</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R21.fasta" download>gene_R21.fasta</a></td></tr>
+<tr><td>22</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R22.fasta" download>gene_R22.fasta</a></td></tr>
+<tr><td>23</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R23.fasta" download>gene_R23.fasta</a></td></tr>
+<tr><td>24</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R24.fasta" download>gene_R24.fasta</a></td></tr>
+<tr><td>25</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R25.fasta" download>gene_R25.fasta</a></td></tr>
+
+<tr><td>26</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R26.fasta" download>gene_R26.fasta</a></td></tr>
+<tr><td>27</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R27.fasta" download>gene_R27.fasta</a></td></tr>
+<tr><td>28</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R28.fasta" download>gene_R28.fasta</a></td></tr>
+<tr><td>29</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R29.fasta" download>gene_R29.fasta</a></td></tr>
+<tr><td>30</td><td><a href="https://raw.githubusercontent.com/SurnamNarendra/Data-Visualization-with-R-Programming/main/lab8data/gene_R30.fasta" download>gene_R30.fasta</a></td></tr>
+
+</table>
+
+<h2>Algorithm</h2>
+<ol>
+<li>Download the assigned FASTA file based on roll number.</li>
+<li>Load the FASTA file into R using the <code>seqinr</code> package.</li>
+<li>Compute nucleotide frequencies (A, T, G, C).</li>
+<li>Calculate GC content (univariate analysis).</li>
+<li>Analyze relationships between nucleotide counts (bivariate analysis).</li>
+<li>Interpret biological significance of the results.</li>
+</ol>
+
+<h2>R Code (seqinr)</h2>
+
+<pre><code>install.packages("seqinr")
+library(seqinr)
+
+# Read FASTA file
+dna <- read.fasta("gene_RXX.fasta")
+
+# Sequence length
+length(dna[[1]])
+
+# Univariate analysis
+nuc_count <- count(dna[[1]], wordsize = 1)
+gc_content <- GC(dna[[1]])
+
+# Bivariate analysis
+at <- nuc_count["A"] + nuc_count["T"]
+gc <- nuc_count["G"] + nuc_count["C"]
+
+# Simple plot
+plot(c(at, gc),
+     names = c("AT content", "GC content"),
+     main = "AT vs GC Composition")
+</code></pre>
+
+<h2>Input</h2>
+<p>
+A FASTA file containing a single DNA gene sequence of length 1000 bp.
+</p>
+
+<h2>Expected Outcome</h2>
+<p>
+Each student will obtain different nucleotide distributions and GC content values,
+leading to unique univariate and bivariate exploratory analysis results.
+</p>
+
+<h2>Conclusion</h2>
+<p>
+This experiment demonstrates how exploratory data analysis techniques can be applied
+to biological sequence data using R. The use of unique gene sequences ensures individual
+analysis and promotes understanding of nucleotide composition and sequence variability.
+</p>
+
 </body>
 </html>
