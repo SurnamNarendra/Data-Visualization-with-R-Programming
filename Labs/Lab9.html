@@ -1,30 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hypothesis Testing – t-test</title>
-<style>
-body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 40px; }
-.container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-h1 { color: #2c3e50; }
-pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
-</style>
+    <meta charset="UTF-8">
+    <title>Lab 9 – Data Visualization Practical Steps</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 30px;
+        }
+        h1, h2 {
+            color: #007acc;
+        }
+        h1 {
+            text-align: center;
+        }
+        h2 {
+            margin-top: 30px;
+        }
+        ol {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        li {
+            margin: 15px 0;
+        }
+        code {
+            background: #eef;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .note {
+            margin-top: 20px;
+            font-style: italic;
+            color: #444;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-  <h1>Hypothesis Testing – t-test</h1>
-  <h2>Aim</h2>
-  <p>To perform one-sample, two-sample, and paired t-tests in R.</p>
-  <h2>Algorithm / Procedure</h2>
-  <ul><li>Use t.test() for different types of t-tests.</li><li>Interpret p-value and confidence intervals.</li></ul>
-  <h2>Input / Output</h2>
-  <pre>Input:
-> t.test(x, y, paired=TRUE)
-Output:
-p-value < 0.05</pre>
-  <h2>Result</h2>
-  <p>Applied t-test and interpreted results statistically.</p>
+
+<h1>Lab 9: Data Visualization Using R</h1>
+<h2>Practical Steps for Students</h2>
+
+<ol>
+    <li>
+        <strong>Load your assigned dataset:</strong><br>
+        <code>data(dataset_name)</code><br>
+        Example: <code>data(mtcars); df &lt;- mtcars</code>
+    </li>
+
+    <li>
+        <strong>Understand the data (EDA):</strong><br>
+        <code>head(df)</code>, <code>str(df)</code>, <code>summary(df)</code><br>
+        <em>Write number of variables, types (numeric/factor), and meaning of data in your record.</em>
+    </li>
+
+    <li>
+        <strong>Univariate Visualization (at least 1):</strong><br>
+        Example histogram/bar plot:
+        <pre><code>library(ggplot2)
+ggplot(df, aes(x = df[,1])) +
+    geom_histogram(bins = 10) +
+    labs(title = "Distribution of Variable 1", x = "Variable", y = "Frequency")</code></pre>
+        <em>Explain what the distribution tells you about the data.</em>
+    </li>
+
+    <li>
+        <strong>Bivariate Visualization (at least 1):</strong><br>
+        Example scatter plot:
+        <pre><code>ggplot(df, aes(x = df[,1], y = df[,2])) +
+    geom_point() +
+    labs(title = "Relationship between Variable 1 and Variable 2", x = "Variable 1", y = "Variable 2")</code></pre>
+        <em>Interpret the relationship between the variables.</em>
+    </li>
+
+    <li>
+        <strong>Categorical / Group Comparison (if applicable):</strong><br>
+        Example boxplot:
+        <pre><code>ggplot(df, aes(x = factor(df[,3]), y = df[,1])) +
+    geom_boxplot() +
+    labs(title = "Comparison Across Categories", x = "Category", y = "Value")</code></pre>
+        <em>Explain insights for different groups.</em>
+    </li>
+
+    <li>
+        <strong>Decision-Oriented Visualization (mandatory):</strong><br>
+        Example with trend line:
+        <pre><code>ggplot(df, aes(x = df[,1], y = df[,2])) +
+    geom_point() +
+    geom_smooth(method = "lm") +
+    labs(title = "Decision-Making Visualization")</code></pre>
+        <em>Write a clear decision or recommendation based on this visualization.</em>
+    </li>
+
+    <li>
+        <strong>Result & Conclusion:</strong><br>
+        <ul>
+            <li><strong>Result:</strong> Meaningful visualizations were created using R to analyze your dataset.</li>
+            <li><strong>Conclusion:</strong> Visualization helped transform raw data into actionable insights for decision-making.</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Minimum Requirements:</strong><br>
+        - Load dataset<br>
+        - Perform EDA<br>
+        - Create at least 3 visualizations<br>
+        - Provide decision insight for each plot
+    </li>
+</ol>
+
+<div class="note">
+    <strong>Note:</strong> Use only the dataset assigned to your roll number. Dataset change is not permitted.
 </div>
+
 </body>
 </html>
