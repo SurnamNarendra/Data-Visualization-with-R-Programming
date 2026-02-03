@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>R Dataset Selection – Lab 9</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 30px;
+        }
+        h2 {
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+        }
+        select, input, button {
+            padding: 8px;
+            margin-top: 8px;
+            width: 300px;
+        }
+        button {
+            background: #007acc;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #005fa3;
+        }
+        .info {
+            margin-top: 20px;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Lab 9: R Dataset Selection</h2>
+
+<label>Student Name / Roll Number:</label><br>
+<input type="text" id="student" placeholder="Enter your name or roll no">
+
+<br><br>
+
+<label>Select Dataset:</label><br>
+<select id="dataset">
+    <option value="">-- Select Dataset --</option>
+    <option>mtcars</option>
+    <option>iris</option>
+    <option>airquality</option>
+    <option>USArrests</option>
+    <option>PlantGrowth</option>
+    <option>ToothGrowth</option>
+    <option>sleep</option>
+    <option>faithful</option>
+    <option>trees</option>
+    <option>InsectSprays</option>
+    <option>ChickWeight</option>
+    <option>CO2</option>
+    <option>Orange</option>
+    <option>AirPassengers</option>
+    <option>nottem</option>
+    <option>sunspot.month</option>
+    <option>Nile</option>
+    <option>esoph</option>
+    <option>quakes</option>
+    <option>morley</option>
+    <option>warpbreaks</option>
+    <option>longley</option>
+    <option>women</option>
+    <option>LifeCycleSavings</option>
+    <option>EuStockMarkets</option>
+    <option>Seatbelts</option>
+    <option>lynx</option>
+    <option>pressure</option>
+    <option>attenu</option>
+</select>
+
+<br><br>
+
+<button onclick="selectDataset()">Confirm Selection</button>
+
+<div class="info" id="message"></div>
+
+<script>
+    // Load used datasets
+    let usedDatasets = JSON.parse(localStorage.getItem("usedDatasets")) || {};
+
+    // Disable already selected datasets
+    let options = document.getElementById("dataset").options;
+    for (let i = 0; i < options.length; i++) {
+        if (usedDatasets[options[i].value]) {
+            options[i].disabled = true;
+        }
+    }
+
+    function selectDataset() {
+        let student = document.getElementById("student").value.trim();
+        let dataset = document.getElementById("dataset").value;
+
+        if (student === "" || dataset === "") {
+            alert("Please enter student name/roll number and select a dataset.");
+            return;
+        }
+
+        if (usedDatasets[dataset]) {
+            alert("Dataset already selected. Please choose another.");
+            return;
+        }
+
+        usedDatasets[dataset] = student;
+        localStorage.setItem("usedDatasets", JSON.stringify(usedDatasets));
+
+        document.getElementById("message").innerHTML =
+            "✅ Dataset <b>" + dataset + "</b> successfully assigned to <b>" + student + "</b>.";
+
+        document.getElementById("dataset").value = "";
+        location.reload();
+    }
+</script>
+
+</body>
+</html>
