@@ -2,125 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>R Dataset Selection – Lab 9</title>
+    <title>Lab 9 – R Dataset Allocation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f4f6f8;
+            background-color: #f4f6f8;
             padding: 30px;
         }
         h2 {
+            text-align: center;
             color: #333;
         }
-        label {
-            font-weight: bold;
+        table {
+            border-collapse: collapse;
+            margin: auto;
+            width: 70%;
+            background: white;
         }
-        select, input, button {
-            padding: 8px;
-            margin-top: 8px;
-            width: 300px;
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
         }
-        button {
-            background: #007acc;
+        th {
+            background-color: #007acc;
             color: white;
-            border: none;
-            cursor: pointer;
         }
-        button:hover {
-            background: #005fa3;
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
         }
-        .info {
+        .note {
             margin-top: 20px;
-            color: green;
-            font-weight: bold;
+            text-align: center;
+            font-style: italic;
+            color: #444;
         }
     </style>
 </head>
 <body>
 
-<h2>Lab 9: R Dataset Selection</h2>
+<h2>Lab 9: Data Visualization Using R<br>Dataset Allocation</h2>
 
-<label>Student Name / Roll Number:</label><br>
-<input type="text" id="student" placeholder="Enter your name or roll no">
+<table>
+    <tr>
+        <th>Roll Number</th>
+        <th>Assigned R Dataset</th>
+    </tr>
+    <tr><td>24WU0701001</td><td>mtcars</td></tr>
+    <tr><td>24WU0701002</td><td>iris</td></tr>
+    <tr><td>24WU0701004</td><td>airquality</td></tr>
+    <tr><td>24WU0701005</td><td>USArrests</td></tr>
+    <tr><td>24WU0701006</td><td>PlantGrowth</td></tr>
+    <tr><td>24WU0701007</td><td>ToothGrowth</td></tr>
+    <tr><td>24WU0701008</td><td>sleep</td></tr>
+    <tr><td>24WU0701009</td><td>faithful</td></tr>
+    <tr><td>24WU0701010</td><td>trees</td></tr>
+    <tr><td>24WU0701012</td><td>InsectSprays</td></tr>
+    <tr><td>24WU0701013</td><td>ChickWeight</td></tr>
+    <tr><td>24WU0701014</td><td>CO2</td></tr>
+    <tr><td>24WU0701015</td><td>Orange</td></tr>
+    <tr><td>24WU0701016</td><td>lynx</td></tr>
+    <tr><td>24WU0701017</td><td>nottem</td></tr>
+    <tr><td>24WU0701018</td><td>AirPassengers</td></tr>
+    <tr><td>24WU0701019</td><td>sunspot.month</td></tr>
+    <tr><td>24WU0701020</td><td>Nile</td></tr>
+    <tr><td>24WU0701021</td><td>esoph</td></tr>
+    <tr><td>24WU0701022</td><td>quakes</td></tr>
+    <tr><td>24WU0701024</td><td>morley</td></tr>
+    <tr><td>24WU0701025</td><td>warpbreaks</td></tr>
+    <tr><td>24WU0701026</td><td>longley</td></tr>
+    <tr><td>24WU0701027</td><td>women</td></tr>
+    <tr><td>24WU0701030</td><td>LifeCycleSavings</td></tr>
+    <tr><td>24WU0701031</td><td>EuStockMarkets</td></tr>
+    <tr><td>24WU0701032</td><td>Seatbelts</td></tr>
+    <tr><td>24WU0701039</td><td>pressure</td></tr>
+    <tr><td>24WU0701042</td><td>attenu</td></tr>
+    <tr><td>24WU0701043T</td><td>beaver1</td></tr>
+</table>
 
-<br><br>
-
-<label>Select Dataset:</label><br>
-<select id="dataset">
-    <option value="">-- Select Dataset --</option>
-    <option>mtcars</option>
-    <option>iris</option>
-    <option>airquality</option>
-    <option>USArrests</option>
-    <option>PlantGrowth</option>
-    <option>ToothGrowth</option>
-    <option>sleep</option>
-    <option>faithful</option>
-    <option>trees</option>
-    <option>InsectSprays</option>
-    <option>ChickWeight</option>
-    <option>CO2</option>
-    <option>Orange</option>
-    <option>AirPassengers</option>
-    <option>nottem</option>
-    <option>sunspot.month</option>
-    <option>Nile</option>
-    <option>esoph</option>
-    <option>quakes</option>
-    <option>morley</option>
-    <option>warpbreaks</option>
-    <option>longley</option>
-    <option>women</option>
-    <option>LifeCycleSavings</option>
-    <option>EuStockMarkets</option>
-    <option>Seatbelts</option>
-    <option>lynx</option>
-    <option>pressure</option>
-    <option>attenu</option>
-</select>
-
-<br><br>
-
-<button onclick="selectDataset()">Confirm Selection</button>
-
-<div class="info" id="message"></div>
-
-<script>
-    // Load used datasets
-    let usedDatasets = JSON.parse(localStorage.getItem("usedDatasets")) || {};
-
-    // Disable already selected datasets
-    let options = document.getElementById("dataset").options;
-    for (let i = 0; i < options.length; i++) {
-        if (usedDatasets[options[i].value]) {
-            options[i].disabled = true;
-        }
-    }
-
-    function selectDataset() {
-        let student = document.getElementById("student").value.trim();
-        let dataset = document.getElementById("dataset").value;
-
-        if (student === "" || dataset === "") {
-            alert("Please enter student name/roll number and select a dataset.");
-            return;
-        }
-
-        if (usedDatasets[dataset]) {
-            alert("Dataset already selected. Please choose another.");
-            return;
-        }
-
-        usedDatasets[dataset] = student;
-        localStorage.setItem("usedDatasets", JSON.stringify(usedDatasets));
-
-        document.getElementById("message").innerHTML =
-            "✅ Dataset <b>" + dataset + "</b> successfully assigned to <b>" + student + "</b>.";
-
-        document.getElementById("dataset").value = "";
-        location.reload();
-    }
-</script>
+<div class="note">
+    Each student must use only the dataset assigned above for Lab 9.<br>
+    Dataset change is not permitted.
+</div>
 
 </body>
 </html>
