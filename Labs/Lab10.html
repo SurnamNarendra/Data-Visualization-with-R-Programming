@@ -3,27 +3,122 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ANOVA (Analysis of Variance)</title>
+<title>Statistical Tests in R</title>
+
 <style>
 body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 40px; }
-.container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+.container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-bottom: 30px; }
 h1 { color: #2c3e50; }
-pre { background: #f4f4f4; padding: 10px; border-radius: 5px; }
+h2 { color: #34495e; }
+pre { background: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
 </style>
+
 </head>
 <body>
+
+<!-- ================= T-TEST ================= -->
 <div class="container">
-  <h1>ANOVA (Analysis of Variance)</h1>
+  <h1>T-Test in R</h1>
+
   <h2>Aim</h2>
-  <p>To conduct one-way ANOVA and interpret group mean differences.</p>
+  <p>To compare the means of two groups using a t-test.</p>
+
   <h2>Algorithm / Procedure</h2>
-  <ul><li>Use aov() and summary() functions.</li><li>Plot results with boxplots.</li></ul>
-  <h2>Input / Output</h2>
-  <pre>Input:
-> aov_result <- aov(Weight ~ Diet, data=data)
-> summary(aov_result)</pre>
+  <ul>
+    <li>Import the dataset.</li>
+    <li>Separate groups based on categorical variable.</li>
+    <li>Apply t.test() function.</li>
+    <li>Interpret p-value.</li>
+  </ul>
+
+  <h2>Input / Output (R Code)</h2>
+  <pre>
+# Sample dataset
+data <- data.frame(
+Gender = c("Male","Female","Male","Female","Male","Female"),
+Marks = c(55,60,58,62,57,65)
+)
+
+# T-test
+t_test_result <- t.test(Marks ~ Gender, data = data)
+t_test_result
+  </pre>
+
   <h2>Result</h2>
-  <p>Tested significance of group mean differences using ANOVA.</p>
+  <p>The t-test compares the mean marks of male and female students. 
+  If p-value &lt; 0.05, there is a significant difference between the two groups.</p>
 </div>
+
+
+<!-- ================= F-TEST / ANOVA ================= -->
+<div class="container">
+  <h1>F-Test (ANOVA) in R</h1>
+
+  <h2>Aim</h2>
+  <p>To test whether there is a significant difference among group means using ANOVA.</p>
+
+  <h2>Algorithm / Procedure</h2>
+  <ul>
+    <li>Load dataset with numeric and categorical variables.</li>
+    <li>Use aov() function.</li>
+    <li>Display results using summary().</li>
+    <li>Visualize using boxplot.</li>
+  </ul>
+
+  <h2>Input / Output (R Code)</h2>
+  <pre>
+# Sample dataset
+data <- data.frame(
+Diet = factor(c("A","A","B","B","C","C")),
+Weight = c(60,62,65,67,70,72)
+)
+
+# ANOVA
+anova_result <- aov(Weight ~ Diet, data = data)
+summary(anova_result)
+
+# Boxplot
+boxplot(Weight ~ Diet, data=data)
+  </pre>
+
+  <h2>Result</h2>
+  <p>ANOVA determines whether group means differ significantly. 
+  If p-value &lt; 0.05, at least one group mean is different.</p>
+</div>
+
+
+<!-- ================= CHI-SQUARE TEST ================= -->
+<div class="container">
+  <h1>Chi-Square Test in R</h1>
+
+  <h2>Aim</h2>
+  <p>To test association between two categorical variables using Chi-square test.</p>
+
+  <h2>Algorithm / Procedure</h2>
+  <ul>
+    <li>Create contingency table.</li>
+    <li>Apply chisq.test().</li>
+    <li>Interpret p-value.</li>
+  </ul>
+
+  <h2>Input / Output (R Code)</h2>
+  <pre>
+# Sample data
+Gender <- c("Male","Male","Female","Female","Male","Female")
+Result <- c("Pass","Fail","Pass","Pass","Fail","Pass")
+
+# Contingency table
+table_data <- table(Gender, Result)
+
+# Chi-square test
+chisq_result <- chisq.test(table_data)
+chisq_result
+  </pre>
+
+  <h2>Result</h2>
+  <p>The Chi-square test checks association between gender and result. 
+  If p-value &lt; 0.05, the variables are significantly associated.</p>
+</div>
+
 </body>
 </html>
