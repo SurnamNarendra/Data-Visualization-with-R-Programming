@@ -32,6 +32,13 @@
     .top-right-logo { position: fixed; top: 10px; right: 10px; width: 100px; height: auto; z-index: 1000; }
     pre { white-space: pre-wrap; word-wrap: break-word; }
   </style>
+
+   <script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    ['copy', 'cut', 'paste'].forEach(evt => document.addEventListener(evt, e => e.preventDefault()));
+    document.addEventListener('keydown', function(e) { if (e.key === "PrintScreen") { alert("Screenshots are disabled on this page."); e.preventDefault(); } });
+    window.addEventListener('keyup', function(e) { if (e.key === "PrintScreen") { document.body.style.filter = "blur(6px)"; setTimeout(() => { document.body.style.filter = "none"; }, 2500); } });
+  </script>
 <body class="text-gray-800 leading-relaxed">
 
 <img src="../images/wos%20ppt.png" class="top-right-logo" alt="Logo">
