@@ -4,153 +4,446 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Statistical Tests in R</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap');
 
- <style>
-    * {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 40px;
-      background-color: #f9fafc;
-      color: #333;
-      line-height: 1.7;
-    }
-    header { background-color: #007acc; color: white; padding: 20px; border-radius: 10px; text-align: center; }
-    h1 { margin: 0; font-size: 2em; }
-    h2 { color: #005b99; border-bottom: 2px solid #007acc; padding-bottom: 5px; }
-    p { margin: 10px 0; }
-    ul, ol { margin-left: 30px; }
-    section { background-color: #ffffff; padding: 20px; margin-top: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    a.button { display: inline-block; margin-top: 30px; padding: 12px 18px; background-color: #007acc; color: white; border-radius: 6px; text-decoration: none; font-weight: bold; transition: background-color 0.3s ease; }
-    a.button:hover { background-color: #005b99; }
-    footer { text-align: center; margin-top: 40px; font-size: 0.9em; color: #666; }
-    .example { background-color: #eef6fb; border-left: 4px solid #007acc; padding: 10px 15px; margin: 10px 0; }
-    .top-right-logo { position: fixed; top: 10px; right: 10px; width: 100px; height: auto; z-index: 1000; }
-    pre { white-space: pre-wrap; word-wrap: break-word; }
-  </style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-   <script>
-    document.addEventListener('contextmenu', event => event.preventDefault());
-    ['copy', 'cut', 'paste'].forEach(evt => document.addEventListener(evt, e => e.preventDefault()));
-    document.addEventListener('keydown', function(e) { if (e.key === "PrintScreen") { alert("Screenshots are disabled on this page."); e.preventDefault(); } });
-    window.addEventListener('keyup', function(e) { if (e.key === "PrintScreen") { document.body.style.filter = "blur(6px)"; setTimeout(() => { document.body.style.filter = "none"; }, 2500); } });
-  </script>
-<body class="text-gray-800 leading-relaxed">
+  :root {
+    --blue: #1a56db;
+    --blue-dark: #1040b0;
+    --blue-light: #e8f0fe;
+    --accent: #f0a500;
+    --bg: #f4f7fb;
+    --white: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #dde3ef;
+    --code-bg: #0f172a;
+    --code-text: #e2e8f0;
+    --radius: 12px;
+  }
 
-<img src="../images/wos%20ppt.png" class="top-right-logo" alt="Logo">
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    padding: 0;
+    margin: 0;
+  }
 
-<header class="bg-blue-700 text-white py-6 text-center shadow-md">
+  header {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);
+    color: white;
+    text-align: center;
+    padding: 48px 24px 40px;
+    position: relative;
+    overflow: hidden;
+  }
 
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg, transparent, transparent 40px,
+      rgba(255,255,255,0.03) 40px, rgba(255,255,255,0.03) 80px
+    );
+  }
+
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    letter-spacing: -0.5px;
+    position: relative;
+  }
+
+  header p {
+    margin-top: 8px;
+    opacity: 0.8;
+    font-size: 1rem;
+    position: relative;
+  }
+
+  .page-wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .card-header {
+    background: linear-gradient(90deg, var(--blue) 0%, #2563eb 100%);
+    color: white;
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .card-header .icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .card-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    border: none;
+    padding: 0;
+    color: white;
+  }
+
+  .card-body {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--blue);
+    margin-bottom: 6px;
+  }
+
+  .section-block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section-block p {
+    color: var(--text);
+    font-size: 0.97rem;
+  }
+
+  .steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+  }
+
+  .steps-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.96rem;
+    color: var(--text);
+  }
+
+  .steps-list li::before {
+    content: counter(step);
+    counter-increment: step;
+    background: var(--blue-light);
+    color: var(--blue);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .steps-list { counter-reset: step; }
+
+  .code-block {
+    background: var(--code-bg);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .code-bar {
+    background: #1e293b;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .code-bar span {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .code-bar span:nth-child(1) { background: #ff5f57; }
+  .code-bar span:nth-child(2) { background: #febc2e; }
+  .code-bar span:nth-child(3) { background: #28c840; }
+
+  .code-bar .lang-tag {
+    margin-left: auto;
+    font-size: 0.72rem;
+    color: #64748b;
+    font-family: 'DM Mono', monospace;
+    width: auto; height: auto;
+    border-radius: 0;
+    background: none;
+  }
+
+  pre {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.875rem;
+    color: var(--code-text);
+    padding: 20px 20px;
+    overflow-x: auto;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* Syntax highlighting */
+  .kw { color: #7dd3fc; }
+  .fn { color: #a5b4fc; }
+  .str { color: #86efac; }
+  .cmt { color: #64748b; font-style: italic; }
+  .num { color: #fda4af; }
+
+  .result-box {
+    background: var(--blue-light);
+    border-left: 4px solid var(--blue);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    color: #1e3a6e;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    background: var(--white);
+  }
+</style>
 </head>
 <body>
+<img src="../images/wos%20ppt.png" class="top-right-logo" alt="Logo">
 
-<!-- ================= T-TEST ================= -->
-<div class="container">
-  <h1>T-Test in R</h1>
+<header>
+  <h1>Statistical Tests in R</h1>
+  <p>T-Test &nbsp;·&nbsp; F-Test (ANOVA) &nbsp;·&nbsp; Chi-Square Test</p>
+</header>
 
-  <h2>Aim</h2>
-  <p>To compare the means of two groups using a t-test.</p>
+<div class="page-wrapper">
 
-  <h2>Algorithm / Procedure</h2>
-  <ul>
-    <li>Import the dataset.</li>
-    <li>Separate groups based on categorical variable.</li>
-    <li>Apply t.test() function.</li>
-    <li>Interpret p-value.</li>
-  </ul>
+  <!-- T-TEST -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon">⊤</div>
+      <h2>T-Test in R</h2>
+    </div>
+    <div class="card-body">
 
-  <h2>Input / Output (R Code)</h2>
-  <pre>
-# Sample dataset
-data <- data.frame(
-Gender = c("Male","Female","Male","Female","Male","Female"),
-Marks = c(55,60,58,62,57,65)
+      <div class="section-block">
+        <div class="section-label">Aim</div>
+        <p>To compare the means of two groups using a t-test.</p>
+      </div>
+
+      <hr class="divider">
+
+      <div class="section-block">
+        <div class="section-label">Algorithm / Procedure</div>
+        <ol class="steps-list">
+          <li>Import the dataset.</li>
+          <li>Separate groups based on categorical variable.</li>
+          <li>Apply <code>t.test()</code> function.</li>
+          <li>Interpret the p-value.</li>
+        </ol>
+      </div>
+
+      <hr class="divider">
+
+      <div class="section-block">
+        <div class="section-label">R Code</div>
+        <div class="code-block">
+          <div class="code-bar">
+            <span></span><span></span><span></span>
+            <span class="lang-tag">R</span>
+          </div>
+          <pre><span class="cmt"># Sample dataset</span>
+data <span class="kw">&lt;-</span> <span class="fn">data.frame</span>(
+  Gender <span class="kw">=</span> <span class="fn">c</span>(<span class="str">"Male"</span>,<span class="str">"Female"</span>,<span class="str">"Male"</span>,<span class="str">"Female"</span>,<span class="str">"Male"</span>,<span class="str">"Female"</span>),
+  Marks  <span class="kw">=</span> <span class="fn">c</span>(<span class="num">55</span>,<span class="num">60</span>,<span class="num">58</span>,<span class="num">62</span>,<span class="num">57</span>,<span class="num">65</span>)
 )
 
-# T-test
-t_test_result <- t.test(Marks ~ Gender, data = data)
-t_test_result
-  </pre>
+<span class="cmt"># T-test</span>
+t_test_result <span class="kw">&lt;-</span> <span class="fn">t.test</span>(Marks <span class="kw">~</span> Gender, data <span class="kw">=</span> data)
+t_test_result</pre>
+        </div>
+      </div>
 
-  <h2>Result</h2>
-  <p>The t-test compares the mean marks of male and female students. 
-  If p-value &lt; 0.05, there is a significant difference between the two groups.</p>
-</div>
+      <hr class="divider">
 
+      <div class="section-block">
+        <div class="section-label">Result</div>
+        <div class="result-box">
+          The t-test compares the mean marks of male and female students.
+          If <strong>p-value &lt; 0.05</strong>, there is a significant difference between the two groups.
+        </div>
+      </div>
 
-<!-- ================= F-TEST / ANOVA ================= -->
-<div class="container">
-  <h1>F-Test (ANOVA) in R</h1>
+    </div>
+  </div>
 
-  <h2>Aim</h2>
-  <p>To test whether there is a significant difference among group means using ANOVA.</p>
+  <!-- F-TEST / ANOVA -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon">F</div>
+      <h2>F-Test (ANOVA) in R</h2>
+    </div>
+    <div class="card-body">
 
-  <h2>Algorithm / Procedure</h2>
-  <ul>
-    <li>Load dataset with numeric and categorical variables.</li>
-    <li>Use aov() function.</li>
-    <li>Display results using summary().</li>
-    <li>Visualize using boxplot.</li>
-  </ul>
+      <div class="section-block">
+        <div class="section-label">Aim</div>
+        <p>To test whether there is a significant difference among group means using ANOVA.</p>
+      </div>
 
-  <h2>Input / Output (R Code)</h2>
-  <pre>
-# Sample dataset
-data <- data.frame(
-Diet = factor(c("A","A","B","B","C","C")),
-Weight = c(60,62,65,67,70,72)
+      <hr class="divider">
+
+      <div class="section-block">
+        <div class="section-label">Algorithm / Procedure</div>
+        <ol class="steps-list">
+          <li>Load dataset with numeric and categorical variables.</li>
+          <li>Use <code>aov()</code> function.</li>
+          <li>Display results using <code>summary()</code>.</li>
+          <li>Visualize using <code>boxplot()</code>.</li>
+        </ol>
+      </div>
+
+      <hr class="divider">
+
+      <div class="section-block">
+        <div class="section-label">R Code</div>
+        <div class="code-block">
+          <div class="code-bar">
+            <span></span><span></span><span></span>
+            <span class="lang-tag">R</span>
+          </div>
+          <pre><span class="cmt"># Sample dataset</span>
+data <span class="kw">&lt;-</span> <span class="fn">data.frame</span>(
+  Diet   <span class="kw">=</span> <span class="fn">factor</span>(<span class="fn">c</span>(<span class="str">"A"</span>,<span class="str">"A"</span>,<span class="str">"B"</span>,<span class="str">"B"</span>,<span class="str">"C"</span>,<span class="str">"C"</span>)),
+  Weight <span class="kw">=</span> <span class="fn">c</span>(<span class="num">60</span>,<span class="num">62</span>,<span class="num">65</span>,<span class="num">67</span>,<span class="num">70</span>,<span class="num">72</span>)
 )
 
-# ANOVA
-anova_result <- aov(Weight ~ Diet, data = data)
-summary(anova_result)
+<span class="cmt"># ANOVA</span>
+anova_result <span class="kw">&lt;-</span> <span class="fn">aov</span>(Weight <span class="kw">~</span> Diet, data <span class="kw">=</span> data)
+<span class="fn">summary</span>(anova_result)
 
-# Boxplot
-boxplot(Weight ~ Diet, data=data)
-  </pre>
+<span class="cmt"># Boxplot</span>
+<span class="fn">boxplot</span>(Weight <span class="kw">~</span> Diet, data <span class="kw">=</span> data)</pre>
+        </div>
+      </div>
 
-  <h2>Result</h2>
-  <p>ANOVA determines whether group means differ significantly. 
-  If p-value &lt; 0.05, at least one group mean is different.</p>
+      <hr class="divider">
+
+      <div class="section-block">
+        <div class="section-label">Result</div>
+        <div class="result-box">
+          ANOVA determines whether group means differ significantly.
+          If <strong>p-value &lt; 0.05</strong>, at least one group mean is different.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CHI-SQUARE -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon">χ²</div>
+      <h2>Chi-Square Test in R</h2>
+    </div>
+    <div class="card-body">
+
+      <div class="section-block">
+        <div class="section-label">Aim</div>
+        <p>To test association between two categorical variables using the Chi-square test.</p>
+      </div>
+
+      <hr class="divider">
+
+      <div class="section-block">
+        <div class="section-label">Algorithm / Procedure</div>
+        <ol class="steps-list">
+          <li>Create a contingency table.</li>
+          <li>Apply <code>chisq.test()</code>.</li>
+          <li>Interpret the p-value.</li>
+        </ol>
+      </div>
+
+      <hr class="divider">
+
+      <div class="section-block">
+        <div class="section-label">R Code</div>
+        <div class="code-block">
+          <div class="code-bar">
+            <span></span><span></span><span></span>
+            <span class="lang-tag">R</span>
+          </div>
+          <pre><span class="cmt"># Sample data</span>
+Gender <span class="kw">&lt;-</span> <span class="fn">c</span>(<span class="str">"Male"</span>,<span class="str">"Male"</span>,<span class="str">"Female"</span>,<span class="str">"Female"</span>,<span class="str">"Male"</span>,<span class="str">"Female"</span>)
+Result <span class="kw">&lt;-</span> <span class="fn">c</span>(<span class="str">"Pass"</span>,<span class="str">"Fail"</span>,<span class="str">"Pass"</span>,<span class="str">"Pass"</span>,<span class="str">"Fail"</span>,<span class="str">"Pass"</span>)
+
+<span class="cmt"># Contingency table</span>
+table_data <span class="kw">&lt;-</span> <span class="fn">table</span>(Gender, Result)
+
+<span class="cmt"># Chi-square test</span>
+chisq_result <span class="kw">&lt;-</span> <span class="fn">chisq.test</span>(table_data)
+chisq_result</pre>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="section-block">
+        <div class="section-label">Result</div>
+        <div class="result-box">
+          The Chi-square test checks association between gender and result.
+          If <strong>p-value &lt; 0.05</strong>, the variables are significantly associated.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
-
-<!-- ================= CHI-SQUARE TEST ================= -->
-<div class="container">
-  <h1>Chi-Square Test in R</h1>
-
-  <h2>Aim</h2>
-  <p>To test association between two categorical variables using Chi-square test.</p>
-
-  <h2>Algorithm / Procedure</h2>
-  <ul>
-    <li>Create contingency table.</li>
-    <li>Apply chisq.test().</li>
-    <li>Interpret p-value.</li>
-  </ul>
-
-  <h2>Input / Output (R Code)</h2>
-  <pre>
-# Sample data
-Gender <- c("Male","Male","Female","Female","Male","Female")
-Result <- c("Pass","Fail","Pass","Pass","Fail","Pass")
-
-# Contingency table
-table_data <- table(Gender, Result)
-
-# Chi-square test
-chisq_result <- chisq.test(table_data)
-chisq_result
-  </pre>
-
-  <h2>Result</h2>
-  <p>The Chi-square test checks association between gender and result. 
-  If p-value &lt; 0.05, the variables are significantly associated.</p>
-</div>
+<footer>
+  Statistical Tests in R &nbsp;·&nbsp; T-Test · F-Test · Chi-Square
+</footer>
 
 </body>
 </html>
